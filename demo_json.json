@@ -1,1 +1,118 @@
-{"projects":[{"id": "1", "name": "Test1", "description": "desc", "createdAt": "hehe", "tags": ["1"], "category": ["1", ""], "board": {"name": "testttt", "data": [{"name": "TO DO", "color": "ffffff", "cards": [{"name": "TO DO", "color": "ffffff", "description": "description", "dueData": "", "priority":  "high", "tags": [], "subTasks": []}]}]}}], "categories": [{"id": "1", "name": "test", "description": "descrip"}], "tags": [{"id": "1", "name": "test", "description": "descrip"}]}
+{
+  "workspaces": [
+    {
+      "id": "workspace_1",
+      "name": "Workspace Name",
+      "description": "Workspace Description",
+      "created_at": "2024-07-07T10:00:00Z",
+      "updated_at": "2024-07-07T12:00:00Z",
+      "users": [
+        {
+          "id": "user_1",
+          "role": "admin"  
+        }
+      ],
+      "projects": [
+        {
+          "id": "project_1",
+          "name": "Project Name",
+          "description": "Project Description",
+          "status": "active",  
+          "created_at": "2024-07-07T10:00:00Z",
+          "updated_at": "2024-07-07T12:00:00Z",
+          "start_date": "2024-07-01",
+          "end_date": "2024-12-31",
+          "task_list": [
+            {"id": "todo", "name": "TODO", "color": "FFFFF", "tasks": [{
+              "id": "task_1",
+              "title": "Task Title",
+              "description": "Task Description",
+              "status": "to_do",  
+              "priority": "high",  
+              "due_date": "2024-07-15",
+              "created_at": "2024-07-07T10:00:00Z",
+              "updated_at": "2024-07-07T12:00:00Z",
+              "assigned_to": "user_2",
+              "comments": [
+                {
+                  "id": "comment_1",
+                  "user_id": "user_1",
+                  "text": "This is a comment.",
+                  "created_at": "2024-07-07T11:00:00Z"
+                }
+              ],
+              "checklists": [
+                {
+                  "id": "checklist_1",
+                  "title": "Checklist Title",
+                  "items": [
+                    {
+                      "id": "item_1",
+                      "title": "Checklist Item Title",
+                      "status": "complete"  
+                    }
+                  ]
+                }
+              ],
+              "tags": [
+                {
+                  "id": "tag_1",
+                  "name": "Tag Name",
+                  "color": "#FF5733"  
+                }
+              ],
+              "attachments": [
+                {
+                  "id": "attachment_1",
+                  "file_name": "file.pdf",
+                  "url": "http://example.com/file.pdf",
+                  "uploaded_at": "2024-07-07T11:30:00Z"
+                }
+              ],
+              "subtasks": [
+                {
+                  "id": "subtask_1",
+                  "title": "Subtask Title",
+                  "status": "to_do",  
+                  "priority": "medium",  
+                  "due_date": "2024-07-12",
+                  "assigned_to": "user_3"
+                }
+              ]
+            }]}
+            
+          ]
+        }
+      ]
+    }
+  ],
+  "users": [
+    {
+      "id": "user_1",
+      "name": "User Name",
+      "email": "user@example.com",
+      "role": "admin",  
+      "created_at": "2024-07-07T10:00:00Z",
+      "updated_at": "2024-07-07T12:00:00Z"
+    }
+  ],
+  "activity_log": [
+    {
+      "id": "activity_1",
+      "user_id": "user_1",
+      "action": "created_task",  
+      "timestamp": "2024-07-07T10:05:00Z",
+      "details": {
+        "task_id": "task_1",
+        "project_id": "project_1"
+      }
+    }
+  ],
+  "tags": [
+    {
+      "id": "tag_1",
+      "name": "Tag Name",
+      "color": "#FF5733"  
+    }
+  ]
+}

@@ -9,20 +9,21 @@ class TableViewController extends GetxController {
   final count = 0.obs;
   Map project = {};
   void initializeTab() async {
-    project = await DatabaseHelper.getProject(project: 'Test1');
+    project = await DatabaseHelper.getProject(
+        projectId: "project_1", workspaceId: "workspace_1");
     contents = [
       //
-      for (var table in project["board"]["data"])
+      for (var table in project["task_list"])
         DragAndDropList(
           header: Text(table["name"] ?? ""),
           children: <DragAndDropItem>[
-            for (var card in table["cards"])
+            for (var card in table["tasks"])
               DragAndDropItem(
                 child: GestureDetector(
                     onTap: () {
                       print("object");
                     },
-                    child: Text(card["name"])),
+                    child: Text(card["title"])),
               ),
           ],
         ),

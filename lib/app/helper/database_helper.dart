@@ -1,4 +1,5 @@
 import 'package:praciar/app/helper/local/database/local_get_project.dart';
+import 'package:praciar/app/helper/local/database/local_get_workspace.dart';
 
 import 'all_imports.dart';
 
@@ -17,11 +18,22 @@ class DatabaseHelper {
     }
   }
 
-  static Future<dynamic> getProject({required String project}) async {
+  static Future<dynamic> getWorkspace({required String workspaceId}) async {
     if (Utils.isLocal) {
-      return await localGetProject(project);
+      return await localGetWorkspace(workspaceId: workspaceId);
     } else {
-      return await localGetProject(project);
+      return await localGetWorkspace(workspaceId: workspaceId);
+    }
+  }
+
+  static Future<dynamic> getProject(
+      {required String projectId, required String workspaceId}) async {
+    if (Utils.isLocal) {
+      return await localGetProject(
+          projectId: projectId, workspaceId: workspaceId);
+    } else {
+      return await localGetProject(
+          projectId: projectId, workspaceId: workspaceId);
     }
   }
 }
