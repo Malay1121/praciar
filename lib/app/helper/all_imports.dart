@@ -10,3 +10,4 @@ export 'package:drag_and_drop_lists/drag_and_drop_list.dart';
 export 'package:praciar/app/helper/all_imports.dart';
 export 'package:praciar/app/helper/database_helper.dart';
 export 'package:get/get_state_manager/src/simple/get_controllers.dart';
+export 'package:praciar/app/helper/local/database/local_get_workspace.dart';
