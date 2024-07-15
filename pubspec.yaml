@@ -18,7 +18,12 @@ dev_dependencies:
   flutter_lints: 4.0.0
   flutter_test: 
     sdk: flutter
-
+  msix: ^3.16.7
+msix_config:
+  display_name: Praciar
+  publisher_display_name: Malay Patel
+  identity_name: com.malay.praciar
+  msix_version: 1.0.0.0
 flutter: 
   uses-material-design: true
 
