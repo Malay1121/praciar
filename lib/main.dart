@@ -6,12 +6,9 @@ import 'package:windows_notification/windows_notification.dart';
 
 import 'app/routes/app_pages.dart';
 
-var winNotifyPlugin;
 void main() {
   DatabaseHelper.createDatabase();
-  winNotifyPlugin = WindowsNotification(
-      applicationId:
-          r"{D65231B0-B2F1-4857-A4CE-A8E7C6EA7D27}\WindowsPowerShell\v1.0\powershell.exe");
+
   runApp(
     GetMaterialApp(
       title: "Praciar",
