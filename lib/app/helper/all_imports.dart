@@ -17,3 +17,8 @@ export 'app_strings.dart';
 export 'app_images.dart';
 export 'package:flutter/material.dart';
 export 'app_colors.dart';
+export 'package:flutter_responsive_helper/flutter_responsive_helper.dart';
+export 'text_style.dart';
+export 'package:auto_size_text/auto_size_text.dart';
+export 'package:praciar/app/widgets/app_text.dart';
+export 'package:praciar/app/routes/app_pages.dart';

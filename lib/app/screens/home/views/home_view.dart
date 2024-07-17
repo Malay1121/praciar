@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:praciar/app/helper/all_imports.dart';
 import 'package:praciar/app/routes/app_pages.dart';
 import 'package:windows_notification/notification_message.dart';
 import '../../../../main.dart';
@@ -23,7 +24,7 @@ class HomeView extends GetView<HomeController> {
           },
           child: Text(
             'HomeView is working',
-            style: TextStyle(fontSize: 20),
+            style: TextStyles.regular(context: context, fontSize: 14),
           ),
         ),
       ),
