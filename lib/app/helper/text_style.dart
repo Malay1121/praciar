@@ -3,7 +3,7 @@ import 'all_imports.dart';
 class TextStyles {
   static TextStyle regular({
     required BuildContext context,
-    required int fontSize,
+    required double fontSize,
     Color color = Colors.black,
   }) {
     return TextStyle(
@@ -16,7 +16,7 @@ class TextStyles {
 
   static TextStyle medium({
     required BuildContext context,
-    required int fontSize,
+    required double fontSize,
     Color color = Colors.black,
   }) {
     return TextStyle(
@@ -29,7 +29,7 @@ class TextStyles {
 
   static TextStyle semiBold({
     required BuildContext context,
-    required int fontSize,
+    required double fontSize,
     Color color = Colors.black,
   }) {
     return TextStyle(
@@ -42,7 +42,7 @@ class TextStyles {
 
   static TextStyle bold({
     required BuildContext context,
-    required int fontSize,
+    required double fontSize,
     Color color = Colors.black,
   }) {
     return TextStyle(

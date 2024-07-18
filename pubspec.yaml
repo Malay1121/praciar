@@ -16,6 +16,7 @@ dependencies:
   windows_notification: ^1.2.0
   flutter_responsive_helper: ^1.0.2
   auto_size_text: ^3.0.0
+  flutter_svg: ^2.0.10+1
 dev_dependencies: 
   flutter_lints: 4.0.0
   flutter_test: 
@@ -26,8 +27,13 @@ msix_config:
   publisher_display_name: Malay Patel
   identity_name: com.malay.praciar
   msix_version: 1.0.0.0
+
 flutter: 
   uses-material-design: true
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/fonts/
   fonts:
     - family: Jakarta
       fonts:

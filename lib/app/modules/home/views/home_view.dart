@@ -20,7 +20,7 @@ class HomeView extends GetView<HomeController> {
       body: Center(
         child: GestureDetector(
           onTap: () async {
-            Get.toNamed(Routes.TABLE_VIEW);
+            Get.toNamed(Routes.DASHBOARD);
           },
           child: Text(
             'HomeView is working',

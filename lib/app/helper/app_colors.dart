@@ -1,6 +1,9 @@
 import 'all_imports.dart';
 
 class AppColors {
+  static Color background = Color(0xFFFAFAFA);
+  static Color cardColor = Color(0xFFF5F5F7);
+
   /// Primary Neutral Palette
   static Color primary900 = Color(0xFF10197A);
   static Color primary800 = Color(0xFF1A2793);
