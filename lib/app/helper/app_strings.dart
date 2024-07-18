@@ -9,4 +9,8 @@ class AppStrings {
   static String letsFinishYourTaskToday = "Let's finish your task today!";
   static String activity = "Activity";
   static String tasks = "Tasks";
+  static String runningTask = "Running Task";
+  static String thisWeek = "This Week";
+  static String thisMonth = "This Month";
+  static String thisYear = "This Year";
 }
