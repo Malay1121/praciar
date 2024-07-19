@@ -6,6 +6,7 @@ abstract class Routes {
   static const HOME = _Paths.HOME;
   static const TABLE_VIEW = _Paths.TABLE_VIEW;
   static const DASHBOARD = _Paths.DASHBOARD;
+  static const TAGS = _Paths.TAGS;
 }
 
 abstract class _Paths {
@@ -13,4 +14,5 @@ abstract class _Paths {
   static const HOME = '/home';
   static const TABLE_VIEW = '/table-view';
   static const DASHBOARD = '/dashboard';
+  static const TAGS = '/tags';
 }

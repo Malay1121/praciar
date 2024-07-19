@@ -13,4 +13,6 @@ class AppStrings {
   static String thisWeek = "This Week";
   static String thisMonth = "This Month";
   static String thisYear = "This Year";
+  static String tags = "Tags";
+  static String tag = "Tag";
 }

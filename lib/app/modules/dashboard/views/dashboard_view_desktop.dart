@@ -17,7 +17,7 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
       body: Row(
         children: [
           CommonSidebar(
-            selectedTab: 0,
+            selectedTab: AppStrings.overview.toLowerCase(),
           ),
           Row(
             children: [
@@ -383,7 +383,10 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                   children: [
                     Container(
                       width: 372.w(context),
-                      height: 160.h(context),
+                      // height: 160.h(context),
+                      padding: EdgeInsets.symmetric(
+                        vertical: 20.h(context),
+                      ),
                       decoration: BoxDecoration(
                         color: AppColors.primary0,
                         borderRadius: BorderRadius.circular(10),
@@ -413,10 +416,14 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                           ),
                           titleCentered: true,
                           formatButtonVisible: false,
-                          headerPadding: EdgeInsets.zero,
+                          headerPadding: EdgeInsets.only(
+                            bottom: 24.h(context),
+                          ),
                         ),
                         calendarFormat: CalendarFormat.week,
+                        rowHeight: 32.h(context),
                         calendarStyle: CalendarStyle(
+                          cellMargin: EdgeInsets.zero,
                           weekendDecoration: BoxDecoration(
                             color: AppColors.cardColor,
                             shape: BoxShape.circle,
@@ -435,12 +442,12 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                             color: AppColors.cardColor,
                             shape: BoxShape.circle,
                           ),
-                          selectedTextStyle: TextStyles.medium(
+                          todayTextStyle: TextStyles.medium(
                             context: context,
                             fontSize: 12,
                             color: AppColors.primary0,
                           ),
-                          selectedDecoration: BoxDecoration(
+                          todayDecoration: BoxDecoration(
                             color: AppColors.primary500,
                             shape: BoxShape.circle,
                           ),

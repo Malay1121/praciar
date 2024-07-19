@@ -3,7 +3,7 @@ import 'package:praciar/app/helper/all_imports.dart';
 class CommonSidebar extends StatefulWidget {
   CommonSidebar({required this.selectedTab});
 
-  int selectedTab;
+  String selectedTab;
 
   @override
   State<CommonSidebar> createState() => _CommonSidebarState();
@@ -22,13 +22,19 @@ class _CommonSidebarState extends State<CommonSidebar> {
       // "screen": AppImages.icCategory2,
     },
     {
+      "icon": AppImages.icTag,
+      "title": AppStrings.tags,
+      // "screen": AppImages.icCategory2,
+    },
+    {
       "icon": AppImages.icSettings,
       "title": AppStrings.task,
       // "screen": AppImages.icCategory2,
     },
   ];
 
-  bool tabSelected(Map tab) => tab == tabs[widget.selectedTab];
+  bool tabSelected(Map tab) =>
+      tab["title"].toString().toLowerCase() == widget.selectedTab.toLowerCase();
   @override
   Widget build(BuildContext context) {
     return Container(

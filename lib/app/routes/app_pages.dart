@@ -6,6 +6,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/table_view/bindings/table_view_binding.dart';
 import '../modules/table_view/views/table_view_view.dart';
+import '../modules/tags/bindings/tags_binding.dart';
+import '../modules/tags/views/tags_view.dart';
 
 part 'app_routes.dart';
 
@@ -29,6 +31,11 @@ class AppPages {
       name: _Paths.DASHBOARD,
       page: () => const DashboardView(),
       binding: DashboardBinding(),
+    ),
+    GetPage(
+      name: _Paths.TAGS,
+      page: () => const TagsView(),
+      binding: TagsBinding(),
     ),
   ];
 }

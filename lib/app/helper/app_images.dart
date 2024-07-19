@@ -12,4 +12,9 @@ class AppImages {
   static String icNewNotification = "${iconsDirectory}ic_new_notification.svg";
   static String icCategory2 = "${iconsDirectory}ic_category-2.svg";
   static String icUserOctagon = "${iconsDirectory}ic_user-octagon.svg";
+  static String icEdit = "${iconsDirectory}ic_edit.svg";
+  static String icClock = "${iconsDirectory}ic_clock.svg";
+  static String icMore = "${iconsDirectory}ic_more.svg";
+  static String icTasks = "${iconsDirectory}ic_tasks.svg";
+  static String icTag = "${iconsDirectory}ic_tag.svg";
 }
