@@ -27,3 +27,4 @@ export 'package:flutter_svg/flutter_svg.dart';
 export 'package:praciar/app/widgets/common_sidebar.dart';
 export 'package:percent_indicator/circular_percent_indicator.dart';
 export 'package:fl_chart/fl_chart.dart';
+export 'package:table_calendar/table_calendar.dart';

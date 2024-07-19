@@ -196,7 +196,7 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                                           style: TextStyles.medium(
                                             context: context,
                                             fontSize: 14,
-                                            color: AppColors.secondary400,
+                                            color: AppColors.secondary300,
                                           ),
                                         ),
                                       ],
@@ -253,94 +253,199 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                               SizedBox(
                                 height: 20.h(context),
                               ),
-                              SizedBox(
+                              Container(
                                 width: 422.w(context),
                                 height: 130.h(context),
-                                child: LineChart(
-                                  LineChartData(
-                                    titlesData: FlTitlesData(
-                                      leftTitles: AxisTitles(
-                                        sideTitles: SideTitles(),
-                                      ),
-                                      rightTitles: AxisTitles(
-                                        sideTitles: SideTitles(),
-                                      ),
-                                      topTitles: AxisTitles(
-                                        sideTitles: SideTitles(),
-                                      ),
-                                      bottomTitles: AxisTitles(
-                                        sideTitles: SideTitles(
-                                          getTitlesWidget: (value, meta) {
-                                            TextStyle style = TextStyles.medium(
-                                              context: context,
-                                              fontSize: 12,
-                                              color: AppColors.secondary500,
-                                            );
-                                            String text;
-                                            switch (value.toInt()) {
-                                              case 0:
-                                                text = 'S';
-                                                break;
-                                              case 1:
-                                                text = 'M';
-                                                break;
-                                              case 2:
-                                                text = 'T';
-                                                break;
-                                              case 3:
-                                                text = 'W';
-                                                break;
-                                              case 4:
-                                                text = 'T';
-                                                break;
-                                              case 5:
-                                                text = 'F';
-                                                break;
-                                              case 6:
-                                                text = 'S';
-                                                break;
-                                              default:
-                                                return Container();
-                                            }
-
-                                            return AppText(
-                                                text: text,
-                                                style: style,
-                                                textAlign: TextAlign.center);
+                                decoration: BoxDecoration(
+                                  color: AppColors.primary0,
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: Padding(
+                                  padding: EdgeInsets.only(
+                                    top: 16.h(context),
+                                    left: 16.w(context),
+                                    right: 16.w(context),
+                                  ),
+                                  child: LineChart(
+                                    LineChartData(
+                                      lineTouchData: LineTouchData(
+                                        touchTooltipData: LineTouchTooltipData(
+                                          getTooltipColor: (touchedSpot) =>
+                                              AppColors.secondary500,
+                                          getTooltipItems: (touchedSpots) {
+                                            return touchedSpots
+                                                .map((LineBarSpot touchedSpot) {
+                                              final textStyle =
+                                                  TextStyles.semiBold(
+                                                context: context,
+                                                color: AppColors.primary0,
+                                                fontSize: 14,
+                                              );
+                                              return LineTooltipItem(
+                                                '${touchedSpot.y.toInt()} ${AppStrings.task}',
+                                                textStyle,
+                                              );
+                                            }).toList();
                                           },
-                                          interval: 1,
-                                          showTitles: true,
+                                        ),
+                                        handleBuiltInTouches: true,
+                                        getTouchLineStart: (data, index) => 0,
+                                      ),
+                                      backgroundColor: AppColors.primary0,
+                                      borderData: FlBorderData(
+                                        border: Border.symmetric(
+                                          vertical: BorderSide(
+                                            color: AppColors.cardColor,
+                                            width: 1,
+                                          ),
                                         ),
                                       ),
+                                      gridData: FlGridData(
+                                        verticalInterval: 1,
+                                        getDrawingVerticalLine: (value) {
+                                          return FlLine(
+                                            color: AppColors.cardColor,
+                                            strokeWidth: 1,
+                                          );
+                                        },
+                                      ),
+                                      titlesData: FlTitlesData(
+                                        leftTitles: AxisTitles(
+                                          sideTitles: SideTitles(
+                                            showTitles: true,
+                                            interval: 1,
+                                            getTitlesWidget: (value, meta) =>
+                                                widget.controller
+                                                    .getProjectNumber(
+                                                        value, meta),
+                                          ),
+                                        ),
+                                        rightTitles: AxisTitles(
+                                          sideTitles: SideTitles(),
+                                        ),
+                                        topTitles: AxisTitles(
+                                          sideTitles: SideTitles(),
+                                        ),
+                                        bottomTitles: AxisTitles(
+                                          sideTitles: SideTitles(
+                                            getTitlesWidget: (value, meta) =>
+                                                widget.controller
+                                                    .getWeekdays(value, meta),
+                                            interval: 1,
+                                            showTitles: true,
+                                          ),
+                                        ),
+                                      ),
+                                      lineBarsData: [
+                                        LineChartBarData(
+                                            color: AppColors.secondary500,
+                                            barWidth: 3,
+                                            isCurved: true,
+                                            preventCurveOverShooting: true,
+                                            spots: [
+                                              FlSpot(0, 0),
+                                              FlSpot(1, 1),
+                                              FlSpot(2, 0),
+                                              FlSpot(3, 2),
+                                              FlSpot(4, 1),
+                                              FlSpot(5, 2),
+                                              FlSpot(6, 0),
+                                            ],
+                                            dotData: FlDotData(show: false)),
+                                      ],
                                     ),
-                                    lineBarsData: [
-                                      LineChartBarData(
-                                          color: AppColors.secondary500,
-                                          barWidth: 3,
-                                          isCurved: true,
-                                          preventCurveOverShooting: true,
-                                          spots: [
-                                            FlSpot(0, 1),
-                                            FlSpot(1, 1),
-                                            FlSpot(2, 0),
-                                            FlSpot(3, 3),
-                                            FlSpot(4, 1),
-                                            FlSpot(5, 2),
-                                            FlSpot(6, 3),
-                                          ],
-                                          dotData: FlDotData(show: false)),
-                                    ],
-                                  ),
 
-                                  duration:
-                                      Duration(milliseconds: 150), // Optional
-                                  curve: Curves.linear, // Optional
+                                    duration:
+                                        Duration(milliseconds: 150), // Optional
+                                    curve: Curves.linear, // Optional
+                                  ),
                                 ),
                               ),
                             ],
                           ),
                         ),
                       ],
+                    ),
+                  ],
+                ),
+              ),
+              Container(
+                width: 436.w(context),
+                height: 1024.h(context),
+                padding: EdgeInsets.symmetric(
+                  vertical: 32.h(context),
+                  horizontal: 32.w(context),
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.cardColor,
+                ),
+                child: Column(
+                  children: [
+                    Container(
+                      width: 372.w(context),
+                      height: 160.h(context),
+                      decoration: BoxDecoration(
+                        color: AppColors.primary0,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: TableCalendar(
+                        firstDay: DateTime.utc(2010, 10, 16),
+                        lastDay: DateTime.utc(2030, 3, 14),
+                        focusedDay: DateTime.now(),
+                        daysOfWeekStyle: DaysOfWeekStyle(
+                          weekdayStyle: TextStyles.medium(
+                            context: context,
+                            fontSize: 12,
+                            color: AppColors.secondary500,
+                          ),
+                          weekendStyle: TextStyles.medium(
+                            context: context,
+                            fontSize: 12,
+                            color: AppColors.secondary500,
+                          ),
+                        ),
+                        headerStyle: HeaderStyle(
+                          formatButtonPadding: EdgeInsets.zero,
+                          titleTextStyle: TextStyles.semiBold(
+                            context: context,
+                            fontSize: 14,
+                            color: AppColors.secondary500,
+                          ),
+                          titleCentered: true,
+                          formatButtonVisible: false,
+                          headerPadding: EdgeInsets.zero,
+                        ),
+                        calendarFormat: CalendarFormat.week,
+                        calendarStyle: CalendarStyle(
+                          weekendDecoration: BoxDecoration(
+                            color: AppColors.cardColor,
+                            shape: BoxShape.circle,
+                          ),
+                          weekendTextStyle: TextStyles.medium(
+                            context: context,
+                            fontSize: 12,
+                            color: AppColors.secondary500,
+                          ),
+                          defaultTextStyle: TextStyles.medium(
+                            context: context,
+                            fontSize: 12,
+                            color: AppColors.secondary500,
+                          ),
+                          defaultDecoration: BoxDecoration(
+                            color: AppColors.cardColor,
+                            shape: BoxShape.circle,
+                          ),
+                          selectedTextStyle: TextStyles.medium(
+                            context: context,
+                            fontSize: 12,
+                            color: AppColors.primary0,
+                          ),
+                          selectedDecoration: BoxDecoration(
+                            color: AppColors.primary500,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                      ),
                     ),
                   ],
                 ),
