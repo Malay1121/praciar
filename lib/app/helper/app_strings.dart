@@ -15,4 +15,7 @@ class AppStrings {
   static String thisYear = "This Year";
   static String tags = "Tags";
   static String tag = "Tag";
+  static String exploreTag = "Explore Tags";
+  static String searchTags = "Search Tags";
+  static String newTag = "New Tag";
 }
