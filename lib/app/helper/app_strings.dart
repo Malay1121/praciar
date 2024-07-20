@@ -18,4 +18,7 @@ class AppStrings {
   static String exploreTag = "Explore Tags";
   static String searchTags = "Search Tags";
   static String newTag = "New Tag";
+  static String sortBy = "Sort by";
+  static String popularity = "Popularity";
+  static String recent = "Recent";
 }

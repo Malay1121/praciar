@@ -29,3 +29,4 @@ export 'package:percent_indicator/circular_percent_indicator.dart';
 export 'package:fl_chart/fl_chart.dart';
 export 'package:table_calendar/table_calendar.dart';
 export 'package:praciar/app/widgets/common_header.dart';
+export 'package:flutter_colorpicker/flutter_colorpicker.dart';

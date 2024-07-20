@@ -112,7 +112,8 @@
     {
       "id": "tag_1",
       "name": "Tag Name",
-      "color": "#FF5733"  
+      "color": "FF5733",
+      "created_at":
     }
   ]
 }
