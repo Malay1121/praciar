@@ -18,13 +18,15 @@ class Utils {
     return dateTime.toUtc().toString();
   }
 
-  Color colorPicker(BuildContext context, Color initialColor) {
+  static Color colorPicker(BuildContext context, Color initialColor) {
     Color pickerColor = initialColor;
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Pick a color!'),
+          title: Text(
+            AppStrings.pickAColor,
+          ),
           content: SingleChildScrollView(
             child: ColorPicker(
               pickerColor: initialColor,
@@ -54,7 +56,9 @@ class Utils {
           ),
           actions: <Widget>[
             ElevatedButton(
-              child: const Text('Got it'),
+              child: Text(
+                AppStrings.confirm,
+              ),
               onPressed: () {
                 initialColor = pickerColor;
                 Navigator.of(context).pop();

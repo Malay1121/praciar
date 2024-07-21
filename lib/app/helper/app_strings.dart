@@ -18,7 +18,13 @@ class AppStrings {
   static String exploreTag = "Explore Tags";
   static String searchTags = "Search Tags";
   static String newTag = "New Tag";
+  static String addTag = "Add Tag";
+  static String tagTitle = "Tag Title";
   static String sortBy = "Sort by";
   static String popularity = "Popularity";
   static String recent = "Recent";
+  static String create = "Create";
+  static String cancel = "Cancel";
+  static String pickAColor = "Pick a color";
+  static String confirm = "Confirm";
 }

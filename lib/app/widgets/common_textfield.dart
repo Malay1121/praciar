@@ -91,9 +91,9 @@ class _CommonTextFieldState extends State<CommonTextField> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: widget.width != null ? widget.width!.w(context) : null,
-      height: widget.height != null ? widget.height!.h(context) : null,
-      child: TextFormField(
+      width: widget.width,
+      height: widget.height,
+      child: TextField(
         controller: widget.controller,
         obscureText: widget.obscureText,
         keyboardType: widget.keyboardType,

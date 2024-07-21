@@ -48,6 +48,8 @@ class _TagsViewDesktopState extends State<TagsViewDesktop> {
                       child: Row(
                         children: [
                           CommonTextField(
+                            width: 480.w(context),
+                            height: 48.h(context),
                             hintText: AppStrings.searchTags,
                             suffixIcon: Padding(
                               padding: EdgeInsetsDirectional.only(
@@ -90,7 +92,7 @@ class _TagsViewDesktopState extends State<TagsViewDesktop> {
                           ),
                           CommonButton(
                             text: AppStrings.newTag,
-                            onTap: () {},
+                            onTap: () => widget.controller.addNewTag(),
                             backgroundColor: AppColors.primary500,
                             prefix: SvgPicture.asset(
                               AppImages.icAdd,
