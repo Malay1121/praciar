@@ -1,3 +1,5 @@
+import 'package:intl/intl.dart';
+
 import 'all_imports.dart';
 
 class Utils {
@@ -10,17 +12,38 @@ class Utils {
     return (await getApplicationSupportDirectory()).path;
   }
 
-  DateTime fromUtc(String dateTime) {
+  static DateTime fromUtc(String dateTime) {
     return DateTime.parse(dateTime).toLocal();
   }
 
-  String toUtc(DateTime dateTime) {
+  static String toUtc(DateTime dateTime) {
     return dateTime.toUtc().toString();
   }
 
-  static Color colorPicker(BuildContext context, Color initialColor) {
+  static String formatDateTime(DateTime dateTime) {
+    return DateFormat.yMMMMd().format(dateTime);
+  }
+
+  static String nameToId(String name, List idList) {
+    String initialId = name.toString().toLowerCase().replaceAll(" ", "-");
+    String originalId = initialId;
+    int intId = 1;
+    idList = idList
+        .where(
+          (element) => element.toString().startsWith(initialId),
+        )
+        .toList();
+    while (idList.contains(initialId)) {
+      initialId = originalId + intId.toString();
+      intId++;
+    }
+    return initialId;
+  }
+
+  static Future<Color> colorPicker(
+      BuildContext context, Color initialColor) async {
     Color pickerColor = initialColor;
-    showDialog(
+    await showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -68,6 +91,7 @@ class Utils {
         );
       },
     );
+    print(initialColor.toHexString());
     return initialColor;
   }
 }

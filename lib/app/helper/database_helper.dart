@@ -1,6 +1,3 @@
-import 'package:praciar/app/helper/local/database/local_get_project.dart';
-import 'package:praciar/app/helper/local/database/local_get_workspace.dart';
-
 import 'all_imports.dart';
 
 class DatabaseHelper {
@@ -15,6 +12,14 @@ class DatabaseHelper {
       return await localGetKey(location: location);
     } else {
       return localGetKey(location: location);
+    }
+  }
+
+  static Future<dynamic> getTags() async {
+    if (Utils.isLocal) {
+      return await localGetTags();
+    } else {
+      return await localGetTags();
     }
   }
 
@@ -34,6 +39,23 @@ class DatabaseHelper {
     } else {
       return await localGetProject(
           projectId: projectId, workspaceId: workspaceId);
+    }
+  }
+
+  static Future<dynamic> createTag({required Map data}) async {
+    List tags = (await localReadData())["tags"];
+    List idList = [];
+    for (Map tag in tags) {
+      idList.add(tag["id"]);
+    }
+    String id = Utils.nameToId(data["name"], idList);
+    data.addEntries({
+      "id": id,
+    }.entries);
+    if (Utils.isLocal) {
+      return await localCreateTag(data);
+    } else {
+      return await localCreateTag(data);
     }
   }
 }

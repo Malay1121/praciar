@@ -122,123 +122,126 @@ class _TagsViewDesktopState extends State<TagsViewDesktop> {
                   ),
                   child: Column(
                     children: [
-                      Container(
-                        width: 1124.w(context),
-                        height: 78.h(context),
-                        margin: EdgeInsets.only(
-                          bottom: 24.h(context),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          vertical: 24.h(context),
-                          horizontal: 24.w(context),
-                        ),
-                        decoration: BoxDecoration(
-                          color: AppColors.primary0,
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 26.w(context),
-                              height: 26.h(context),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.primary500,
+                      for (var tag in widget.controller.tags)
+                        Container(
+                          width: 1124.w(context),
+                          height: 78.h(context),
+                          margin: EdgeInsets.only(
+                            bottom: 24.h(context),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            vertical: 24.h(context),
+                            horizontal: 24.w(context),
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.primary0,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Row(
+                            children: [
+                              Container(
+                                width: 26.w(context),
+                                height: 26.h(context),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: AppColors.primary500,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 18.w(context),
-                            ),
-                            AppText(
-                              text: "tag 1",
-                              height: 24.h(context),
-                              style: TextStyles.semiBold(
-                                context: context,
-                                fontSize: 16,
-                                color: AppColors.secondary500,
+                              SizedBox(
+                                width: 18.w(context),
                               ),
-                            ),
-                            SizedBox(
-                              width: 75.w(context),
-                            ),
-                            SvgPicture.asset(
-                              AppImages.icTasks,
-                              width: 24.w(context),
-                              height: 24.h(context),
-                              color: AppColors.secondary400,
-                            ),
-                            SizedBox(
-                              width: 8.w(context),
-                            ),
-                            AppText(
-                              text: "40",
-                              height: 24.h(context),
-                              style: TextStyles.medium(
-                                context: context,
-                                fontSize: 14,
-                                color: AppColors.secondary500,
-                              ),
-                            ),
-                            Spacer(),
-                            SvgPicture.asset(
-                              AppImages.icClock,
-                              width: 24.w(context),
-                              height: 24.h(context),
-                              color: AppColors.secondary400,
-                            ),
-                            SizedBox(
-                              width: 8.w(context),
-                            ),
-                            AppText(
-                              text: "24th December 2024",
-                              height: 24.h(context),
-                              style: TextStyles.regular(
-                                context: context,
-                                fontSize: 14,
-                                color: AppColors.secondary400,
-                              ),
-                            ),
-                            SizedBox(
-                              width: 20.w(context),
-                            ),
-                            Container(
-                              width: 30.h(context),
-                              height: 30.h(context),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColors.cardColor,
-                              ),
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  AppImages.icEdit,
-                                  width: 16.w(context),
-                                  height: 16.h(context),
+                              AppText(
+                                text: tag["name"],
+                                height: 24.h(context),
+                                style: TextStyles.semiBold(
+                                  context: context,
+                                  fontSize: 16,
                                   color: AppColors.secondary500,
                                 ),
                               ),
-                            ),
-                            SizedBox(
-                              width: 20.w(context),
-                            ),
-                            Container(
-                              width: 30.h(context),
-                              height: 30.h(context),
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: AppColors.primary500,
+                              SizedBox(
+                                width: 75.w(context),
                               ),
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  AppImages.icMore,
-                                  width: 16.w(context),
-                                  height: 16.h(context),
-                                  color: AppColors.primary0,
+                              SvgPicture.asset(
+                                AppImages.icTasks,
+                                width: 24.w(context),
+                                height: 24.h(context),
+                                color: AppColors.secondary400,
+                              ),
+                              SizedBox(
+                                width: 8.w(context),
+                              ),
+                              AppText(
+                                text: "40",
+                                height: 24.h(context),
+                                style: TextStyles.medium(
+                                  context: context,
+                                  fontSize: 14,
+                                  color: AppColors.secondary500,
                                 ),
                               ),
-                            )
-                          ],
+                              Spacer(),
+                              SvgPicture.asset(
+                                AppImages.icClock,
+                                width: 24.w(context),
+                                height: 24.h(context),
+                                color: AppColors.secondary400,
+                              ),
+                              SizedBox(
+                                width: 8.w(context),
+                              ),
+                              AppText(
+                                text: Utils.formatDateTime(
+                                        Utils.fromUtc(tag["created_at"]))
+                                    .toString(),
+                                height: 24.h(context),
+                                style: TextStyles.regular(
+                                  context: context,
+                                  fontSize: 14,
+                                  color: AppColors.secondary400,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20.w(context),
+                              ),
+                              Container(
+                                width: 30.h(context),
+                                height: 30.h(context),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: AppColors.cardColor,
+                                ),
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    AppImages.icEdit,
+                                    width: 16.w(context),
+                                    height: 16.h(context),
+                                    color: AppColors.secondary500,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 20.w(context),
+                              ),
+                              Container(
+                                width: 30.h(context),
+                                height: 30.h(context),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: AppColors.primary500,
+                                ),
+                                child: Center(
+                                  child: SvgPicture.asset(
+                                    AppImages.icMore,
+                                    width: 16.w(context),
+                                    height: 16.h(context),
+                                    color: AppColors.primary0,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
                         ),
-                      ),
                     ],
                   ),
                 ),

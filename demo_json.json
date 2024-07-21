@@ -108,12 +108,12 @@
       }
     }
   ],
-  "tags": [
+    "tags": [
     {
       "id": "tag_1",
       "name": "Tag Name",
       "color": "FF5733",
-      "created_at":
+      "created_at":"2024-07-21 12:27:55.806342Z"
     }
   ]
 }

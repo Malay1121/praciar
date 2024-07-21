@@ -29,7 +29,7 @@ class _CommonSidebarState extends State<CommonSidebar> {
     },
     {
       "icon": AppImages.icSettings,
-      "title": AppStrings.task,
+      "title": AppStrings.settings,
       "screen": Routes.DASHBOARD,
     },
   ];
