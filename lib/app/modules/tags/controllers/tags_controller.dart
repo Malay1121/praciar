@@ -19,6 +19,13 @@ class TagsController extends GetxController {
     update();
   }
 
+  void deleteTag({
+    required String id,
+  }) async {
+    tags = await DatabaseHelper.deleteTag(id: id);
+    update();
+  }
+
   void addNewTag() {
     Color color = AppColors.primary500;
     TextEditingController nameController = TextEditingController();

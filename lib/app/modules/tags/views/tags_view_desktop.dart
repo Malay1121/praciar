@@ -1,4 +1,5 @@
 import 'package:praciar/app/helper/all_imports.dart';
+import 'package:praciar/app/helper/app_images.dart';
 import 'package:praciar/app/modules/tags/controllers/tags_controller.dart';
 import 'package:praciar/app/widgets/common_button.dart';
 import 'package:praciar/app/widgets/common_textfield.dart';
@@ -223,22 +224,68 @@ class _TagsViewDesktopState extends State<TagsViewDesktop> {
                               SizedBox(
                                 width: 20.w(context),
                               ),
-                              Container(
-                                width: 30.h(context),
-                                height: 30.h(context),
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(10),
-                                  color: AppColors.primary500,
+                              PopupMenuButton(
+                                constraints: BoxConstraints(
+                                  minWidth: 152.w(context),
                                 ),
-                                child: Center(
-                                  child: SvgPicture.asset(
-                                    AppImages.icMore,
-                                    width: 16.w(context),
-                                    height: 16.h(context),
-                                    color: AppColors.primary0,
+                                padding: EdgeInsets.zero,
+                                shape: Border.all(
+                                  color: AppColors.cardColor,
+                                ),
+                                shadowColor: Colors.transparent,
+                                child: Container(
+                                  width: 30.h(context),
+                                  height: 30.h(context),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(10),
+                                    color: AppColors.primary500,
+                                  ),
+                                  child: Center(
+                                    child: SvgPicture.asset(
+                                      AppImages.icMore,
+                                      width: 16.w(context),
+                                      height: 16.h(context),
+                                      color: AppColors.primary0,
+                                    ),
                                   ),
                                 ),
-                              )
+                                color: AppColors.primary0,
+                                itemBuilder: (BuildContext context) =>
+                                    <PopupMenuEntry>[
+                                  PopupMenuItem(
+                                    onTap: () => widget.controller
+                                        .deleteTag(id: tag["id"]),
+                                    height: 24.h(context),
+                                    padding: EdgeInsets.zero,
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        SvgPicture.asset(
+                                          AppImages.icBin,
+                                          width: 24.w(context),
+                                          height: 24.h(context),
+                                          color: AppColors.error500,
+                                        ),
+                                        SizedBox(
+                                          width: 12.w(context),
+                                        ),
+                                        AppText(
+                                          centered: true,
+                                          text: AppStrings.delete,
+                                          height: 40.h(context),
+                                          width: 96.w(context),
+                                          style: TextStyles.semiBold(
+                                            context: context,
+                                            fontSize: 12,
+                                            color: AppColors.error500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),

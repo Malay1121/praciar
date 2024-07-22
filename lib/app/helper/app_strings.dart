@@ -27,4 +27,5 @@ class AppStrings {
   static String cancel = "Cancel";
   static String pickAColor = "Pick a color";
   static String confirm = "Confirm";
+  static String delete = "Delete";
 }

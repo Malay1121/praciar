@@ -20,4 +20,5 @@ class AppImages {
   static String icSearch = "${iconsDirectory}ic_search.svg";
   static String icSort = "${iconsDirectory}ic_sort.svg";
   static String icAdd = "${iconsDirectory}ic_add.svg";
+  static String icBin = "${iconsDirectory}ic_bin.svg";
 }
