@@ -19,6 +19,30 @@ class TagsController extends GetxController {
     update();
   }
 
+  void editTag({
+    required String name,
+    required Color color,
+    required String id,
+  }) async {
+    Map tag = tags.firstWhere((element) => element["id"] == id);
+    tag["name"] = name;
+    tag["color"] = color.toHexString().substring(2);
+    if (tag["updated_at"] is List) {
+      tag["updated_at"].add(Utils.toUtc(
+        DateTime.now(),
+      ));
+    } else {
+      tag["updated_at"] = [
+        Utils.toUtc(
+          DateTime.now(),
+        )
+      ];
+    }
+    await DatabaseHelper.deleteTag(id: id);
+    tags = await DatabaseHelper.createTag(data: tag);
+    update();
+  }
+
   void deleteTag({
     required String id,
   }) async {
@@ -26,9 +50,45 @@ class TagsController extends GetxController {
     update();
   }
 
-  void addNewTag() {
-    Color color = AppColors.primary500;
-    TextEditingController nameController = TextEditingController();
+  List<PopupMenuEntry> popupMenuButtons(Map tag) {
+    return <PopupMenuEntry>[
+      PopupMenuItem(
+        onTap: () => deleteTag(id: tag["id"]),
+        height: 24.h(Get.context!),
+        padding: EdgeInsets.zero,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SvgPicture.asset(
+              AppImages.icBin,
+              width: 24.w(Get.context!),
+              height: 24.h(Get.context!),
+              color: AppColors.error500,
+            ),
+            SizedBox(
+              width: 12.w(Get.context!),
+            ),
+            AppText(
+              centered: true,
+              text: AppStrings.delete,
+              height: 40.h(Get.context!),
+              width: 96.w(Get.context!),
+              style: TextStyles.semiBold(
+                context: Get.context!,
+                fontSize: 12,
+                color: AppColors.error500,
+              ),
+            ),
+          ],
+        ),
+      ),
+    ];
+  }
+
+  void addNewTag({Map? tag}) {
+    Color color = tag != null ? HexColor(tag["color"]) : AppColors.primary500;
+    TextEditingController nameController =
+        TextEditingController(text: tag != null ? tag["name"] : "");
     showDialog(
       context: Get.context!,
       builder: (context) {
@@ -73,7 +133,7 @@ class TagsController extends GetxController {
                     onTap: () async {
                       color = await Utils.colorPicker(
                         context,
-                        AppColors.primary500,
+                        color,
                       );
                       setState(() {});
                     },
@@ -129,10 +189,15 @@ class TagsController extends GetxController {
                   CommonButton(
                     text: AppStrings.create,
                     onTap: () {
-                      createTag(
-                        color: color,
-                        name: nameController.text,
-                      );
+                      tag != null
+                          ? editTag(
+                              name: nameController.text,
+                              color: color,
+                              id: tag["id"])
+                          : createTag(
+                              color: color,
+                              name: nameController.text,
+                            );
                       Get.back();
                     },
                     width: 235.w(context),
