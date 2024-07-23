@@ -24,22 +24,12 @@ class TagsController extends GetxController {
     required Color color,
     required String id,
   }) async {
-    Map tag = tags.firstWhere((element) => element["id"] == id);
-    tag["name"] = name;
-    tag["color"] = color.toHexString().substring(2);
-    if (tag["updated_at"] is List) {
-      tag["updated_at"].add(Utils.toUtc(
-        DateTime.now(),
-      ));
-    } else {
-      tag["updated_at"] = [
-        Utils.toUtc(
-          DateTime.now(),
-        )
-      ];
-    }
-    await DatabaseHelper.deleteTag(id: id);
-    tags = await DatabaseHelper.createTag(data: tag);
+    tags = await DatabaseHelper.updateTag(data: {
+      "name": name,
+      "color": color.toHexString().substring(2),
+      "id": id,
+    });
+
     update();
   }
 

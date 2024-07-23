@@ -1,5 +1,3 @@
-import 'package:praciar/app/helper/local/database/delete/local_delete_tag.dart';
-
 import 'all_imports.dart';
 
 class DatabaseHelper {
@@ -58,6 +56,14 @@ class DatabaseHelper {
       return await localCreateTag(data);
     } else {
       return await localCreateTag(data);
+    }
+  }
+
+  static Future<dynamic> updateTag({required Map data}) async {
+    if (Utils.isLocal) {
+      return await localUpdateTag(data);
+    } else {
+      return await localUpdateTag(data);
     }
   }
 
