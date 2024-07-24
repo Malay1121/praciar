@@ -32,4 +32,7 @@ class AppStrings {
   static String pickAColor = "Pick a color";
   static String confirm = "Confirm";
   static String delete = "Delete";
+  static String general = "General";
+  static String appearance = "Appearance";
+  static String mode = "Mode";
 }
