@@ -2,6 +2,9 @@ class AppStrings {
   static String appName = 'Praciar';
   static String fontFamily = "Jakarta";
 
+  static String letsGetYouStarted = "Let's get you started";
+  static String getStarted = "Get started";
+  static String yourName = "Your Name";
   static String overview = "Overview";
   static String task = "Task";
   static String settings = "Settings";

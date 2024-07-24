@@ -24,6 +24,31 @@ class Utils {
     return DateFormat.yMMMMd().format(dateTime);
   }
 
+  static String greet() {
+    DateTime now = DateTime.now();
+    int hours = now.hour;
+    String greeting = "";
+
+    if (hours >= 1 && hours <= 12) {
+      greeting = "Good Morning";
+    } else if (hours >= 12 && hours <= 16) {
+      greeting = "Good Afternoon";
+    } else if (hours >= 16 && hours <= 21) {
+      greeting = "Good Evening";
+    } else if (hours >= 21 && hours <= 24) {
+      greeting = "Good Night";
+    }
+    return greeting;
+  }
+
+  static bool compareString(String str1, String str2) {
+    if (str1.toLowerCase() == str2.toLowerCase()) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   static String nameToId(String name, List idList) {
     String initialId = name.toString().toLowerCase().replaceAll(" ", "-");
     String originalId = initialId;

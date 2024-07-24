@@ -7,6 +7,7 @@ abstract class Routes {
   static const TABLE_VIEW = _Paths.TABLE_VIEW;
   static const DASHBOARD = _Paths.DASHBOARD;
   static const TAGS = _Paths.TAGS;
+  static const ONBOARDING = _Paths.ONBOARDING;
 }
 
 abstract class _Paths {
@@ -15,4 +16,5 @@ abstract class _Paths {
   static const TABLE_VIEW = '/table-view';
   static const DASHBOARD = '/dashboard';
   static const TAGS = '/tags';
+  static const ONBOARDING = '/onboarding';
 }
