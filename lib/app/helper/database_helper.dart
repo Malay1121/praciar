@@ -74,4 +74,23 @@ class DatabaseHelper {
       return await localDeleteTag(id);
     }
   }
+
+  static Future<dynamic> createUser(
+      {required String name,
+      required String email,
+      required String role}) async {
+    if (Utils.isLocal) {
+      return await localCreateUser(name: name, email: email, role: role);
+    } else {
+      return await localCreateUser(name: name, email: email, role: role);
+    }
+  }
+
+  static Future<dynamic> getUsers() async {
+    if (Utils.isLocal) {
+      return await localGetUsers();
+    } else {
+      return await localGetUsers();
+    }
+  }
 }

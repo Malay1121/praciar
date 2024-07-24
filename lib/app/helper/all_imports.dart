@@ -38,3 +38,5 @@ export 'package:praciar/app/helper/hexcolor.dart';
 export 'dart:async';
 export 'package:praciar/app/helper/local/database/delete/local_delete_tag.dart';
 export 'package:praciar/app/helper/local/database/update/local_update_tag.dart';
+export 'package:praciar/app/helper/local/database/create/local_create_user.dart';
+export 'package:praciar/app/helper/local/database/get/local_get_users.dart';

@@ -5,6 +5,7 @@ class AppStrings {
   static String letsGetYouStarted = "Let's get you started";
   static String getStarted = "Get started";
   static String yourName = "Your Name";
+  static String yourEmail = "Your Email";
   static String overview = "Overview";
   static String task = "Task";
   static String settings = "Settings";

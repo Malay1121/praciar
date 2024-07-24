@@ -31,7 +31,7 @@ class _OnboardingViewDesktopState extends State<OnboardingViewDesktop> {
                   width: 840.w(context),
                   height: 60.h(context),
                   centered: true,
-                  style: TextStyles.semiBold(
+                  style: TextStyles.medium(
                       context: context,
                       fontSize: 40,
                       color: AppColors.secondary500),
@@ -53,8 +53,10 @@ class _OnboardingViewDesktopState extends State<OnboardingViewDesktop> {
                   width: 840.w(context),
                   height: 135.h(context),
                   child: TextField(
+                    controller: widget.controller.nameController,
                     textAlign: TextAlign.center,
                     textAlignVertical: TextAlignVertical.center,
+                    textInputAction: TextInputAction.next,
                     autofocus: true,
                     style: TextStyles.semiBold(
                       context: context,
@@ -64,6 +66,7 @@ class _OnboardingViewDesktopState extends State<OnboardingViewDesktop> {
                     cursorColor: AppColors.primary500,
                     cursorHeight: 135.h(context),
                     decoration: InputDecoration(
+                      contentPadding: EdgeInsets.zero,
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                       ),
@@ -77,15 +80,53 @@ class _OnboardingViewDesktopState extends State<OnboardingViewDesktop> {
                   ),
                 ),
                 SizedBox(
+                  height: 10.h(context),
+                ),
+                SizedBox(
+                  width: 840.w(context),
+                  height: 90.h(context),
+                  child: TextField(
+                    controller: widget.controller.emailController,
+                    textAlign: TextAlign.center,
+                    textAlignVertical: TextAlignVertical.center,
+                    textInputAction: TextInputAction.go,
+                    onSubmitted: (value) => widget.controller.getStarted(
+                        name: widget.controller.nameController.text,
+                        email: widget.controller.emailController.text),
+                    style: TextStyles.semiBold(
+                      context: context,
+                      fontSize: 60,
+                      color: AppColors.primary300,
+                    ),
+                    cursorColor: AppColors.primary500,
+                    cursorHeight: 90.h(context),
+                    decoration: InputDecoration(
+                      contentPadding: EdgeInsets.zero,
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                      ),
+                      hintText: AppStrings.yourEmail,
+                      hintStyle: TextStyles.semiBold(
+                        context: context,
+                        fontSize: 60,
+                        color: AppColors.primary300,
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
                   height: 200.h(context),
                 ),
                 CommonButton(
                   text: AppStrings.getStarted,
-                  width: 287.w(context),
-                  height: 44.h(context),
+                  width: 300.w(context),
+                  height: 60.h(context),
+                  fontSize: 22.t(context),
                   backgroundColor: AppColors.primary500,
                   textColor: AppColors.primary0,
-                  onTap: () {},
+                  onTap: () => widget.controller.getStarted(
+                      name: widget.controller.nameController.text,
+                      email: widget.controller.emailController.text),
                 ),
               ],
             ),
@@ -98,6 +139,7 @@ class _OnboardingViewDesktopState extends State<OnboardingViewDesktop> {
             child: Image.asset(
               AppImages.logoShort,
               width: 188.w(context),
+
               // height: 40.h(context),
               fit: BoxFit.fitWidth,
             ),
