@@ -9,8 +9,9 @@ class TableViewController extends GetxController {
   final count = 0.obs;
   Map project = {};
   void initializeTab() async {
-    project = await DatabaseHelper.getProject(
-        projectId: "project_1", workspaceId: "workspace_1");
+    project = (await DatabaseHelper.getProject(
+            projectId: "project_1", workspaceId: "workspace_1"))
+        .first;
     contents = [
       //
       for (var table in project["task_list"])

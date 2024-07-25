@@ -9,6 +9,7 @@ class AppStrings {
   static String overview = "Overview";
   static String task = "Task";
   static String settings = "Settings";
+
   static String hi = "Hi";
   static String letsFinishYourTaskToday = "Let's finish your task today!";
   static String activity = "Activity";
@@ -17,6 +18,8 @@ class AppStrings {
   static String thisWeek = "This Week";
   static String thisMonth = "This Month";
   static String thisYear = "This Year";
+  static String upcomingTask = "Upcoming Task";
+
   static String tags = "Tags";
   static String tag = "Tag";
   static String exploreTag = "Explore Tags";

@@ -1,14 +1,17 @@
 import '/app/helper/all_imports.dart';
 
-Future<Map> localGetWorkspace({required String workspaceId}) async {
+Future<List> localGetWorkspace({String? workspaceId}) async {
   return await run(() async {
     List workspaceList = await localGetKey(location: ["workspaces"]);
-    Map output = {};
-    for (var workspace in workspaceList) {
-      if (workspaceId == workspace["id"]) {
-        output = workspace;
-      }
+    List output = [];
+    if (workspaceId == null) {
+      output = workspaceList;
+    } else {
+      output.addAll(workspaceList.where(
+        (element) => element["id"] == workspaceId,
+      ));
     }
+
     return output;
   });
 }

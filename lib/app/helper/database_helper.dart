@@ -1,5 +1,3 @@
-import 'package:praciar/app/helper/local/database/update/local_update_settings.dart';
-
 import 'all_imports.dart';
 
 class DatabaseHelper {
@@ -25,7 +23,7 @@ class DatabaseHelper {
     }
   }
 
-  static Future<dynamic> getWorkspace({required String workspaceId}) async {
+  static Future<List> getWorkspace({String? workspaceId}) async {
     if (Utils.isLocal) {
       return await localGetWorkspace(workspaceId: workspaceId);
     } else {
@@ -33,14 +31,49 @@ class DatabaseHelper {
     }
   }
 
-  static Future<dynamic> getProject(
-      {required String projectId, required String workspaceId}) async {
+  static Future<List> getProject(
+      {String? projectId, String? workspaceId}) async {
     if (Utils.isLocal) {
       return await localGetProject(
           projectId: projectId, workspaceId: workspaceId);
     } else {
       return await localGetProject(
           projectId: projectId, workspaceId: workspaceId);
+    }
+  }
+
+  static Future<List> getTaskList(
+      {String? projectId, String? workspaceId, String? taskListId}) async {
+    if (Utils.isLocal) {
+      return await localGetTaskList(
+          projectId: projectId,
+          workspaceId: workspaceId,
+          taskListId: taskListId);
+    } else {
+      return await localGetTaskList(
+          projectId: projectId,
+          workspaceId: workspaceId,
+          taskListId: taskListId);
+    }
+  }
+
+  static Future<List> getTask(
+      {String? projectId,
+      String? workspaceId,
+      String? taskListId,
+      String? taskId}) async {
+    if (Utils.isLocal) {
+      return await localGetTask(
+          projectId: projectId,
+          workspaceId: workspaceId,
+          taskListId: taskListId,
+          taskId: taskId);
+    } else {
+      return await localGetTask(
+          projectId: projectId,
+          workspaceId: workspaceId,
+          taskListId: taskListId,
+          taskId: taskId);
     }
   }
 

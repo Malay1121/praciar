@@ -1,9 +1,9 @@
 {
   "workspaces": [
     {
-      "id": "workspace_1",
-      "name": "Workspace Name",
-      "description": "Workspace Description",
+      "id": "personal",
+      "name": "Personal Space",
+      "description": "Personal Space Description",
       "created_at": "2024-07-07T10:00:00Z",
       "updated_at": "2024-07-07T12:00:00Z",
       "users": [
@@ -23,7 +23,12 @@
           "start_date": "2024-07-01",
           "end_date": "2024-12-31",
           "task_list": [
-            {"id": "todo", "name": "TODO", "color": "FFFFF", "tasks": [{
+            {
+              "id": "todo",
+              "name": "TODO",
+              "color": "FFFFF",
+              "tasks": [
+              {
               "id": "task_1",
               "title": "Task Title",
               "description": "Task Description",
@@ -79,8 +84,9 @@
                   "assigned_to": "user_3"
                 }
               ]
-            }]}
-            
+            }
+            ]
+            }
           ]
         }
       ]
