@@ -119,4 +119,83 @@ class Utils {
     print(initialColor.toHexString());
     return initialColor;
   }
+
+  static changeTheme() async {
+    Map settings = await DatabaseHelper.getKey(location: ["settings"]);
+    String type =
+        settings["appearance"]["mode"]["name"].toString().toLowerCase();
+    AppColors.primary900 =
+        type == "dark" ? Color(0xFF3B6506) : Color(0xFF10197A);
+    AppColors.primary800 =
+        type == "dark" ? Color(0xFF4C7A0B) : Color(0xFF1A2793);
+    AppColors.primary700 =
+        type == "dark" ? Color(0xFF659711) : Color(0xFF2A3BB7);
+    AppColors.primary600 =
+        type == "dark" ? Color(0xFF7FB519) : Color(0xFF3D53DB);
+    AppColors.primary500 =
+        type == "dark" ? Color(0xFF9CD323) : Color(0xFF546FFF);
+    AppColors.primary400 =
+        type == "dark" ? Color(0xFFBCE455) : Color(0xFF9F84FD);
+    AppColors.primary300 =
+        type == "dark" ? Color(0xFFD3F178) : Color(0xFF98ABFF);
+    AppColors.primary200 =
+        type == "dark" ? Color(0xFFE8FAA6) : Color(0xFFBAC8FF);
+    AppColors.primary100 =
+        type == "dark" ? Color(0xFFF5FCD2) : Color(0xFFDCE4FF);
+    AppColors.primary0 = type == "dark" ? Color(0xFF000000) : Color(0xFFFFFFFF);
+    AppColors.success900 =
+        type == "dark" ? Color(0xFF10197A) : Color(0xFFFFFFFF);
+    AppColors.success800 =
+        type == "dark" ? Color(0xFF1A2793) : Color(0xFF3B6506);
+    AppColors.success700 =
+        type == "dark" ? Color(0xFF2A3BB7) : Color(0xFF4C7A0B);
+    AppColors.success600 =
+        type == "dark" ? Color(0xFF3D53DB) : Color(0xFF659711);
+    AppColors.success500 =
+        type == "dark" ? Color(0xFF546FFF) : Color(0xFF7FB519);
+    AppColors.success400 =
+        type == "dark" ? Color(0xFF9F84FD) : Color(0xFF9CD323);
+    AppColors.success300 =
+        type == "dark" ? Color(0xFF98ABFF) : Color(0xFFBCE455);
+    AppColors.success200 =
+        type == "dark" ? Color(0xFFBAC8FF) : Color(0xFFD3F178);
+    AppColors.success100 =
+        type == "dark" ? Color(0xFFDCE4FF) : Color(0xFFE8FAA6);
+    AppColors.error900 = Color(0xFF7A0619);
+    AppColors.error800 = Color(0xFF930B16);
+    AppColors.error700 = Color(0xFFB71112);
+    AppColors.error600 = Color(0xFFDB2719);
+    AppColors.error500 = Color(0xFFFF4423);
+    AppColors.error400 = Color(0xFFFF7F59);
+    AppColors.error300 = Color(0xFFFFA37A);
+    AppColors.error200 = Color(0xFFFFC8A6);
+    AppColors.error100 = Color(0xFFFFE7D3);
+    AppColors.warning900 = Color(0xFF7A4D0B);
+    AppColors.warning800 = Color(0xFF936312);
+    AppColors.warning700 = Color(0xFFB7821D);
+    AppColors.warning600 = Color(0xFFDBA32A);
+    AppColors.warning500 = Color(0xFFFFC73A);
+    AppColors.warning400 = Color(0xFFFFD96B);
+    AppColors.warning300 = Color(0xFFFFE488);
+    AppColors.warning200 = Color(0xFFFFEFB0);
+    AppColors.warning100 = Color(0xFFFFF8D7);
+    AppColors.information900 = Color(0xFF102E7A);
+    AppColors.information800 = Color(0xFF1A4393);
+    AppColors.information700 = Color(0xFF2A60B7);
+    AppColors.information600 = Color(0xFF3D81DB);
+    AppColors.information500 = Color(0xFF54A6FF);
+    AppColors.information400 = Color(0xFF7EC2FF);
+    AppColors.information300 = Color(0xFF98D3FF);
+    AppColors.information200 = Color(0xFFBAE5FF);
+    AppColors.information100 = Color(0xFFDCF3FF);
+    AppColors.secondary900 = Color(0xFF040815);
+    AppColors.secondary800 = Color(0xFF060713);
+    AppColors.secondary700 = Color(0xFF0A0A18);
+    AppColors.secondary600 = Color(0xFF0E0F1D);
+    AppColors.secondary500 = Color(0xFF141522);
+    AppColors.secondary400 = Color(0xFF54577A);
+    AppColors.secondary300 = Color(0xFF8E92BC);
+    AppColors.secondary200 = Color(0xFFC2C6E8);
+    AppColors.secondary100 = Color(0xFFDFE1F3);
+  }
 }

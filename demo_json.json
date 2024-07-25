@@ -116,5 +116,9 @@
       "created_at":"2024-07-21 12:27:55.806342Z"
     }
   ],
-  "settings": {"appearance": {"mode": "Light"}}
+  "settings": {
+    "appearance": {
+      "mode": "Light"
+    }
+  }
 }

@@ -80,7 +80,8 @@ class _SettingsViewDesktopState extends State<SettingsViewDesktop> {
                                                 width: 76.w(context),
                                                 height: 21.h(context),
                                                 centered: true,
-                                                text: category,
+                                                text: category.capitalizeFirst
+                                                    .toString(),
                                                 style: TextStyles.medium(
                                                   context: context,
                                                   fontSize: 14.t(context),

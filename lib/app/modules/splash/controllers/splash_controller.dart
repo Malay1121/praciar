@@ -14,6 +14,7 @@ class SplashController extends GetxController {
   }
 
   Future<bool> tasks() async {
+    await Utils.changeTheme();
     return true;
   }
 

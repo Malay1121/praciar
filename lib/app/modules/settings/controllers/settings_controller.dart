@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:praciar/app/helper/local/database/create/local_write_data.dart';
 
 import '../../../helper/all_imports.dart';
 
@@ -11,8 +12,29 @@ class SettingsController extends GetxController {
         "type": "multichoice",
         "parameter": "mode",
         "options": [
-          {"name": "Light"},
-          {"name": "Dark"},
+          {
+            "name": "Light",
+          },
+          {
+            "name": "Dark",
+          },
+        ],
+      },
+    },
+  };
+  Map tasks = {
+    "general": {},
+    "appearance": {
+      "mode": {
+        "type": "multichoice",
+        "parameter": "mode",
+        "options": [
+          {
+            "onClick": () => Utils.changeTheme(),
+          },
+          {
+            "onClick": () => Utils.changeTheme(),
+          },
         ],
       },
     },
@@ -21,6 +43,20 @@ class SettingsController extends GetxController {
 
   void changeCategory(String category) {
     selectedCategory = category;
+    update();
+  }
+
+  void getSettings() async {
+    settings = (await localReadData())["settings"];
+  }
+
+  void changeSettings(
+      {required String category,
+      required String parameter,
+      required Map newValue}) async {
+    settings = await DatabaseHelper.updateSettings(
+        category: category, parameter: parameter, newValue: newValue);
+    tasks[category][parameter]["onClick"];
     update();
   }
 
@@ -49,7 +85,8 @@ class SettingsController extends GetxController {
           children: [
             for (Map option in options)
               InkWell(
-                onTap: () {},
+                onTap: () => changeSettings(
+                    category: category, parameter: parameter, newValue: option),
                 child: Container(
                   height: 50.h(Get.context!),
                   padding: EdgeInsets.symmetric(
@@ -63,7 +100,10 @@ class SettingsController extends GetxController {
                           color: option["name"] ==
                                   (settings[category] == null
                                       ? ""
-                                      : (settings[category][parameter] ?? ""))
+                                      : (settings[category][parameter] == null)
+                                          ? ""
+                                          : settings[category][parameter]
+                                              ["name"])
                               ? AppColors.primary500
                               : AppColors.cardColor)),
                   child: Row(
@@ -89,15 +129,21 @@ class SettingsController extends GetxController {
                               color: option["name"] ==
                                       (settings[category] == null
                                           ? ""
-                                          : (settings[category][parameter] ??
-                                              ""))
+                                          : (settings[category][parameter] ==
+                                                  null)
+                                              ? ""
+                                              : settings[category][parameter]
+                                                  ["name"])
                                   ? AppColors.primary500
                                   : AppColors.cardColor,
                               width: option["name"] ==
                                       (settings[category] == null
                                           ? ""
-                                          : (settings[category][parameter] ??
-                                              ""))
+                                          : (settings[category][parameter] ==
+                                                  null)
+                                              ? ""
+                                              : settings[category][parameter]
+                                                  ["name"])
                                   ? 4
                                   : 2),
                         ),
@@ -115,6 +161,8 @@ class SettingsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    getSettings();
+    print(settings);
   }
 
   @override

@@ -1,3 +1,5 @@
+import 'package:praciar/app/helper/local/database/update/local_update_settings.dart';
+
 import 'all_imports.dart';
 
 class DatabaseHelper {
@@ -91,6 +93,19 @@ class DatabaseHelper {
       return await localGetUsers();
     } else {
       return await localGetUsers();
+    }
+  }
+
+  static Future<Map> updateSettings(
+      {required String category,
+      required String parameter,
+      required Map newValue}) async {
+    if (Utils.isLocal) {
+      return await localUpdateSettings(
+          category: category, parameter: parameter, newValue: newValue);
+    } else {
+      return await localUpdateSettings(
+          category: category, parameter: parameter, newValue: newValue);
     }
   }
 }
