@@ -77,6 +77,29 @@ class DatabaseHelper {
     }
   }
 
+  static Future<List> getSubTask(
+      {String? projectId,
+      String? workspaceId,
+      String? taskListId,
+      String? taskId,
+      String? subTaskId}) async {
+    if (Utils.isLocal) {
+      return await localGetSubTask(
+          projectId: projectId,
+          workspaceId: workspaceId,
+          taskListId: taskListId,
+          taskId: taskId,
+          subTaskId: subTaskId);
+    } else {
+      return await localGetSubTask(
+          projectId: projectId,
+          workspaceId: workspaceId,
+          taskListId: taskListId,
+          taskId: taskId,
+          subTaskId: subTaskId);
+    }
+  }
+
   static Future<dynamic> createTag({required Map data}) async {
     List tags = (await localReadData())["tags"];
     List idList = [];

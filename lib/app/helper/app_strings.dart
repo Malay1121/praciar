@@ -19,6 +19,7 @@ class AppStrings {
   static String thisMonth = "This Month";
   static String thisYear = "This Year";
   static String upcomingTask = "Upcoming Task";
+  static String left = "Left";
 
   static String tags = "Tags";
   static String tag = "Tag";

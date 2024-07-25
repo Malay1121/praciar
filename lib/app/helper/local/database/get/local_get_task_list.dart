@@ -9,13 +9,14 @@ Future<List> localGetTaskList({
     List taskList = [];
     List projectList =
         (await localGetProject(workspaceId: workspaceId, projectId: projectId));
-    for (Map project in projectList) {
+
+    for (Map project in projectList.toList()) {
       if (taskListId != null) {
         taskList.addAll(project["task_list"].where(
           (element) => element["id"] == taskListId,
         ));
       } else {
-        projectList.addAll(project["task_list"]);
+        taskList.addAll(project["task_list"].toList());
       }
     }
 

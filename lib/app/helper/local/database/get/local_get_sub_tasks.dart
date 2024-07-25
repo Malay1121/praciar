@@ -20,7 +20,7 @@ Future<List> localGetSubTask({
           (element) => element["id"] == subTaskId,
         ));
       } else {
-        taskList.addAll(taskListData["sub_tasks"]);
+        subTaskList.addAll(taskListData["sub_tasks"]);
       }
     }
 

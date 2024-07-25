@@ -64,6 +64,12 @@ class DashboardController extends GetxController {
     return AppText(text: text, style: style, textAlign: TextAlign.center);
   }
 
+  Future<List> getUpcomingTasks() async {
+    List tasks = await DatabaseHelper.getTask();
+
+    return TaskSorter.sortByDueDate(tasks);
+  }
+
   @override
   void onInit() {
     super.onInit();

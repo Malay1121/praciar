@@ -1,5 +1,5 @@
+import 'package:humanize_duration/humanize_duration.dart';
 import 'package:intl/intl.dart';
-
 import 'all_imports.dart';
 
 class Utils {
@@ -22,6 +22,19 @@ class Utils {
 
   static String formatDateTime(DateTime dateTime) {
     return DateFormat.yMMMMd().format(dateTime);
+  }
+
+  static String formatDateTimeDifference(DateTime startDateTime, endDateTime) {
+    Duration difference = startDateTime.difference(endDateTime);
+
+    return humanizeDuration(
+      difference,
+      options: const HumanizeOptions(spacer: " ", units: [
+        Units.day,
+        Units.hour,
+        Units.minute,
+      ]),
+    );
   }
 
   static String greet() {
@@ -143,7 +156,7 @@ class Utils {
     AppColors.primary100 =
         type == "dark" ? Color(0xFFDFE1F3) : Color(0xFFDCE4FF);
     AppColors.background =
-        type == "dark" ? Color(0xFF0A0A0A) : Color(0xFFF5F5F7);
+        type == "dark" ? Color(0xFF0A0A0A) : Color(0xFFFAFAFA);
     AppColors.cardColor =
         type == "dark" ? Color(0xFF050507) : Color(0xFFF5F5F7);
     AppColors.primary0 = type == "dark" ? Color(0xFF000000) : Color(0xFFFFFFFF);
