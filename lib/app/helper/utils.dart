@@ -125,42 +125,55 @@ class Utils {
     String type =
         settings["appearance"]["mode"]["name"].toString().toLowerCase();
     AppColors.primary900 =
-        type == "dark" ? Color(0xFF3B6506) : Color(0xFF10197A);
+        type == "dark" ? Color(0xFF040815) : Color(0xFF10197A);
     AppColors.primary800 =
-        type == "dark" ? Color(0xFF4C7A0B) : Color(0xFF1A2793);
+        type == "dark" ? Color(0xFF060713) : Color(0xFF1A2793);
     AppColors.primary700 =
-        type == "dark" ? Color(0xFF659711) : Color(0xFF2A3BB7);
+        type == "dark" ? Color(0xFF0A0A18) : Color(0xFF2A3BB7);
     AppColors.primary600 =
-        type == "dark" ? Color(0xFF7FB519) : Color(0xFF3D53DB);
+        type == "dark" ? Color(0xFF0E0F1D) : Color(0xFF3D53DB);
     AppColors.primary500 =
-        type == "dark" ? Color(0xFF9CD323) : Color(0xFF546FFF);
+        type == "dark" ? Color(0xFF546FFF) : Color(0xFF546FFF);
     AppColors.primary400 =
-        type == "dark" ? Color(0xFFBCE455) : Color(0xFF9F84FD);
+        type == "dark" ? Color(0xFF54577A) : Color(0xFF9F84FD);
     AppColors.primary300 =
-        type == "dark" ? Color(0xFFD3F178) : Color(0xFF98ABFF);
+        type == "dark" ? Color(0xFF8E92BC) : Color(0xFF98ABFF);
     AppColors.primary200 =
-        type == "dark" ? Color(0xFFE8FAA6) : Color(0xFFBAC8FF);
+        type == "dark" ? Color(0xFFC2C6E8) : Color(0xFFBAC8FF);
     AppColors.primary100 =
-        type == "dark" ? Color(0xFFF5FCD2) : Color(0xFFDCE4FF);
+        type == "dark" ? Color(0xFFDFE1F3) : Color(0xFFDCE4FF);
+    AppColors.background =
+        type == "dark" ? Color(0xFF0A0A0A) : Color(0xFFF5F5F7);
+    AppColors.cardColor =
+        type == "dark" ? Color(0xFF050507) : Color(0xFFF5F5F7);
     AppColors.primary0 = type == "dark" ? Color(0xFF000000) : Color(0xFFFFFFFF);
-    AppColors.success900 =
-        type == "dark" ? Color(0xFF10197A) : Color(0xFFFFFFFF);
-    AppColors.success800 =
-        type == "dark" ? Color(0xFF1A2793) : Color(0xFF3B6506);
-    AppColors.success700 =
-        type == "dark" ? Color(0xFF2A3BB7) : Color(0xFF4C7A0B);
-    AppColors.success600 =
-        type == "dark" ? Color(0xFF3D53DB) : Color(0xFF659711);
-    AppColors.success500 =
-        type == "dark" ? Color(0xFF546FFF) : Color(0xFF7FB519);
-    AppColors.success400 =
-        type == "dark" ? Color(0xFF9F84FD) : Color(0xFF9CD323);
-    AppColors.success300 =
-        type == "dark" ? Color(0xFF98ABFF) : Color(0xFFBCE455);
-    AppColors.success200 =
-        type == "dark" ? Color(0xFFBAC8FF) : Color(0xFFD3F178);
-    AppColors.success100 =
-        type == "dark" ? Color(0xFFDCE4FF) : Color(0xFFE8FAA6);
+    AppColors.secondary900 =
+        type == "dark" ? Color(0xFF10197A) : Color(0xFF040815);
+    AppColors.secondary800 =
+        type == "dark" ? Color(0xFF1A2793) : Color(0xFF060713);
+    AppColors.secondary700 =
+        type == "dark" ? Color(0xFF2A3BB7) : Color(0xFF0A0A18);
+    AppColors.secondary600 =
+        type == "dark" ? Color(0xFF3D53DB) : Color(0xFF0E0F1D);
+    AppColors.secondary500 =
+        type == "dark" ? Color(0xFF546FFF) : Color(0xFF141522);
+    AppColors.secondary400 =
+        type == "dark" ? Color(0xFF9F84FD) : Color(0xFF54577A);
+    AppColors.secondary300 =
+        type == "dark" ? Color(0xFF98ABFF) : Color(0xFF8E92BC);
+    AppColors.secondary200 =
+        type == "dark" ? Color(0xFFBAC8FF) : Color(0xFFC2C6E8);
+    AppColors.secondary100 =
+        type == "dark" ? Color(0xFFDCE4FF) : Color(0xFFDFE1F3);
+    AppColors.success900 = Color(0xFF3B6506);
+    AppColors.success800 = Color(0xFF4C7A0B);
+    AppColors.success700 = Color(0xFF659711);
+    AppColors.success600 = Color(0xFF7FB519);
+    AppColors.success500 = Color(0xFF9CD323);
+    AppColors.success400 = Color(0xFFBCE455);
+    AppColors.success300 = Color(0xFFD3F178);
+    AppColors.success200 = Color(0xFFE8FAA6);
+    AppColors.success100 = Color(0xFFF5FCD2);
     AppColors.error900 = Color(0xFF7A0619);
     AppColors.error800 = Color(0xFF930B16);
     AppColors.error700 = Color(0xFFB71112);
@@ -188,14 +201,5 @@ class Utils {
     AppColors.information300 = Color(0xFF98D3FF);
     AppColors.information200 = Color(0xFFBAE5FF);
     AppColors.information100 = Color(0xFFDCF3FF);
-    AppColors.secondary900 = Color(0xFF040815);
-    AppColors.secondary800 = Color(0xFF060713);
-    AppColors.secondary700 = Color(0xFF0A0A18);
-    AppColors.secondary600 = Color(0xFF0E0F1D);
-    AppColors.secondary500 = Color(0xFF141522);
-    AppColors.secondary400 = Color(0xFF54577A);
-    AppColors.secondary300 = Color(0xFF8E92BC);
-    AppColors.secondary200 = Color(0xFFC2C6E8);
-    AppColors.secondary100 = Color(0xFFDFE1F3);
   }
 }
