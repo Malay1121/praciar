@@ -1,6 +1,7 @@
 import 'package:praciar/app/modules/dashboard/controllers/dashboard_controller.dart';
 
 import '../../../helper/all_imports.dart';
+import '../../../helper/local_firestore/local_firestore.dart';
 
 class DashboardViewDesktop extends StatefulWidget {
   DashboardViewDesktop({required this.controller});
@@ -110,100 +111,108 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                     ),
                     Row(
                       children: [
-                        Container(
-                          width: 194.w(context),
-                          height: 214.h(context),
-                          decoration: BoxDecoration(
-                            color: AppColors.secondary500,
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 20.h(context),
-                              horizontal: 20.w(context),
+                        GestureDetector(
+                          onTap: () {
+                            LocalFirestore()
+                                .collection("xDD")
+                                .doc("sa")
+                                .collection("asda");
+                          },
+                          child: Container(
+                            width: 194.w(context),
+                            height: 214.h(context),
+                            decoration: BoxDecoration(
+                              color: AppColors.secondary500,
+                              borderRadius: BorderRadius.circular(10),
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AppText(
-                                  text: AppStrings.runningTask,
-                                  height: 24.h(context),
-                                  style: TextStyles.semiBold(
-                                    context: context,
-                                    fontSize: 16,
-                                    color: AppColors.primary0,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                vertical: 20.h(context),
+                                horizontal: 20.w(context),
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  AppText(
+                                    text: AppStrings.runningTask,
+                                    height: 24.h(context),
+                                    style: TextStyles.semiBold(
+                                      context: context,
+                                      fontSize: 16,
+                                      color: AppColors.primary0,
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 16.h(context),
-                                ),
-                                AppText(
-                                  text: "65",
-                                  height: 48.h(context),
-                                  style: TextStyles.semiBold(
-                                    context: context,
-                                    fontSize: 32,
-                                    color: AppColors.primary0,
+                                  SizedBox(
+                                    height: 16.h(context),
                                   ),
-                                ),
-                                SizedBox(
-                                  height: 16.h(context),
-                                ),
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      // width: 68.w(context),
-                                      height: 68.h(context),
-                                      child: CircularPercentIndicator(
-                                        radius: 34.h(context),
-                                        lineWidth: 3.0,
-                                        percent: 0.5,
-                                        center: AppText(
-                                          text: "45%",
-                                          width: 44.w(context),
-                                          height: 24.h(context),
-                                          centered: true,
-                                          style: TextStyles.medium(
-                                            context: context,
-                                            fontSize: 18,
-                                            color: AppColors.primary0,
+                                  AppText(
+                                    text: "65",
+                                    height: 48.h(context),
+                                    style: TextStyles.semiBold(
+                                      context: context,
+                                      fontSize: 32,
+                                      color: AppColors.primary0,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 16.h(context),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      SizedBox(
+                                        // width: 68.w(context),
+                                        height: 68.h(context),
+                                        child: CircularPercentIndicator(
+                                          radius: 34.h(context),
+                                          lineWidth: 3.0,
+                                          percent: 0.5,
+                                          center: AppText(
+                                            text: "45%",
+                                            width: 44.w(context),
+                                            height: 24.h(context),
+                                            centered: true,
+                                            style: TextStyles.medium(
+                                              context: context,
+                                              fontSize: 18,
+                                              color: AppColors.primary0,
+                                            ),
                                           ),
+                                          progressColor: AppColors.primary500,
+                                          backgroundColor: Color(0xFFD8D8D8)
+                                              .withOpacity(0.1),
                                         ),
-                                        progressColor: AppColors.primary500,
-                                        backgroundColor:
-                                            Color(0xFFD8D8D8).withOpacity(0.1),
                                       ),
-                                    ),
-                                    SizedBox(
-                                      width: 18.w(context),
-                                    ),
-                                    Column(
-                                      children: [
-                                        AppText(
-                                          text: "100",
-                                          style: TextStyles.semiBold(
-                                            context: context,
-                                            fontSize: 20,
-                                            color: AppColors.primary0,
+                                      SizedBox(
+                                        width: 18.w(context),
+                                      ),
+                                      Column(
+                                        children: [
+                                          AppText(
+                                            text: "100",
+                                            style: TextStyles.semiBold(
+                                              context: context,
+                                              fontSize: 20,
+                                              color: AppColors.primary0,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 8.h(context),
-                                        ),
-                                        AppText(
-                                          text: AppStrings.task,
-                                          style: TextStyles.medium(
-                                            context: context,
-                                            fontSize: 14,
-                                            color: AppColors.secondary300,
+                                          SizedBox(
+                                            height: 8.h(context),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                              ],
+                                          AppText(
+                                            text: AppStrings.task,
+                                            style: TextStyles.medium(
+                                              context: context,
+                                              fontSize: 14,
+                                              color: AppColors.secondary300,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),

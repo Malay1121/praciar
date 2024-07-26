@@ -1,5 +1,6 @@
 import 'package:humanize_duration/humanize_duration.dart';
 import 'package:intl/intl.dart';
+import 'package:praciar/app/helper/local_firestore/local_firestore.dart';
 import 'all_imports.dart';
 
 class Utils {
@@ -10,6 +11,10 @@ class Utils {
 
   static Future<String> getLocalPath() async {
     return (await getApplicationSupportDirectory()).path;
+  }
+
+  static Future<String> dataPath() async {
+    return "${await getLocalPath()}/data";
   }
 
   static DateTime fromUtc(String dateTime) {
