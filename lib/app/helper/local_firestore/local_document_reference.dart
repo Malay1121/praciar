@@ -1,8 +1,5 @@
 import 'package:praciar/app/helper/all_imports.dart';
 
-import 'local_collection_reference.dart';
-import 'local_firestore.dart';
-
 @immutable
 abstract class DocumentReference<T extends Object?> {
   /// The Firestore instance associated with this document reference.
@@ -38,7 +35,7 @@ abstract class DocumentReference<T extends Object?> {
   /// By providing [options], this method can be configured to fetch results only
   /// from the server, only from the local cache or attempt to fetch results
   /// from the server and fall back to the cache (which is the default).
-  // Future<DocumentSnapshot<T>> get([GetOptions? options]);
+  Future<LocalDocumentSnapshot> get();
 
   /// Notifies of document updates at this location.
   ///
@@ -90,7 +87,9 @@ class JsonDocumentReference implements DocumentReference<Map<String, dynamic>> {
   JsonDocumentReference(
     this.firestore,
     this.path,
+    this.delegate,
   ) {}
+  LocalDelegate delegate;
   @override
   final String path;
   @override
@@ -117,27 +116,17 @@ class JsonDocumentReference implements DocumentReference<Map<String, dynamic>> {
       'a collection path must not contain "//"',
     );
     print(collectionPath);
-
-    return JsonCollectionReference(
-      firestore,
-      collectionPath,
-    );
+    delegate.collection(collectionPath);
+    return JsonCollectionReference(firestore, collectionPath, delegate);
   }
 
   // @override
   // Future<void> delete() => _delegate.delete();
   //
-  // @override
-  // Future<DocumentSnapshot<Map<String, dynamic>>> get([
-  //   GetOptions? options,
-  // ]) async {
-  //   return _JsonDocumentSnapshot(
-  //     firestore,
-  //     await _delegate.get(
-  //       options ?? const GetOptions(),
-  //     ),
-  //   );
-  // }
+  @override
+  Future<LocalDocumentSnapshot> get() async {
+    return LocalDocumentSnapshot(firestore: firestore, delegate: delegate);
+  }
   //
   // @override
   // Stream<DocumentSnapshot<Map<String, dynamic>>> snapshots({

@@ -5,6 +5,7 @@ import 'all_imports.dart';
 
 class Utils {
   static bool isLocal = Platform.isWindows || Platform.isMacOS;
+  static String dataPath = "";
   static WindowsNotification winNotifyPlugin = WindowsNotification(
       applicationId:
           r"{D65231B0-B2F1-4857-A4CE-A8E7C6EA7D27}\WindowsPowerShell\v1.0\powershell.exe");
@@ -13,8 +14,8 @@ class Utils {
     return (await getApplicationSupportDirectory()).path;
   }
 
-  static Future<String> dataPath() async {
-    return "${await getLocalPath()}/data";
+  static Future<String> getDataPath() async {
+    return "${await getLocalPath()}\\data";
   }
 
   static DateTime fromUtc(String dateTime) {

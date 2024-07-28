@@ -15,6 +15,7 @@ class SplashController extends GetxController {
 
   Future<bool> tasks() async {
     await Utils.changeTheme();
+    Utils.dataPath = await Utils.getDataPath();
     return true;
   }
 

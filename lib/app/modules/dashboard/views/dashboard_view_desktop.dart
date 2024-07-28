@@ -1,3 +1,4 @@
+import 'package:praciar/app/helper/local_firestore/local_query_snapshot.dart';
 import 'package:praciar/app/modules/dashboard/controllers/dashboard_controller.dart';
 
 import '../../../helper/all_imports.dart';
@@ -112,11 +113,13 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: () {
-                            LocalFirestore()
-                                .collection("xDD")
-                                .doc("sa")
-                                .collection("asda");
+                          onTap: () async {
+                            LocalQuerySnapshot query =
+                                await LocalFirestore().collection("all").get();
+                            List data = query.docs();
+                            for (LocalDocumentSnapshot doc in data) {
+                              print(doc.data().toString());
+                            }
                           },
                           child: Container(
                             width: 194.w(context),

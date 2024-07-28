@@ -18,6 +18,12 @@ export 'package:praciar/app/helper/local/database/get/local_get_workspace.dart';
 export 'package:praciar/app/helper/local/database/create/local_create_tag.dart';
 export 'package:praciar/app/helper/local/database/get/local_get_project.dart';
 
+export 'package:praciar/app/helper/local_firestore/local_collection_reference.dart';
+export 'package:praciar/app/helper/local_firestore/local_document_reference.dart';
+export 'package:praciar/app/helper/local_firestore/local_delegate.dart';
+export 'package:praciar/app/helper/local_firestore/local_firestore.dart';
+export 'package:praciar/app/helper/local_firestore/local_query.dart';
+
 export 'package:praciar/app/helper/data_sorter/task_sorter.dart';
 
 export 'package:drag_and_drop_lists/drag_and_drop_item.dart';
@@ -48,3 +54,4 @@ export 'local/database/get/local_get_tags.dart';
 export "run.dart";
 export 'package:praciar/app/helper/hexcolor.dart';
 export 'dart:async';
+export 'package:praciar/app/helper/local_firestore/local_document_snapshot.dart';

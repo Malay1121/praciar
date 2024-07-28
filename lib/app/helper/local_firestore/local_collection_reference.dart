@@ -1,8 +1,5 @@
 import "package:praciar/app/helper/all_imports.dart";
-import "package:praciar/app/helper/local_firestore/local_firestore.dart";
-
-import "local_document_reference.dart";
-import "local_query.dart";
+import "package:praciar/app/helper/local_firestore/local_query_snapshot.dart";
 
 abstract class CollectionReference<T extends Object?> implements Query<T> {
   // String get id;
@@ -34,6 +31,8 @@ abstract class CollectionReference<T extends Object?> implements Query<T> {
   /// so that the resulting list will be chronologically-sorted.
   /// {@endtemplate}
   DocumentReference<T> doc([String? path]);
+
+  Future<LocalQuerySnapshot> get();
 
   /// Transforms a [CollectionReference] to manipulate a custom object instead
   /// of a `Map<String, dynamic>`.
@@ -69,10 +68,9 @@ abstract class CollectionReference<T extends Object?> implements Query<T> {
 class JsonCollectionReference extends JsonQuery
     implements CollectionReference<Map<String, dynamic>> {
   JsonCollectionReference(
-    LocalFirestore firestore,
-    String collectionPath,
-  ) : super(firestore, collectionPath);
-
+      LocalFirestore firestore, String collectionPath, this.delegate)
+      : super(firestore, collectionPath);
+  LocalDelegate delegate;
   // @override
   // String get id => _delegate.id;
 
@@ -107,11 +105,15 @@ class JsonCollectionReference extends JsonQuery
       assert(!path.contains('//'), 'a document path must not contain "//"');
       assert(path != '/', 'a document path must point to a valid document');
     }
-    print(path);
+    delegate.collection(path ?? "");
 
-    return JsonDocumentReference(firestore, path!);
+    return JsonDocumentReference(firestore, path!, delegate);
   }
 
+  @override
+  Future<LocalQuerySnapshot> get() async {
+    return LocalQuerySnapshot(firestore: firestore, delegate: delegate);
+  }
   // @override
   // CollectionReference<R> withConverter<R extends Object?>({
   //   required FromFirestore<R> fromFirestore,

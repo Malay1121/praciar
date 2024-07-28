@@ -1,10 +1,17 @@
 import 'package:praciar/app/helper/all_imports.dart';
 
-import 'local_collection_reference.dart';
-
 class LocalFirestore {
+  String dataPath = "";
+
   CollectionReference<Map<String, dynamic>> collection(String collectionPath) {
-    print(collectionPath);
-    return JsonCollectionReference(this, collectionPath);
+    LocalDelegate delegate = LocalDelegate(dataPath: "${Utils.dataPath}");
+    delegate.collection(collectionPath);
+    print(delegate.getCollection());
+
+    return JsonCollectionReference(
+      this,
+      collectionPath,
+      delegate,
+    );
   }
 }
