@@ -5,7 +5,7 @@ Future<dynamic> localGetKey({required List location}) async {
     String dataPath = Utils.dataPath;
 // for (String )
     Map data = await localReadData();
-    print(data);
+    // print(data);
     dynamic output = data;
     for (String key in location) {
       output = output[key];

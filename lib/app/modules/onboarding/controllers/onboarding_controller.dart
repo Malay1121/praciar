@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:praciar/app/helper/all_imports.dart';
 
-class OnboardingController extends GetxController {
+class OnboardingController extends CommonController {
   //TODO: Implement OnboardingController
 
   TextEditingController nameController = TextEditingController();

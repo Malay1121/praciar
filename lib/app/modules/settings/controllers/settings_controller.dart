@@ -3,7 +3,7 @@ import 'package:praciar/app/helper/local/database/create/local_write_data.dart';
 
 import '../../../helper/all_imports.dart';
 
-class SettingsController extends GetxController {
+class SettingsController extends CommonController {
   String selectedCategory = AppStrings.general.toLowerCase();
   Map options = {
     "general": {},

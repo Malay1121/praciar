@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
+import 'package:praciar/app/helper/all_imports.dart';
 
-class HomeController extends GetxController {
+class HomeController extends CommonController {
   //TODO: Implement HomeController
 
   final count = 0.obs;

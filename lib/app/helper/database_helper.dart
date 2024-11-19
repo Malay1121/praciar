@@ -1,4 +1,5 @@
 import 'all_imports.dart';
+import 'local/database/get/local_get_pinned_projects.dart';
 
 class DatabaseHelper {
   static void createDatabase() {
@@ -39,6 +40,14 @@ class DatabaseHelper {
     } else {
       return await localGetProject(
           projectId: projectId, workspaceId: workspaceId);
+    }
+  }
+
+  static Future<List> getPinnedProject() async {
+    if (Utils.isLocal) {
+      return await localGetPinnedProject();
+    } else {
+      return await localGetPinnedProject();
     }
   }
 

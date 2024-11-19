@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:praciar/app/helper/all_imports.dart';
 
-class TableViewController extends GetxController {
+class TableViewController extends CommonController {
   //TODO: Implement TableViewController
   List<DragAndDropList> contents = [];
 

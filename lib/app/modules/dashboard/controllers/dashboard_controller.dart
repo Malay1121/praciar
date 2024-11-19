@@ -1,7 +1,7 @@
 import 'package:get/get.dart';
 import 'package:praciar/app/helper/all_imports.dart';
 
-class DashboardController extends GetxController {
+class DashboardController extends CommonController {
   //TODO: Implement DashboardController
 
   Widget getWeekdays(value, meta) {
@@ -66,13 +66,13 @@ class DashboardController extends GetxController {
 
   Future<List> getUpcomingTasks() async {
     List tasks = await DatabaseHelper.getTask();
-
     return TaskSorter.sortByDueDate(tasks);
   }
 
   @override
   void onInit() {
     super.onInit();
+    getUpcomingTasks();
   }
 
   @override

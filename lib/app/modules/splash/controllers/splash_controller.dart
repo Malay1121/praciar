@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
+import 'package:watcher/watcher.dart';
 
 import '../../../helper/all_imports.dart';
 
-class SplashController extends GetxController {
+class SplashController extends CommonController {
   //TODO: Implement SplashController
   Future<bool> checkUserExist() async {
     List users = await DatabaseHelper.getUsers();
@@ -40,6 +41,7 @@ class SplashController extends GetxController {
       },
     );
     tasksPerformed = await tasks();
+
     if (timeDone) {
       redirect();
     }

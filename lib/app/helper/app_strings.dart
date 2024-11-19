@@ -19,7 +19,11 @@ class AppStrings {
   static String thisMonth = "This Month";
   static String thisYear = "This Year";
   static String upcomingTask = "Upcoming Task";
+  static String pinnedProjects = "Pinned Projects";
   static String left = "Left";
+  static String taskToday = "Task Today";
+  static String detailTask = "Detail Task";
+  static String goToDetail = "Go To Detail";
 
   static String tags = "Tags";
   static String tag = "Tag";

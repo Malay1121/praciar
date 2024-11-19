@@ -13,7 +13,9 @@ class LocalDelegate {
 
     List<LocalDocumentSnapshot> docs = [];
     for (FileSystemEntity file in directorySync) {
-      docs.add(LocalDocumentSnapshot(delegate: this));
+      docs.add(LocalDocumentSnapshot(
+          delegate: LocalDelegate(
+              dataPath: "$dataPath/${file.path.split("\\").last}")));
     }
     return docs;
   }
@@ -23,7 +25,7 @@ class LocalDelegate {
   }
 
   Future<Map> getDoc() async {
-    File file = File(dataPath);
+    File file = File(dataPath + "/data.json");
     Map document = jsonDecode(await file.readAsString());
     return document;
   }

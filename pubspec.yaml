@@ -23,6 +23,8 @@ dependencies:
   flutter_colorpicker: ^1.1.0
   intl: ^0.19.0
   humanize_duration: ^0.0.2
+  cached_network_image: ^3.4.1
+  watcher: ^1.1.0
 dev_dependencies: 
   flutter_lints: 4.0.0
   flutter_test: 

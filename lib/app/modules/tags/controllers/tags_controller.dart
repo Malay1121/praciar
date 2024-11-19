@@ -4,7 +4,7 @@ import 'package:praciar/app/helper/all_imports.dart';
 import 'package:praciar/app/widgets/common_button.dart';
 import 'package:praciar/app/widgets/common_textfield.dart';
 
-class TagsController extends GetxController {
+class TagsController extends CommonController {
   void createTag({
     required String name,
     required Color color,

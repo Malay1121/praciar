@@ -20,7 +20,7 @@ abstract class CollectionReference<T extends Object?> implements Query<T> {
   ///
   /// The unique key generated is prefixed with a client-generated timestamp
   /// so that the resulting list will be chronologically-sorted.
-  // Future<DocumentReference<T>> add(T data);
+  Future<DocumentReference<T>> add(T data);
 
   /// {@template cloud_firestore.collection_reference.doc}
   /// Returns a `DocumentReference` with the provided path.
@@ -89,14 +89,27 @@ class JsonCollectionReference extends JsonQuery
   // @override
   // String get path => _delegate.path;
   //
-  // @override
-  // Future<DocumentReference<Map<String, dynamic>>> add(
-  //   Map<String, dynamic> data,
-  // ) async {
-  //   final newDocument = doc();
-  //   await newDocument.set(data);
-  //   return newDocument;
-  // }
+  @override
+  Future<DocumentReference<Map<String, dynamic>>> add(
+    Map<String, dynamic> data,
+  ) async {
+    String location = Utils.dataPath + "/" + path;
+    final newDocument = doc(location);
+    // await newDocument.set(data);
+    String id = DateTime.now().millisecondsSinceEpoch.toString();
+    Directory pathDir = Directory(location + "/$id");
+    if (await pathDir.exists()) {
+    } else {
+      pathDir.create(recursive: true);
+    }
+    File dataFile = File(pathDir.path + "/data.json");
+    if (await dataFile.exists()) {
+    } else {
+      await dataFile.create(recursive: true);
+    }
+    dataFile.writeAsString(jsonEncode(data).toString());
+    return newDocument;
+  }
 
   @override
   DocumentReference<Map<String, dynamic>> doc([String? path]) {

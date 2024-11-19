@@ -6,7 +6,6 @@ class LocalFirestore {
   CollectionReference<Map<String, dynamic>> collection(String collectionPath) {
     LocalDelegate delegate = LocalDelegate(dataPath: "${Utils.dataPath}");
     delegate.collection(collectionPath);
-    print(delegate.getCollection());
 
     return JsonCollectionReference(
       this,
