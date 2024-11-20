@@ -19,6 +19,7 @@ class AppStrings {
   static String thisMonth = "This Month";
   static String thisYear = "This Year";
   static String upcomingTask = "Upcoming Task";
+  static String noUpcomingTask = "No upcoming task!";
   static String pinnedProjects = "Pinned Projects";
   static String left = "Left";
   static String taskToday = "Task Today";
