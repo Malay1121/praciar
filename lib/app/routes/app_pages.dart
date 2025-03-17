@@ -6,6 +6,8 @@ import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
+import '../modules/project_dashboard/bindings/project_dashboard_binding.dart';
+import '../modules/project_dashboard/views/project_dashboard_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
@@ -57,6 +59,11 @@ class AppPages {
       name: _Paths.SETTINGS,
       page: () => const SettingsView(),
       binding: SettingsBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROJECT_DASHBOARD,
+      page: () => const ProjectDashboardView(),
+      binding: ProjectDashboardBinding(),
     ),
   ];
 }

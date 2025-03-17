@@ -21,6 +21,9 @@ class CommonImage extends StatefulWidget {
 class _CommonImageState extends State<CommonImage> {
   @override
   Widget build(BuildContext context) {
+    (widget.imageUrl) == ""
+        ? widget.imageUrl = "assets/images/placeholder.png"
+        : widget.imageUrl = widget.imageUrl;
     return widget.type == "network"
         ? CachedNetworkImage(
             imageUrl: widget.imageUrl,

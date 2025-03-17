@@ -24,6 +24,7 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
             selectedTab: AppStrings.overview.toLowerCase(),
           ),
           Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SingleChildScrollView(
                 child: Padding(
@@ -33,6 +34,7 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                   ),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -567,6 +569,7 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                             project["pinned"] = project["pinned"] is bool
                                 ? !project["pinned"]
                                 : true;
+                            print(project);
                             DatabaseHelper.updateProject(
                                 projectId: project["id"], projectData: project);
                           }
@@ -602,168 +605,55 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                                               MainAxisAlignment.spaceEvenly,
                                           children: [
                                             for (Map project in projects)
-                                              Container(
-                                                margin: EdgeInsets.only(
-                                                    right: 32.w(context)),
-                                                width: 328.w(context),
-                                                decoration: BoxDecoration(
-                                                  color: AppColors.primary0,
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                ),
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 24.w(context),
-                                                  vertical: 24.h(context),
-                                                ),
-                                                child: Column(
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      child: CommonImage(
-                                                        imageUrl:
-                                                            "https://via.placeholder.com/280x110",
-                                                        width: 280.w(context),
-                                                        height: 110.h(context),
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 16.h(context),
-                                                    ),
-                                                    AppText(
-                                                      text: project["name"],
-                                                      height: 24.h(context),
-                                                      width: 280.w(context),
-                                                      style:
-                                                          TextStyles.semiBold(
-                                                        context: context,
-                                                        fontSize: 16,
-                                                        color: AppColors
-                                                            .secondary500,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 4.h(context),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 280.w(context),
-                                                      height: 16.h(context),
-                                                      child:
-                                                          SingleChildScrollView(
-                                                        scrollDirection:
-                                                            Axis.horizontal,
-                                                        physics:
-                                                            BouncingScrollPhysics(),
-                                                        child: Row(
-                                                          children: [
-                                                            Container(
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                horizontal: 5
-                                                                    .w(context),
-                                                              ),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                color: project[
-                                                                            "status"] ==
-                                                                        "active"
-                                                                    ? AppColors
-                                                                        .success500
-                                                                    : AppColors
-                                                                        .error500,
-                                                              ),
-                                                              child: AppText(
-                                                                text: project[
-                                                                    "status"],
-                                                                height: 16
-                                                                    .h(context),
-                                                                style:
-                                                                    TextStyles
-                                                                        .medium(
-                                                                  context:
-                                                                      context,
-                                                                  fontSize: 12,
-                                                                  color: AppColors
-                                                                      .primary0,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 16.h(context),
-                                                    ),
-                                                    Row(
-                                                      children: [
-                                                        SvgPicture.asset(
-                                                          AppImages.icClock,
-                                                          width: 24.w(context),
-                                                          height: 24.h(context),
-                                                          color: AppColors
-                                                              .secondary400,
-                                                        ),
-                                                        SizedBox(
-                                                          width: 8.w(context),
-                                                        ),
-                                                        StreamBuilder(
-                                                            stream:
-                                                                Stream.periodic(
-                                                                    const Duration(
-                                                                        seconds:
-                                                                            1)),
-                                                            builder: (context,
-                                                                snapshot) {
-                                                              return AppText(
-                                                                text:
-                                                                    "${Utils.formatDateTimeDifference(DateTime.now(), Utils.fromUtc(project["end_date"]))} ${AppStrings.left}",
-                                                                height: 24
-                                                                    .h(context),
-                                                                style:
-                                                                    TextStyles
-                                                                        .medium(
-                                                                  context:
-                                                                      context,
-                                                                  fontSize: 16.t(
-                                                                      context),
-                                                                  color: AppColors
-                                                                      .secondary500,
-                                                                ),
-                                                              );
-                                                            }),
-                                                        Spacer(),
-                                                        IconButton(
-                                                          icon: Icon(
-                                                            project["pinned"] ==
-                                                                    true
-                                                                ? Icons.star
-                                                                : Icons
-                                                                    .star_border_outlined,
-                                                            size: 20.t(context),
-                                                          ),
-                                                          onPressed: () =>
-                                                              togglePin(
-                                                                  project),
-                                                          color: AppColors
-                                                              .secondary500,
-                                                          splashRadius:
-                                                              20.t(context),
-                                                          hoverColor: AppColors
-                                                              .secondary500
-                                                              .withOpacity(0.1),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
+                                              CommonProjectCard(
+                                                  project: project)
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : SizedBox();
+                        },
+                      ),
+                      FutureBuilder(
+                        future: DatabaseHelper.getProject(),
+                        builder: (context, snapshot) {
+                          List projects = snapshot.data ?? [];
+
+                          return projects.isNotEmpty
+                              ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 32.h(context),
+                                    ),
+                                    Row(
+                                      children: [
+                                        AppText(
+                                          text: AppStrings.projects,
+                                          style: TextStyles.semiBold(
+                                            context: context,
+                                            fontSize: 24,
+                                            color: AppColors.secondary500,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(
+                                      height: 20.h(context),
+                                    ),
+                                    SizedBox(
+                                      width: 688.w(context),
+                                      child: SingleChildScrollView(
+                                        scrollDirection: Axis.horizontal,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: [
+                                            for (Map project in projects)
+                                              CommonProjectCard(
+                                                  project: project),
                                             // Text(
                                             //     "${task["title"]} -  ${Utils.formatDateTime(Utils.fromUtc(task["due_date"]))}"),
                                           ],

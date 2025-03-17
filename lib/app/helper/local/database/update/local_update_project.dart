@@ -12,5 +12,6 @@ Future<Map> localUpdateProject(
   int projectIndex = (data["workspaces"][workspaceIndex]["projects"] as List)
       .indexWhere((element) => element["id"] == projectId);
   data["workspaces"][workspaceIndex]["projects"][projectIndex] = projectData;
+  await localWriteData(data);
   return projectData;
 }

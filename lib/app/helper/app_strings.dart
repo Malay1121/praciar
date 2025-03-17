@@ -21,6 +21,7 @@ class AppStrings {
   static String upcomingTask = "Upcoming Task";
   static String noUpcomingTask = "No upcoming task!";
   static String pinnedProjects = "Pinned Projects";
+  static String projects = "Projects";
   static String left = "Left";
   static String taskToday = "Task Today";
   static String detailTask = "Detail Task";

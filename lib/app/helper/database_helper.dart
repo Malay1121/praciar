@@ -45,11 +45,11 @@ class DatabaseHelper {
     }
   }
 
-  static Future<List> getPinnedProject() async {
+  static Future<List> getPinnedProject({String? workspaceId}) async {
     if (Utils.isLocal) {
-      return await localGetPinnedProject();
+      return await localGetPinnedProject(workspaceId: workspaceId);
     } else {
-      return await localGetPinnedProject();
+      return await localGetPinnedProject(workspaceId: workspaceId);
     }
   }
 

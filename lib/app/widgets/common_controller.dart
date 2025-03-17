@@ -36,6 +36,7 @@ class CommonController extends GetxController {
     ).events.listen(
       (event) async {
         update();
+        print("updateeee");
       },
     );
   }

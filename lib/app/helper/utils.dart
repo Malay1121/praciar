@@ -16,7 +16,21 @@ class Utils {
     return (await getApplicationSupportDirectory()).path;
   }
 
+  static dynamic getKey(Map data, List location, dynamic replacement) {
+    dynamic value = data;
+    for (var key in location) {
+      if (value is Map) {
+        print(value.toString() + " is Map");
+        value = value[key];
+      } else {
+        return replacement;
+      }
+    }
+    return value ?? replacement;
+  }
+
   static Future<String> getDataPath() async {
+    print("${await getLocalPath()}\\data");
     return "${await getLocalPath()}\\data";
   }
 
