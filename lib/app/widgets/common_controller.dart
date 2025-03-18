@@ -31,6 +31,14 @@ class CommonController extends GetxController {
   Map data = {};
   StreamSubscription? watcher;
   void readDetails() async {
+    File("${Utils.dataPath}/data.json").exists().then((value) async{
+      if (value) {
+        data = await jsonDecode(File("${Utils.dataPath}/data.json").readAsStringSync());
+        update();
+      } else {
+        File("${Utils.dataPath}/data.json").writeAsStringSync(jsonEncode({}));
+      }
+    });
     watcher = FileWatcher(
       "${Utils.dataPath}/data.json",
     ).events.listen(
@@ -39,6 +47,8 @@ class CommonController extends GetxController {
         print("updateeee");
       },
     );
+    
+    
   }
 
   @override

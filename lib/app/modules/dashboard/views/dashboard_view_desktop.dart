@@ -378,7 +378,7 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                         future: widget.controller.getUpcomingTasks(),
                         builder: (context, snapshot) {
                           List tasks = snapshot.data ?? [];
-                          return tasks.isEmpty
+                          return tasks.isNotEmpty
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
@@ -621,48 +621,62 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                         builder: (context, snapshot) {
                           List projects = snapshot.data ?? [];
 
-                          return projects.isNotEmpty
-                              ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                          return Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              SizedBox(
+                                height: 32.h(context),
+                              ),
+                              SizedBox(
+                                width: 688.w(context),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
-                                    SizedBox(
-                                      height: 32.h(context),
+                                    AppText(
+                                      text: AppStrings.projects,
+                                      style: TextStyles.semiBold(
+                                        context: context,
+                                        fontSize: 24,
+                                        color: AppColors.secondary500,
+                                      ),
                                     ),
-                                    Row(
-                                      children: [
-                                        AppText(
-                                          text: AppStrings.projects,
-                                          style: TextStyles.semiBold(
-                                            context: context,
-                                            fontSize: 24,
-                                            color: AppColors.secondary500,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 20.h(context),
-                                    ),
-                                    SizedBox(
-                                      width: 688.w(context),
-                                      child: SingleChildScrollView(
-                                        scrollDirection: Axis.horizontal,
-                                        child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            for (Map project in projects)
-                                              CommonProjectCard(
-                                                  project: project),
-                                            // Text(
-                                            //     "${task["title"]} -  ${Utils.formatDateTime(Utils.fromUtc(task["due_date"]))}"),
-                                          ],
-                                        ),
+                                    Spacer(),
+                                    CommonButton(
+                                      text: AppStrings.newProject,
+                                      onTap: () => widget.controller
+                                          .createProjectDialog(),
+                                      backgroundColor: AppColors.primary500,
+                                      textColor: AppColors.primary0,
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: 60.w(context),
+                                        vertical: 12.h(context),
                                       ),
                                     ),
                                   ],
-                                )
-                              : SizedBox();
+                                ),
+                              ),
+                              SizedBox(
+                                height: 20.h(context),
+                              ),
+                              SizedBox(
+                                width: 688.w(context),
+                                child: SingleChildScrollView(
+                                  scrollDirection: Axis.horizontal,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      for (Map project in projects)
+                                        CommonProjectCard(project: project),
+                                      // Text(
+                                      //     "${task["title"]} -  ${Utils.formatDateTime(Utils.fromUtc(task["due_date"]))}"),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
                         },
                       ),
                     ],

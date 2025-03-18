@@ -40,7 +40,7 @@ class SplashController extends CommonController {
         }
       },
     );
-    tasksPerformed = await tasks();
+    tasksPerformed = await checkUserExist() ? await tasks() : true;
 
     if (timeDone) {
       redirect();

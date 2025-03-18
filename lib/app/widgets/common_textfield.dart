@@ -4,6 +4,7 @@ import 'dart:ffi';
 // import 'package:speech_to_text/speech_to_text.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart';
 
 import '../helper/all_imports.dart';
 
@@ -22,6 +23,7 @@ class CommonTextField extends StatefulWidget {
     this.obscureText = false,
     this.textInputAction,
     this.maxLines = 1,
+    this.inputFormatters,
   });
   String hintText;
   double? width;
@@ -35,6 +37,7 @@ class CommonTextField extends StatefulWidget {
   TextInputType? keyboardType;
   TextInputAction? textInputAction;
   int? maxLines;
+  List<TextInputFormatter>? inputFormatters;
 
   @override
   State<CommonTextField> createState() => _CommonTextFieldState();
@@ -94,6 +97,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
       width: widget.width,
       height: widget.height,
       child: TextField(
+        inputFormatters: widget.inputFormatters,
         controller: widget.controller,
         obscureText: widget.obscureText,
         keyboardType: widget.keyboardType,

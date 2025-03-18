@@ -13,6 +13,11 @@ class CommonSidebar extends StatefulWidget {
 class _CommonSidebarState extends State<CommonSidebar> {
   List<Map> tabs = [
     {
+      "material_icon": Icons.arrow_back_ios,
+      "title": AppStrings.back,
+      "onTap": () => Get.back(),
+    },
+    {
       "icon": AppImages.icCategory2,
       "title": AppStrings.overview,
       "screen": Routes.DASHBOARD,
@@ -57,7 +62,9 @@ class _CommonSidebarState extends State<CommonSidebar> {
           ),
           for (Map tab in tabs)
             InkWell(
-              onTap: () => Get.toNamed(tab["screen"]),
+              onTap: () => tab.containsKey("screen")
+                  ? Get.toNamed(tab["screen"])
+                  : tab["onTap"](),
               child: Container(
                 margin: EdgeInsets.only(
                   bottom: 24.h(context),
@@ -74,15 +81,23 @@ class _CommonSidebarState extends State<CommonSidebar> {
                   ),
                   child: Row(
                     children: [
-                      SvgPicture.asset(
-                        tab["icon"],
-                        width: 24.w(context),
-                        height: 24.h(context),
-                        fit: BoxFit.fitHeight,
-                        color: tabSelected(tab)
-                            ? AppColors.secondary500
-                            : AppColors.secondary300,
-                      ),
+                      tab.containsKey("icon")
+                          ? SvgPicture.asset(
+                              tab["icon"],
+                              width: 24.w(context),
+                              height: 24.h(context),
+                              fit: BoxFit.fitHeight,
+                              color: tabSelected(tab)
+                                  ? AppColors.secondary500
+                                  : AppColors.secondary300,
+                            )
+                          : Icon(
+                              tab["material_icon"],
+                              size: 24.t(context),
+                              color: tabSelected(tab)
+                                  ? AppColors.secondary500
+                                  : AppColors.secondary300,
+                            ),
                       SizedBox(
                         width: 12.w(context),
                       ),

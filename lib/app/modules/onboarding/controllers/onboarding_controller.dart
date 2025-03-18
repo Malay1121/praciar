@@ -8,6 +8,7 @@ class OnboardingController extends CommonController {
   TextEditingController emailController = TextEditingController();
 
   void getStarted({required String name, required String email}) async {
+    await DatabaseHelper.createDatabase();
     await DatabaseHelper.createUser(name: name, email: email, role: "owner");
     Get.offAllNamed(Routes.DASHBOARD);
   }

@@ -1,12 +1,13 @@
+import 'package:praciar/app/helper/local/database/create/local_create_project.dart';
 import 'package:praciar/app/helper/local/database/update/local_update_project.dart';
 
 import 'all_imports.dart';
 import 'local/database/get/local_get_pinned_projects.dart';
 
 class DatabaseHelper {
-  static void createDatabase() {
+  static Future createDatabase() async {
     if (Utils.isLocal) {
-      localCreateDatabase();
+      await localCreateDatabase();
     } else {}
   }
 
@@ -163,6 +164,30 @@ class DatabaseHelper {
       return await localCreateUser(name: name, email: email, role: role);
     } else {
       return await localCreateUser(name: name, email: email, role: role);
+    }
+  }
+
+  static Future<dynamic> createProject({
+    required String workspace,
+    required String id,
+    required String name,
+    required String description,
+    required DateTimeRange duration,
+  }) async {
+    if (Utils.isLocal) {
+      return await localCreateProject(
+          workspace: workspace,
+          id: id,
+          name: name,
+          description: description,
+          duration: duration);
+    } else {
+      return await localCreateProject(
+          workspace: workspace,
+          id: id,
+          name: name,
+          description: description,
+          duration: duration);
     }
   }
 

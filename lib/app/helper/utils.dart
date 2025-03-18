@@ -1,3 +1,4 @@
+import 'package:get/get.dart';
 import 'package:humanize_duration/humanize_duration.dart';
 import 'package:intl/intl.dart';
 import 'package:praciar/app/helper/local_firestore/local_firestore.dart';
@@ -29,6 +30,23 @@ class Utils {
     return value ?? replacement;
   }
 
+  static dynamic addItemToList(Map data, List location, dynamic item) {
+    dynamic value = data;
+    for (var key in location) {
+      if (value is Map) {
+        print(value.toString() + " is Map");
+        value = value[key];
+      } else {
+        if (value is! List) {
+          value = [];
+        }
+      }
+    }
+    value ??= [];
+    value.add(item);
+    return value;
+  }
+
   static Future<String> getDataPath() async {
     print("${await getLocalPath()}\\data");
     return "${await getLocalPath()}\\data";
@@ -44,6 +62,15 @@ class Utils {
 
   static String formatDateTime(DateTime dateTime) {
     return DateFormat.yMMMMd().format(dateTime);
+  }
+
+  static showSnackbar({String? title, String? message}) {
+    Get.snackbar(
+      title ?? AppStrings.appName,
+      message ?? '',
+      backgroundColor: AppColors.primary500,
+      colorText: AppColors.primary0,
+    );
   }
 
   static String formatDateTimeDifference(DateTime startDateTime, endDateTime) {

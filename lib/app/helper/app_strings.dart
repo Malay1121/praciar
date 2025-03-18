@@ -6,6 +6,7 @@ class AppStrings {
   static String getStarted = "Get started";
   static String yourName = "Your Name";
   static String yourEmail = "Your Email";
+  static String back = "Back";
   static String overview = "Overview";
   static String task = "Task";
   static String settings = "Settings";
@@ -26,6 +27,21 @@ class AppStrings {
   static String taskToday = "Task Today";
   static String detailTask = "Detail Task";
   static String goToDetail = "Go To Detail";
+
+  static String newProject = "New Project";
+  static String duration = "Duration";
+  static String projectId = "Project ID";
+  static String projectDuration = "Project Duration";
+  static String projectName = "Project Name";
+  static String projectDescription = "Project Description";
+  static String projectIdIsNotUnique = "Project ID is not unique";
+  static String projectNameValidation = "Please enter a valid project name";
+  static String projectDescriptionValidation =
+      "Please enter a valid project description";
+  static String projectIdValidation =
+      "Please enter a valid project ID, can only contain lowercase letters, _, and -";
+  static String projectDurationValidation =
+      "Please select a valid project duration";
 
   static String tags = "Tags";
   static String tag = "Tag";

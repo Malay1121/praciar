@@ -6,7 +6,13 @@ Future<Map> localReadData() async {
   return await run(() async {
     String path = await Utils.getDataPath();
     File file = File('$path/data.json');
-    file.watch(recursive: true).asBroadcastStream();
-    return jsonDecode(await file.readAsString());
+    Map data = {};
+    if (await file.exists()) {
+      file.watch(recursive: true).asBroadcastStream();
+      data = jsonDecode(await file.readAsString());
+    } else {
+      localCreateDatabase();
+    }
+    return data;
   });
 }
