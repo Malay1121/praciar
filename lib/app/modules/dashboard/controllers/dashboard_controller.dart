@@ -291,6 +291,13 @@ class DashboardController extends CommonController {
                           );
                         },
                       ).toList(),
+                      dropdownItemDecoration: DropdownItemDecoration(
+                        textColor: AppColors.secondary900,
+                        backgroundColor: AppColors.background,
+                      ),
+                      dropdownDecoration: DropdownDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                       searchDecoration: SearchFieldDecoration(
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(8),

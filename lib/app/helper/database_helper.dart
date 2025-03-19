@@ -27,6 +27,17 @@ class DatabaseHelper {
     }
   }
 
+  static Future<dynamic> getTaskTags(
+      {required String workspaceId, required String projectId}) async {
+    if (Utils.isLocal) {
+      return await localGetTaskTags(
+          workspaceId: workspaceId, projectId: projectId);
+    } else {
+      return await localGetTaskTags(
+          workspaceId: workspaceId, projectId: projectId);
+    }
+  }
+
   static Future<List> getWorkspace({String? workspaceId}) async {
     if (Utils.isLocal) {
       return await localGetWorkspace(workspaceId: workspaceId);
@@ -130,6 +141,14 @@ class DatabaseHelper {
   }
 
   static Future<dynamic> updateTag({required Map data}) async {
+    if (Utils.isLocal) {
+      return await localUpdateTag(data);
+    } else {
+      return await localUpdateTag(data);
+    }
+  }
+
+  static Future<dynamic> updateTaskTag({required Map data}) async {
     if (Utils.isLocal) {
       return await localUpdateTag(data);
     } else {

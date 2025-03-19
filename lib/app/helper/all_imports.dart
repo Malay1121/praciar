@@ -18,6 +18,8 @@ export 'package:praciar/app/helper/local/database/get/local_get_key.dart';
 export 'package:praciar/app/helper/local/database/get/local_get_workspace.dart';
 export 'package:praciar/app/helper/local/database/create/local_create_tag.dart';
 export 'package:praciar/app/helper/local/database/get/local_get_project.dart';
+export 'package:praciar/app/helper/local/database/get/local_get_tags.dart';
+export 'package:praciar/app/helper/local/database/get/local_get_task_tags.dart';
 
 export 'package:praciar/app/helper/local_firestore/local_collection_reference.dart';
 export 'package:praciar/app/helper/local_firestore/local_document_reference.dart';
@@ -59,6 +61,7 @@ export 'package:praciar/app/helper/local_firestore/local_document_snapshot.dart'
 export 'package:multi_dropdown/multi_dropdown.dart';
 
 export 'package:praciar/app/widgets/common_sidebar.dart';
+export 'package:praciar/app/widgets/common_project_sidebar.dart';
 export 'package:praciar/app/widgets/common_controller.dart';
 export 'package:praciar/app/widgets/common_image.dart';
 export 'package:praciar/app/widgets/common_project_card.dart';

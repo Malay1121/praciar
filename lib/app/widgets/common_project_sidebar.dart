@@ -1,17 +1,22 @@
 import 'package:get/get.dart';
 import 'package:praciar/app/helper/all_imports.dart';
 
-class CommonSidebar extends StatefulWidget {
-  CommonSidebar({required this.selectedTab});
+class CommonProjectSidebar extends StatefulWidget {
+  CommonProjectSidebar({required this.selectedTab});
 
   String selectedTab;
 
   @override
-  State<CommonSidebar> createState() => _CommonSidebarState();
+  State<CommonProjectSidebar> createState() => _CommonProjectSidebarState();
 }
 
-class _CommonSidebarState extends State<CommonSidebar> {
+class _CommonProjectSidebarState extends State<CommonProjectSidebar> {
   List<Map> tabs = [
+    {
+      "material_icon": Icons.arrow_back_ios,
+      "title": AppStrings.back,
+      "onTap": () => Get.back(),
+    },
     {
       "icon": AppImages.icCategory2,
       "title": AppStrings.overview,

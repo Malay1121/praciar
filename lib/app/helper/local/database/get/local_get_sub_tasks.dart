@@ -14,15 +14,21 @@ Future<List> localGetSubTask({
         projectId: projectId,
         taskListId: taskListId,
         taskId: taskId));
+
+    print("tasklisttttttt: ");
+    print(taskList);
+
     for (Map taskListData in taskList) {
       if (subTaskId != null) {
-        subTaskList.addAll(taskListData["sub_tasks"].where(
+        subTaskList.addAll(Utils.getKey(taskListData, ["subtasks"], []).where(
           (element) => element["id"] == subTaskId,
         ));
       } else {
-        subTaskList.addAll(taskListData["sub_tasks"]);
+        subTaskList.addAll(Utils.getKey(taskListData, ["subtasks"], []));
       }
     }
+
+    print("subtaskkkkk: ");
 
     return subTaskList;
   });
