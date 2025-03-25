@@ -21,7 +21,6 @@ class Utils {
     dynamic value = data;
     for (var key in location) {
       if (value is Map) {
-        print(value.toString() + " is Map");
         value = value[key];
       } else {
         return replacement;

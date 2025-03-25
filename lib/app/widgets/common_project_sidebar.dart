@@ -2,9 +2,10 @@ import 'package:get/get.dart';
 import 'package:praciar/app/helper/all_imports.dart';
 
 class CommonProjectSidebar extends StatefulWidget {
-  CommonProjectSidebar({required this.selectedTab});
+  CommonProjectSidebar({required this.selectedTab, required this.projectId});
 
   String selectedTab;
+  String projectId;
 
   @override
   State<CommonProjectSidebar> createState() => _CommonProjectSidebarState();
@@ -30,7 +31,7 @@ class _CommonProjectSidebarState extends State<CommonProjectSidebar> {
     {
       "icon": AppImages.icTag,
       "title": AppStrings.tags,
-      "screen": Routes.TAGS,
+      "screen": Routes.PROJECT_TAGS,
     },
     {
       "icon": AppImages.icSettings,
@@ -63,7 +64,8 @@ class _CommonProjectSidebarState extends State<CommonProjectSidebar> {
           for (Map tab in tabs)
             InkWell(
               onTap: () => tab.containsKey("screen")
-                  ? Get.toNamed(tab["screen"])
+                  ? Get.offAndToNamed(tab["screen"],
+                      arguments: {"projectId": widget.projectId})
                   : tab["onTap"](),
               child: Container(
                 margin: EdgeInsets.only(

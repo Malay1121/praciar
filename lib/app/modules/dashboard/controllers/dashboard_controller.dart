@@ -107,7 +107,8 @@ class DashboardController extends CommonController {
       "end_date": Utils.toUtc(duration.end),
       "task_list": [
         {"id": "todo", "name": "TODO", "color": "FFFFF", "tasks": []}
-      ]
+      ],
+      "tags": [],
     };
     return await DatabaseHelper.createProject(
         workspace: Utils.currentWorkspace,
@@ -282,28 +283,73 @@ class DashboardController extends CommonController {
                     SizedBox(
                       height: 24.h(context),
                     ),
-                    MultiDropdown<String>(
-                      items: tags.map<DropdownItem<String>>(
-                        (dynamic tag) {
-                          return DropdownItem(
-                            label: Utils.getKey(tag, ["name"], ""),
-                            value: Utils.getKey(tag, ["id"], ""),
-                          );
-                        },
-                      ).toList(),
-                      dropdownItemDecoration: DropdownItemDecoration(
-                        textColor: AppColors.secondary900,
-                        backgroundColor: AppColors.background,
-                      ),
-                      dropdownDecoration: DropdownDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      searchDecoration: SearchFieldDecoration(
-                        border: OutlineInputBorder(
+                    SizedBox(
+                      width: 299.w(context),
+                      child: MultiDropdown<String>(
+                        items: tags.map<DropdownItem<String>>(
+                          (dynamic tag) {
+                            return DropdownItem(
+                              label: Utils.getKey(tag, ["name"], ""),
+                              value: Utils.getKey(tag, ["id"], ""),
+                            );
+                          },
+                        ).toList(),
+                        chipDecoration: ChipDecoration(
+                          labelStyle: TextStyles.regular(
+                            context: context,
+                            fontSize: 12.t(context),
+                            color: AppColors.primary0,
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 0.h(context), vertical: 0.h(context)),
+                          backgroundColor: AppColors.primary500,
+                          deleteIcon: Icon(
+                            Icons.close,
+                            size: 16.t(context),
+                            color: AppColors.primary0,
+                          ),
                           borderRadius: BorderRadius.circular(8),
-                          borderSide: BorderSide(
-                            color: AppColors.cardColor,
-                            width: 1,
+                        ),
+                        dropdownItemDecoration: DropdownItemDecoration(
+                          textColor: AppColors.secondary900,
+                          backgroundColor: AppColors.background,
+                        ),
+                        dropdownDecoration: DropdownDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        fieldDecoration: FieldDecoration(
+                          suffixIcon: Icon(
+                            Icons.arrow_drop_down,
+                            size: 18.t(context),
+                            color: AppColors.secondary900,
+                          ),
+                          borderRadius: 8,
+                          hintText: AppStrings.tags,
+                          hintStyle: TextStyles.regular(
+                            context: context,
+                            fontSize: 12.t(context),
+                            color: AppColors.secondary400,
+                          ),
+                          labelStyle: TextStyles.regular(
+                            context: context,
+                            fontSize: 12.t(context),
+                            color: AppColors.secondary500,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: AppColors.cardColor,
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        searchDecoration: SearchFieldDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: AppColors.cardColor,
+                              width: 1,
+                            ),
                           ),
                         ),
                       ),

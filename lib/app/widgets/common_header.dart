@@ -59,7 +59,7 @@ class _CommonHeaderState extends State<CommonHeader> {
               shape: BoxShape.circle,
               image: DecorationImage(
                 image: NetworkImage(
-                  "https://via.placeholder.com/52x52",
+                  "https://placehold.co/52x52",
                 ),
                 fit: BoxFit.fill,
               ),

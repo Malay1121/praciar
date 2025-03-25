@@ -1,15 +1,19 @@
 import 'package:praciar/app/helper/all_imports.dart';
 import 'package:praciar/app/helper/local/database/update/local_update_data.dart';
+import 'package:praciar/app/helper/local/database/update/local_update_project.dart';
 
 import '../create/local_write_data.dart';
 
 Future<List> localUpdateTaskTag(
     String workspaceId, String projectId, Map tagData) async {
   return await run(() async {
-    Map data = (await localReadData());
+    Map project = (await localGetProject(
+      projectId: projectId,
+      workspaceId: workspaceId,
+    ))
+        .first;
     Map tag =
-        (await localGetTaskTags(projectId: projectId, workspaceId: workspaceId))
-            .firstWhere((element) => element["id"] == tagData["id"]);
+        project["tags"].firstWhere((element) => element["id"] == tagData["id"]);
     tag["name"] = tagData["name"];
     tag["color"] = tagData["color"];
     if (tag["updated_at"] is List) {
@@ -24,17 +28,8 @@ Future<List> localUpdateTaskTag(
       ];
     }
 
-    Utils.getKey(data, [
-      "workspaces",
-    ], {});
-    localUpdateKey(location: [
-      "workspaces",
-      Utils.getKey(data, ["workspaces"], [])
-          .firstWhere((element) => element["id"] == workspaceId),
-      "projects",
-    ], updateData: tag);
+    await localUpdateProject(projectId: projectId, projectData: project);
 
-    await localWriteData(data);
-    return data["tags"];
+    return project["tags"];
   });
 }

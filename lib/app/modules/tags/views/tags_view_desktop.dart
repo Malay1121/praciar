@@ -145,7 +145,8 @@ class _TagsViewDesktopState extends State<TagsViewDesktop> {
                                 height: 26.h(context),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: AppColors.primary500,
+                                  color: HexColor(
+                                      Utils.getKey(tag, ["color"], "")),
                                 ),
                               ),
                               SizedBox(

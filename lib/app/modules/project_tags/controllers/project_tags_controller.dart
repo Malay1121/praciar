@@ -7,13 +7,16 @@ class ProjectTagsController extends CommonController {
     required String name,
     required Color color,
   }) async {
-    tags = await DatabaseHelper.createTag(data: {
-      "name": name,
-      "color": color.toHexString().substring(2),
-      "created_at": Utils.toUtc(
-        DateTime.now(),
-      ),
-    });
+    tags = await DatabaseHelper.createTaskTag(
+        projectId: projectId,
+        workspaceId: Utils.currentWorkspace,
+        data: {
+          "name": name,
+          "color": color.toHexString().substring(2),
+          "created_at": Utils.toUtc(
+            DateTime.now(),
+          ),
+        });
     update();
   }
 
@@ -22,11 +25,14 @@ class ProjectTagsController extends CommonController {
     required Color color,
     required String id,
   }) async {
-    tags = await DatabaseHelper.updateTag(data: {
-      "name": name,
-      "color": color.toHexString().substring(2),
-      "id": id,
-    });
+    tags = await DatabaseHelper.updateTaskTag(
+        projectId: projectId,
+        workspaceId: Utils.currentWorkspace,
+        data: {
+          "name": name,
+          "color": color.toHexString().substring(2),
+          "id": id,
+        });
 
     update();
   }
@@ -34,7 +40,8 @@ class ProjectTagsController extends CommonController {
   void deleteTag({
     required String id,
   }) async {
-    tags = await DatabaseHelper.deleteTag(id: id);
+    tags = await DatabaseHelper.deleteTaskTag(
+        projectId: projectId, workspaceId: Utils.currentWorkspace, id: id);
     update();
   }
 
@@ -227,11 +234,18 @@ class ProjectTagsController extends CommonController {
   @override
   void onInit() {
     super.onInit();
+    if (Get.arguments != null) {
+      projectId = Utils.getKey(Get.arguments, ["projectId"], "");
+      fetchTags();
+    }
   }
 
   @override
   void onReady() {
     super.onReady();
+    if (projectId.isEmpty) {
+      // Get.back();
+    }
   }
 
   @override

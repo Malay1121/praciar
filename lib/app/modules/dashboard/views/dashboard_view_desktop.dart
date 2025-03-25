@@ -100,7 +100,7 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                               shape: BoxShape.circle,
                               image: DecorationImage(
                                 image: NetworkImage(
-                                  "https://via.placeholder.com/52x52",
+                                  "https://placehold.co/52x52",
                                 ),
                                 fit: BoxFit.fill,
                               ),
@@ -119,8 +119,6 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                           future: DatabaseHelper.getSubTask(),
                           builder: (context, snapshot) {
                             if (snapshot.data == null) {
-                              print("snapshottttt: ");
-                              print(snapshot.data);
                               return SizedBox();
                             }
 
@@ -493,7 +491,7 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                                                               10),
                                                       child: CommonImage(
                                                         imageUrl:
-                                                            "https://via.placeholder.com/280x110",
+                                                            "https://placehold.co/280x110",
                                                         width: 280.w(context),
                                                         height: 110.h(context),
                                                         fit: BoxFit.cover,

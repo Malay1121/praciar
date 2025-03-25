@@ -9,6 +9,7 @@ class TagsController extends CommonController {
     required String name,
     required Color color,
   }) async {
+    print(color);
     tags = await DatabaseHelper.createTag(data: {
       "name": name,
       "color": color.toHexString().substring(2),

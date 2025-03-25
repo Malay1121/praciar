@@ -140,6 +140,34 @@ class DatabaseHelper {
     }
   }
 
+  static Future<dynamic> createTaskTag(
+      {required String projectId,
+      required String workspaceId,
+      required Map data}) async {
+    print("      projectId: ${projectId}, workspaceId: ${workspaceId},");
+    List tags = Utils.getKey(
+        (await localGetProject(
+          projectId: projectId,
+          workspaceId: workspaceId,
+        ))
+            .first,
+        ["tags"],
+        []);
+    List idList = [];
+    for (Map tag in tags) {
+      idList.add(tag["id"]);
+    }
+    String id = Utils.nameToId(data["name"], idList);
+    data.addEntries({
+      "id": id,
+    }.entries);
+    if (Utils.isLocal) {
+      return await localCreateTaskTag(workspaceId, projectId, data);
+    } else {
+      return await localCreateTaskTag(workspaceId, projectId, data);
+    }
+  }
+
   static Future<dynamic> updateTag({required Map data}) async {
     if (Utils.isLocal) {
       return await localUpdateTag(data);
@@ -148,11 +176,14 @@ class DatabaseHelper {
     }
   }
 
-  static Future<dynamic> updateTaskTag({required Map data}) async {
+  static Future<dynamic> updateTaskTag(
+      {required String projectId,
+      required String workspaceId,
+      required Map data}) async {
     if (Utils.isLocal) {
-      return await localUpdateTag(data);
+      return await localUpdateTaskTag(workspaceId, projectId, data);
     } else {
-      return await localUpdateTag(data);
+      return await localUpdateTaskTag(workspaceId, projectId, data);
     }
   }
 
@@ -172,6 +203,17 @@ class DatabaseHelper {
       return await localDeleteTag(id);
     } else {
       return await localDeleteTag(id);
+    }
+  }
+
+  static Future<dynamic> deleteTaskTag(
+      {required String workspaceId,
+      required String projectId,
+      required String id}) async {
+    if (Utils.isLocal) {
+      return await localDeleteTaskTag(workspaceId, projectId, id);
+    } else {
+      return await localDeleteTaskTag(workspaceId, projectId, id);
     }
   }
 

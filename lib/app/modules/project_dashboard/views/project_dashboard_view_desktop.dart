@@ -22,6 +22,7 @@ class _ProjectDashboardViewDesktopState
         children: [
           CommonProjectSidebar(
             selectedTab: AppStrings.overview.toLowerCase(),
+            projectId: widget.controller.projectId,
           ),
           Expanded(
             child: Row(
@@ -102,7 +103,7 @@ class _ProjectDashboardViewDesktopState
                                   shape: BoxShape.circle,
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                      "https://via.placeholder.com/52x52",
+                                      "https://placehold.co/52x52",
                                     ),
                                     fit: BoxFit.fill,
                                   ),
@@ -176,7 +177,7 @@ class _ProjectDashboardViewDesktopState
                                                                   .circular(10),
                                                           child: CommonImage(
                                                             imageUrl:
-                                                                "https://via.placeholder.com/280x110",
+                                                                "https://placehold.co/280x110",
                                                             width:
                                                                 280.w(context),
                                                             height:

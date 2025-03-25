@@ -21,8 +21,9 @@ class _ProjectTagsViewDesktopState extends State<ProjectTagsViewDesktop> {
       backgroundColor: AppColors.background,
       body: Row(
         children: [
-          CommonSidebar(
+          CommonProjectSidebar(
             selectedTab: AppStrings.tags.toLowerCase(),
+            projectId: widget.controller.projectId,
           ),
           Column(
             children: [
@@ -145,7 +146,8 @@ class _ProjectTagsViewDesktopState extends State<ProjectTagsViewDesktop> {
                                 height: 26.h(context),
                                 decoration: BoxDecoration(
                                   shape: BoxShape.circle,
-                                  color: AppColors.primary500,
+                                  color: HexColor(
+                                      Utils.getKey(tag, ["color"], "")),
                                 ),
                               ),
                               SizedBox(

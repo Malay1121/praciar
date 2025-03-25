@@ -106,7 +106,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
         textInputAction: widget.textInputAction,
         style: TextStyles.regular(
           context: context,
-          fontSize: 12,
+          fontSize: 12.t(context),
           color: AppColors.secondary500,
         ),
         decoration: InputDecoration(
@@ -117,7 +117,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
           hintText: widget.hintText,
           hintStyle: TextStyles.regular(
             context: context,
-            fontSize: 12,
+            fontSize: 12.t(context),
             color: AppColors.secondary400,
           ),
           prefixIcon: widget.prefixIcon,
