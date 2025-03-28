@@ -4,7 +4,7 @@ part of 'app_pages.dart';
 abstract class Routes {
   Routes._();
   static const HOME = _Paths.HOME;
-  static const TABLE_VIEW = _Paths.TABLE_VIEW;
+  static const PROJECT_TABLE_VIEW = _Paths.PROJECT_TABLE_VIEW;
   static const DASHBOARD = _Paths.DASHBOARD;
   static const TAGS = _Paths.TAGS;
   static const ONBOARDING = _Paths.ONBOARDING;
@@ -17,7 +17,7 @@ abstract class Routes {
 abstract class _Paths {
   _Paths._();
   static const HOME = '/home';
-  static const TABLE_VIEW = '/table-view';
+  static const PROJECT_TABLE_VIEW = '/project-table-view';
   static const DASHBOARD = '/dashboard';
   static const TAGS = '/tags';
   static const ONBOARDING = '/onboarding';

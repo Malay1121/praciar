@@ -527,41 +527,81 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                                                         child: Row(
                                                           children: [
                                                             for (Map tag
-                                                                in task["tags"])
-                                                              Container(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                  horizontal: 5
-                                                                      .w(context),
-                                                                ),
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              5),
-                                                                  color:
-                                                                      HexColor(
-                                                                    tag["color"],
-                                                                  ),
-                                                                ),
-                                                                child: AppText(
-                                                                  text: tag[
-                                                                      "name"],
-                                                                  height: 16.h(
-                                                                      context),
-                                                                  style:
-                                                                      TextStyles
-                                                                          .medium(
-                                                                    context:
-                                                                        context,
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: AppColors
-                                                                        .primary0,
-                                                                  ),
-                                                                ),
-                                                              ),
+                                                                in Utils.getKey(
+                                                                    task, [
+                                                              "tags"
+                                                            ], []))
+                                                              FutureBuilder(
+                                                                  future: DatabaseHelper.getTaskTags(
+                                                                      workspaceId:
+                                                                          Utils
+                                                                              .currentWorkspace,
+                                                                      projectId:
+                                                                          Utils.getKey(
+                                                                              task,
+                                                                              [
+                                                                                "projectId"
+                                                                              ],
+                                                                              ""),
+                                                                      tagId: Utils.getKey(
+                                                                          tag,
+                                                                          [
+                                                                            "id"
+                                                                          ],
+                                                                          "")),
+                                                                  builder: (context,
+                                                                      snapshot) {
+                                                                    if (snapshot
+                                                                            .data ==
+                                                                        null) {
+                                                                      return Container();
+                                                                    }
+                                                                    Map tagData =
+                                                                        (snapshot.data
+                                                                                as List)
+                                                                            .first;
+                                                                    return Container(
+                                                                      height: 16
+                                                                          .h(context),
+                                                                      padding:
+                                                                          EdgeInsets
+                                                                              .symmetric(
+                                                                        horizontal:
+                                                                            5.w(context),
+                                                                      ),
+                                                                      decoration:
+                                                                          BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(5),
+                                                                        color: HexColor(Utils.getKey(
+                                                                            tagData,
+                                                                            [
+                                                                              "color"
+                                                                            ],
+                                                                            "")),
+                                                                      ),
+                                                                      child:
+                                                                          AppText(
+                                                                        text: Utils.getKey(
+                                                                            tagData,
+                                                                            [
+                                                                              "name"
+                                                                            ],
+                                                                            ""),
+                                                                        height:
+                                                                            16.h(context),
+                                                                        style: TextStyles
+                                                                            .medium(
+                                                                          context:
+                                                                              context,
+                                                                          fontSize:
+                                                                              12,
+                                                                          color:
+                                                                              AppColors.primary0,
+                                                                        ),
+                                                                      ),
+                                                                    );
+                                                                  }),
                                                           ],
                                                         ),
                                                       ),

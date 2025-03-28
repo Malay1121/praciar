@@ -21,12 +21,12 @@ class _CommonProjectSidebarState extends State<CommonProjectSidebar> {
     {
       "icon": AppImages.icCategory2,
       "title": AppStrings.overview,
-      "screen": Routes.DASHBOARD,
+      "screen": Routes.PROJECT_DASHBOARD,
     },
     {
       "icon": AppImages.icBook,
       "title": AppStrings.task,
-      "screen": Routes.DASHBOARD,
+      "screen": Routes.PROJECT_TABLE_VIEW,
     },
     {
       "icon": AppImages.icTag,

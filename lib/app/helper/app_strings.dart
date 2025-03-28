@@ -43,6 +43,11 @@ class AppStrings {
   static String projectDurationValidation =
       "Please select a valid project duration";
 
+  static String newTask = "New Task";
+  static String newList = "New List";
+  static String taskName = "Task Name";
+  static String taskDescription = "Task Description";
+
   static String tags = "Tags";
   static String tag = "Tag";
   static String exploreTag = "Explore Tags";

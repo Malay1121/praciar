@@ -14,8 +14,8 @@ import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
-import '../modules/table_view/bindings/table_view_binding.dart';
-import '../modules/table_view/views/table_view_view.dart';
+import '../modules/project_table_view/bindings/table_view_binding.dart';
+import '../modules/project_table_view/views/project_table_view_view.dart';
 import '../modules/tags/bindings/tags_binding.dart';
 import '../modules/tags/views/tags_view.dart';
 
@@ -33,8 +33,8 @@ class AppPages {
       binding: HomeBinding(),
     ),
     GetPage(
-      name: _Paths.TABLE_VIEW,
-      page: () => const TableViewView(),
+      name: _Paths.PROJECT_TABLE_VIEW,
+      page: () => const ProjectTableViewView(),
       binding: TableViewBinding(),
     ),
     GetPage(

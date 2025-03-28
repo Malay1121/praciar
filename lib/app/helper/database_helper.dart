@@ -28,13 +28,15 @@ class DatabaseHelper {
   }
 
   static Future<dynamic> getTaskTags(
-      {required String workspaceId, required String projectId}) async {
+      {required String workspaceId,
+      required String projectId,
+      String? tagId}) async {
     if (Utils.isLocal) {
       return await localGetTaskTags(
-          workspaceId: workspaceId, projectId: projectId);
+          workspaceId: workspaceId, projectId: projectId, tagId: tagId);
     } else {
       return await localGetTaskTags(
-          workspaceId: workspaceId, projectId: projectId);
+          workspaceId: workspaceId, projectId: projectId, tagId: tagId);
     }
   }
 
