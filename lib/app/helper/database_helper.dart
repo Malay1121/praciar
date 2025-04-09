@@ -170,6 +170,52 @@ class DatabaseHelper {
     }
   }
 
+  static Future<dynamic> createTask(
+      {required String projectId,
+      required String workspaceId,
+      required String listId,
+      required Map data}) async {
+    print("      projectId: ${projectId}, workspaceId: ${workspaceId},");
+    List tags =
+        await localGetTask(workspaceId: workspaceId, projectId: projectId);
+    List idList = [];
+    for (Map tag in tags) {
+      idList.add(tag["id"]);
+    }
+    String id = Utils.nameToId(Utils.getKey(data, ["title"], "task"), idList);
+    data.addEntries({
+      "id": id,
+    }.entries);
+    if (Utils.isLocal) {
+      return await localCreateTask(workspaceId, projectId, listId, data);
+    } else {
+      return await localCreateTask(workspaceId, projectId, listId, data);
+    }
+  }
+
+  static Future<dynamic> createTaskList(
+      {required String projectId,
+      required String workspaceId,
+      required Map data}) async {
+    List tags =
+        await localGetTaskList(workspaceId: workspaceId, projectId: projectId);
+    List idList = [];
+    for (Map tag in tags) {
+      idList.add(tag["id"]);
+    }
+    String id =
+        Utils.nameToId(Utils.getKey(data, ["name"], "tasklist"), idList);
+    data.addEntries({
+      "id": id,
+      "tasks": [],
+    }.entries);
+    if (Utils.isLocal) {
+      return await localCreateTaskList(workspaceId, projectId, data);
+    } else {
+      return await localCreateTaskList(workspaceId, projectId, data);
+    }
+  }
+
   static Future<dynamic> updateTag({required Map data}) async {
     if (Utils.isLocal) {
       return await localUpdateTag(data);

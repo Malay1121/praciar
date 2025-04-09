@@ -129,8 +129,8 @@ class _ProjectTableViewViewDesktopState
                                       style: TextStyles.bold(
                                         context: context,
                                         fontSize: 20.t(context),
-                                        color: HexColor(
-                                            Utils.getKey(table, ["color"], "")),
+                                        color: HexColor(Utils.getKey(
+                                            table, ["color"], "FFFFFF")),
                                       ),
                                     ),
                                     SizedBox(
@@ -139,8 +139,8 @@ class _ProjectTableViewViewDesktopState
                                     Container(
                                       height: 0.5,
                                       width: 328.w(context),
-                                      color: HexColor(
-                                          Utils.getKey(table, ["color"], "")),
+                                      color: HexColor(Utils.getKey(
+                                          table, ["color"], "FFFFFF")),
                                     ),
                                     SizedBox(
                                       height: 16.h(context),
@@ -278,7 +278,7 @@ class _ProjectTableViewViewDesktopState
                                                                         [
                                                                           "color"
                                                                         ],
-                                                                        "")),
+                                                                        "FFFFFF")),
                                                               ),
                                                               child: AppText(
                                                                 text: Utils
@@ -364,8 +364,10 @@ class _ProjectTableViewViewDesktopState
                                   DragAndDropItem(
                                       child: CommonButton(
                                         text: AppStrings.newTask,
-                                        onTap: () =>
-                                            widget.controller.addNewTask(),
+                                        onTap: () => widget.controller
+                                            .addNewTask(
+                                                listId: Utils.getKey(
+                                                    table, ["id"], "")),
                                         prefix: SvgPicture.asset(
                                           AppImages.icAdd,
                                           width: 24.w(context),
@@ -390,9 +392,7 @@ class _ProjectTableViewViewDesktopState
                               children: [],
                               header: CommonButton(
                                 text: AppStrings.newList,
-                                onTap: () => null,
-                                // widget.controller.addNewTag(),
-
+                                onTap: () => widget.controller.addNewTaskList(),
                                 prefix: SvgPicture.asset(
                                   AppImages.icAdd,
                                   width: 24.w(context),

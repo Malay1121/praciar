@@ -23,6 +23,8 @@ export 'package:praciar/app/helper/local/database/get/local_get_task_tags.dart';
 export 'package:praciar/app/helper/local/database/update/local_update_task_tag.dart';
 export 'package:praciar/app/helper/local/database/create/local_create_task_tag.dart';
 export 'package:praciar/app/helper/local/database/delete/local_delete_task_tag.dart';
+export 'package:praciar/app/helper/local/database/create/local_create_task.dart';
+export 'package:praciar/app/helper/local/database/create/local_create_task_list.dart';
 
 export 'package:praciar/app/helper/local_firestore/local_collection_reference.dart';
 export 'package:praciar/app/helper/local_firestore/local_document_reference.dart';

@@ -47,6 +47,8 @@ class AppStrings {
   static String newList = "New List";
   static String taskName = "Task Name";
   static String taskDescription = "Task Description";
+  static String listName = "List Name";
+  static String listDescription = "List Description";
 
   static String tags = "Tags";
   static String tag = "Tag";

@@ -49,17 +49,203 @@ class ProjectTableViewController extends CommonController {
     ];
   }
 
-  void createTask(
+  void createTaskList(
       {required String name,
       required String description,
-      required DateTimeRange duration,
-      required Color color}) async {}
+      required Color color}) async {
+    await DatabaseHelper.createTaskList(
+        projectId: projectId,
+        workspaceId: Utils.currentWorkspace,
+        data: {
+          "name": name,
+          "description": description,
+          "color": color.toHexString().substring(2),
+          "created_at": Utils.toUtc(
+            DateTime.now(),
+          ),
+        });
+  }
 
-  void addNewTask({Map? tag}) {
+  void addNewTaskList({Map? tag}) {
+    Color color = tag != null
+        ? HexColor(Utils.getKey(tag, ["color"], "546FFF"))
+        : AppColors.primary500;
+    TextEditingController nameController = TextEditingController(
+        text: tag != null ? Utils.getKey(tag, ["name"], "Tag Name") : "");
+    TextEditingController taskDescriptionController = TextEditingController();
+    showDialog(
+      context: Get.context!,
+      builder: (context) {
+        return Dialog(
+          child: StatefulBuilder(builder: (context, setState) {
+            return Container(
+              padding: EdgeInsets.symmetric(
+                horizontal: 32.w(context),
+                vertical: 32.h(context),
+              ),
+              width: 688.w(context),
+              height: 580.h(context),
+              decoration: BoxDecoration(
+                color: AppColors.primary0,
+                borderRadius: BorderRadius.circular(10),
+              ),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    AppText(
+                      text: AppStrings.newTask,
+                      width: 299.w(context),
+                      height: 52.h(context),
+                      style: TextStyles.semiBold(
+                        context: context,
+                        fontSize: 24,
+                        color: AppColors.secondary500,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 36.h(context),
+                    ),
+                    CommonTextField(
+                      hintText: AppStrings.listName,
+                      width: 299.w(context),
+                      height: 43.h(context),
+                      controller: nameController,
+                    ),
+                    SizedBox(
+                      height: 24.h(context),
+                    ),
+                    CommonTextField(
+                      hintText: AppStrings.listDescription,
+                      width: 299.w(context),
+                      height: 43.h(context),
+                      controller: taskDescriptionController,
+                    ),
+                    SizedBox(
+                      height: 24.h(context),
+                    ),
+                    InkWell(
+                      onTap: () async {
+                        color = await Utils.colorPicker(
+                          context,
+                          color,
+                        );
+                        setState(() {});
+                      },
+                      child: Container(
+                        width: 299.w(context),
+                        height: 43.h(context),
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 28.w(context),
+                          // vertical: 32.h(context),
+                        ),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary0,
+                          border: Border.all(
+                            color: AppColors.cardColor,
+                            width: 1,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              constraints: BoxConstraints(
+                                minWidth: 22.w(context),
+                                minHeight: 22.h(context),
+                              ),
+                              decoration: BoxDecoration(
+                                color: color,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppColors.cardColor,
+                                  width: 1,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 8.w(context),
+                            ),
+                            AppText(
+                              text: color.toHexString().substring(2),
+                              style: TextStyles.regular(
+                                context: context,
+                                fontSize: 12,
+                                color: AppColors.secondary400,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 36.h(context),
+                    ),
+                    CommonButton(
+                      text: AppStrings.create,
+                      onTap: () {
+                        tag != null
+                            ? null
+                            : createTaskList(
+                                color: color,
+                                description: taskDescriptionController.text,
+                                name: nameController.text,
+                              );
+                        Get.back();
+                      },
+                      width: 235.w(context),
+                      height: 43.h(context),
+                      backgroundColor: AppColors.primary500,
+                      textColor: AppColors.primary0,
+                    ),
+                    SizedBox(
+                      height: 24.h(context),
+                    ),
+                    CommonButton(
+                      text: AppStrings.cancel,
+                      onTap: () => Get.back(),
+                      width: 235.w(context),
+                      height: 43.h(context),
+                      border: Border.all(
+                        color: AppColors.cardColor,
+                        width: 1,
+                      ),
+                      textColor: AppColors.secondary400,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }),
+        );
+      },
+    );
+  }
+
+  void createTask(
+      {required String name,
+      required String listId,
+      required String description,
+      required DateTimeRange duration,
+      required Color color}) async {
+    await DatabaseHelper.createTask(
+        projectId: projectId,
+        workspaceId: Utils.currentWorkspace,
+        listId: listId,
+        data: {
+          "title": name,
+          "description": description,
+          "created_at": Utils.toUtc(
+            DateTime.now(),
+          ),
+          "due_date": Utils.toUtc(duration.end),
+          "start_date": Utils.toUtc(duration.start),
+        });
+  }
+
+  void addNewTask({required String listId, Map? tag}) {
     Color color = tag != null ? HexColor(tag["color"]) : AppColors.primary500;
     TextEditingController nameController =
         TextEditingController(text: tag != null ? tag["name"] : "");
-    TextEditingController taskIdController = TextEditingController();
     TextEditingController taskDescriptionController = TextEditingController();
     DateTimeRange? duration;
     showDialog(
@@ -226,15 +412,15 @@ class ProjectTableViewController extends CommonController {
                     CommonButton(
                       text: AppStrings.create,
                       onTap: () {
-                        // tag != null
-                        //     ? editTag(
-                        //         name: nameController.text,
-                        //         color: color,
-                        //         id: tag["id"])
-                        //     : createTag(
-                        //         color: color,
-                        //         name: nameController.text,
-                        //       );
+                        tag != null
+                            ? null
+                            : createTask(
+                                color: color,
+                                listId: listId,
+                                description: taskDescriptionController.text,
+                                duration: duration!,
+                                name: nameController.text,
+                              );
                         Get.back();
                       },
                       width: 235.w(context),
