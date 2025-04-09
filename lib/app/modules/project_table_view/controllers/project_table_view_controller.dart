@@ -13,6 +13,30 @@ class ProjectTableViewController extends CommonController {
   List views = ["Table", "List"];
   String selectedView = "Table";
 
+  Map viewData = {
+    "Table": {
+      "axis": Axis.horizontal,
+      "listWidth": 328,
+      "listDraggingWidth": 328,
+      "listPadding": const EdgeInsets.all(8.0),
+      "itemDragOnLongPress": false,
+      "listDragOnLongPress": false,
+    },
+    "List": {
+      "axis": Axis.vertical,
+      "listWidth": 1124,
+      "listDraggingWidth": 1124,
+      "listPadding": const EdgeInsets.all(8.0),
+      "itemDragOnLongPress": false,
+      "listDragOnLongPress": false,
+    },
+  };
+
+  void changeView(String view) {
+    selectedView = view;
+    update();
+  }
+
   List<PopupMenuEntry> popupMenuButtons(Map tag) {
     return <PopupMenuEntry>[
       PopupMenuItem(

@@ -265,6 +265,18 @@ class DatabaseHelper {
     }
   }
 
+  static Future<dynamic> deleteTask(
+      {required String workspaceId,
+      required String projectId,
+      required String listId,
+      required String taskId}) async {
+    if (Utils.isLocal) {
+      return await localDeleteTask(workspaceId, projectId, listId, taskId);
+    } else {
+      return await localDeleteTask(workspaceId, projectId, listId, taskId);
+    }
+  }
+
   static Future<dynamic> createUser(
       {required String name,
       required String email,

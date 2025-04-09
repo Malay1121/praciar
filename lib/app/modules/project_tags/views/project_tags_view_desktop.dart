@@ -158,7 +158,7 @@ class _ProjectTagsViewDesktopState extends State<ProjectTagsViewDesktop> {
                                 height: 24.h(context),
                                 style: TextStyles.semiBold(
                                   context: context,
-                                  fontSize: 16,
+                                  fontSize: 16.t(context),
                                   color: AppColors.secondary500,
                                 ),
                               ),

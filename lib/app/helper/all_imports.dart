@@ -25,6 +25,7 @@ export 'package:praciar/app/helper/local/database/create/local_create_task_tag.d
 export 'package:praciar/app/helper/local/database/delete/local_delete_task_tag.dart';
 export 'package:praciar/app/helper/local/database/create/local_create_task.dart';
 export 'package:praciar/app/helper/local/database/create/local_create_task_list.dart';
+export 'package:praciar/app/helper/local/database/delete/local_delete_task.dart';
 
 export 'package:praciar/app/helper/local_firestore/local_collection_reference.dart';
 export 'package:praciar/app/helper/local_firestore/local_document_reference.dart';

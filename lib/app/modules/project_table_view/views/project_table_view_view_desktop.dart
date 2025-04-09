@@ -2,6 +2,7 @@ import 'package:drag_and_drop_lists/drag_and_drop_list_interface.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:praciar/app/helper/all_imports.dart';
 import 'package:praciar/app/modules/project_table_view/controllers/project_table_view_controller.dart';
+import 'package:praciar/app/widgets/common_task_card.dart';
 
 class ProjectTableViewViewDesktop extends StatefulWidget {
   ProjectTableViewViewDesktop({required this.controller});
@@ -55,21 +56,21 @@ class _ProjectTableViewViewDesktopState
                             alignment: WrapAlignment.start,
                             spacing: 24.w(context),
                             children: [
-                              for (String category in widget.controller.views)
+                              for (String view in widget.controller.views)
                                 InkWell(
-                                  onTap: () => print(""),
-                                  // widget.controller.changeCategory(category),
+                                  onTap: () =>
+                                      widget.controller.changeView(view),
                                   child: Column(
                                     children: [
                                       AppText(
                                         width: 76.w(context),
                                         height: 21.h(context),
                                         centered: true,
-                                        text: category.toString(),
+                                        text: view.toString(),
                                         style: TextStyles.medium(
                                           context: context,
                                           fontSize: 14.t(context),
-                                          color: category ==
+                                          color: view ==
                                                   widget.controller.selectedView
                                               ? AppColors.secondary500
                                               : AppColors.secondary300,
@@ -81,7 +82,7 @@ class _ProjectTableViewViewDesktopState
                                       Container(
                                         width: 76.w(context),
                                         height: 2.h(context),
-                                        color: category ==
+                                        color: view ==
                                                 widget.controller.selectedView
                                             ? AppColors.primary500
                                             : AppColors.primary0,
@@ -155,209 +156,13 @@ class _ProjectTableViewViewDesktopState
                                       child: Padding(
                                         padding: EdgeInsets.only(
                                             bottom: 16.w(context)),
-                                        child: InkWell(
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          child: Container(
-                                            width: 328.w(context),
-                                            height: 315.h(context),
-                                            decoration: BoxDecoration(
-                                              color: AppColors.primary0,
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                            ),
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: 24.w(context),
-                                              vertical: 24.h(context),
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                ClipRRect(
-                                                  borderRadius:
-                                                      BorderRadius.circular(10),
-                                                  child: CommonImage(
-                                                    imageUrl: Utils.getKey(card,
-                                                        ["image", "path"], ""),
-                                                    width: 280.w(context),
-                                                    height: 110.h(context),
-                                                    fit: BoxFit.cover,
-                                                    type: Utils.getKey(card,
-                                                        ["image", "type"], ""),
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 16.h(context),
-                                                ),
-                                                AppText(
-                                                  text: Utils.getKey(
-                                                      card, ["title"], ""),
-                                                  height: 24.h(context),
-                                                  width: 280.w(context),
-                                                  style: TextStyles.bold(
-                                                    context: context,
-                                                    fontSize: 16.t(context),
-                                                    color:
-                                                        AppColors.secondary500,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 16.h(context),
-                                                ),
-                                                AppText(
-                                                  text: Utils.getKey(card,
-                                                      ["description"], ""),
-                                                  // height: 24.h(context),
-                                                  width: 280.w(context),
-                                                  maxLines: 2,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: TextStyles.regular(
-                                                    context: context,
-                                                    fontSize: 14.t(context),
-                                                    color:
-                                                        AppColors.secondary300,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  height: 8.h(context),
-                                                ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment.start,
-                                                  children: [
-                                                    for (Map tag
-                                                        in Utils.getKey(
-                                                            card, ["tags"], []))
-                                                      FutureBuilder(
-                                                          future: DatabaseHelper.getTaskTags(
-                                                              workspaceId: Utils
-                                                                  .currentWorkspace,
-                                                              projectId: widget
-                                                                  .controller
-                                                                  .projectId,
-                                                              tagId:
-                                                                  Utils.getKey(
-                                                                      tag,
-                                                                      ["id"],
-                                                                      "")),
-                                                          builder: (context,
-                                                              snapshot) {
-                                                            if (snapshot.data ==
-                                                                null) {
-                                                              return Container();
-                                                            }
-                                                            if (snapshot.data
-                                                                    is! List ||
-                                                                (snapshot.data
-                                                                        as List)
-                                                                    .isEmpty) {
-                                                              return Container();
-                                                            }
-                                                            Map tagData =
-                                                                (snapshot.data
-                                                                        as List)
-                                                                    .first;
-
-                                                            return Container(
-                                                              height:
-                                                                  16.h(context),
-                                                              padding: EdgeInsets
-                                                                  .symmetric(
-                                                                horizontal: 5
-                                                                    .w(context),
-                                                              ),
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            5),
-                                                                color: HexColor(
-                                                                    Utils.getKey(
-                                                                        tagData,
-                                                                        [
-                                                                          "color"
-                                                                        ],
-                                                                        "FFFFFF")),
-                                                              ),
-                                                              child: AppText(
-                                                                text: Utils
-                                                                    .getKey(
-                                                                        tagData,
-                                                                        [
-                                                                          "name"
-                                                                        ],
-                                                                        ""),
-                                                                height: 16
-                                                                    .h(context),
-                                                                style:
-                                                                    TextStyles
-                                                                        .medium(
-                                                                  context:
-                                                                      context,
-                                                                  fontSize: 12,
-                                                                  color: AppColors
-                                                                      .primary0,
-                                                                ),
-                                                              ),
-                                                            );
-                                                          }),
-                                                  ],
-                                                ),
-                                                SizedBox(
-                                                  height: 16.h(context),
-                                                ),
-                                                Row(
-                                                  children: [
-                                                    SvgPicture.asset(
-                                                      AppImages.icClock,
-                                                      width: 24.w(context),
-                                                      height: 24.h(context),
-                                                      color: AppColors
-                                                          .secondary400,
-                                                    ),
-                                                    SizedBox(
-                                                      width: 8.w(context),
-                                                    ),
-                                                    // SizedBox(
-                                                    //   height: 24.h(context),
-                                                    //   child: StreamBuilder(
-                                                    //       stream:
-                                                    //           Stream.periodic(const Duration(seconds: 1)),
-                                                    //       builder: (context, snapshot) {
-                                                    //         return AppText(
-                                                    //           text:
-                                                    //               "${Utils.formatDateTimeDifference(DateTime.now(), Utils.fromUtc(Utils.getKey(card, [
-                                                    //                     "due_date"
-                                                    //                   ], "")))} ${AppStrings.left}",
-                                                    //           height: 24.h(context),
-                                                    //           style: TextStyles.medium(
-                                                    //             context: context,
-                                                    //             fontSize: 16.t(context),
-                                                    //             color: AppColors.secondary500,
-                                                    //           ),
-                                                    //         );
-                                                    //       }),
-                                                    // ),
-                                                    // Spacer(),
-                                                    // IconButton(
-                                                    //   icon: Icon(
-                                                    //     Utils.getKey(card, ["pinned"], false) == true
-                                                    //         ? Icons.star
-                                                    //         : Icons.star_border_outlined,
-                                                    //     size: 20.t(context),
-                                                    //   ),
-                                                    //   onPressed: () => null,
-                                                    //   // togglePin(Utils.getKey(card, [], {})),
-                                                    //   color: AppColors.secondary500,
-                                                    //   splashRadius: 20.t(context),
-                                                    //   hoverColor: AppColors.secondary500.withOpacity(0.1),
-                                                    // ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
+                                        child: CommonTaskcard(
+                                          card: card,
+                                          listId:
+                                              Utils.getKey(table, ["id"], ""),
+                                          projectId:
+                                              widget.controller.projectId,
+                                          view: widget.controller.selectedView,
                                         ),
                                       ),
                                     ),
@@ -446,10 +251,32 @@ class _ProjectTableViewViewDesktopState
                           }
 
                           return DragAndDropLists(
-                            axis: Axis.horizontal,
-                            listWidth: 328.w(context),
-                            listDraggingWidth: 328.w(context),
-                            listPadding: const EdgeInsets.all(8.0),
+                            axis: Utils.getKey(
+                                widget.controller.viewData,
+                                [widget.controller.selectedView, "axis"],
+                                Axis.horizontal),
+                            listWidth: int.parse(Utils.getKey(
+                                        widget.controller.viewData,
+                                        [
+                                          widget.controller.selectedView,
+                                          "listWidth"
+                                        ],
+                                        1)
+                                    .toString())
+                                .w(context),
+                            listDraggingWidth: int.parse(Utils.getKey(
+                                        widget.controller.viewData,
+                                        [
+                                          widget.controller.selectedView,
+                                          "listDraggingWidth"
+                                        ],
+                                        1)
+                                    .toString())
+                                .w(context),
+                            listPadding: Utils.getKey(
+                                widget.controller.viewData,
+                                [widget.controller.selectedView, "listPadding"],
+                                EdgeInsets.zero),
                             itemDragOnLongPress: false,
                             listDragOnLongPress: false,
                             children: contents,
