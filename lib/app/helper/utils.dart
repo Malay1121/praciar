@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:humanize_duration/humanize_duration.dart';
 import 'package:intl/intl.dart';
 import 'package:praciar/app/helper/local_firestore/local_firestore.dart';
+import 'package:timezone/data/latest_all.dart' as tz;
 import 'all_imports.dart';
 
 class Utils {
@@ -15,6 +16,78 @@ class Utils {
 
   static Future<String> getLocalPath() async {
     return (await getApplicationSupportDirectory()).path;
+  }
+
+  static FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
+  static Future<void> initializeNotification() async {
+    const AndroidInitializationSettings initializationSettingsAndroid =
+        AndroidInitializationSettings('app_icon');
+    final DarwinInitializationSettings initializationSettingsDarwin =
+        DarwinInitializationSettings();
+    final LinuxInitializationSettings initializationSettingsLinux =
+        LinuxInitializationSettings(defaultActionName: 'Open notification');
+    final WindowsInitializationSettings initializationSettingsWindows =
+        WindowsInitializationSettings(
+            appName: 'Praciar',
+            appUserModelId: 'Com.Malay.Praciar',
+            // Search online for GUID generators to make your own
+            guid: '0a1172ea-232a-4743-a712-1f2c0301477c');
+    final InitializationSettings initializationSettings =
+        InitializationSettings(
+            android: initializationSettingsAndroid,
+            iOS: initializationSettingsDarwin,
+            macOS: initializationSettingsDarwin,
+            linux: initializationSettingsLinux,
+            windows: initializationSettingsWindows);
+    await flutterLocalNotificationsPlugin.initialize(
+      initializationSettings,
+      onDidReceiveNotificationResponse: (details) => null,
+    );
+  }
+
+  static scheduleNotification(Map task, DateTime endDate) async {
+    tz.initializeTimeZones();
+    final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+    setLocalLocation(getLocation(currentTimeZone));
+    String title = getKey(task, ["title"], "Task Notification");
+    String body = getKey(task, ["description"], "Task Description");
+    Duration duration =
+        endDate.subtract(Duration(minutes: 10)).difference(DateTime.now());
+
+    if (DateTime.now().isAfter(
+      endDate.subtract(
+        Duration(minutes: 11),
+      ),
+    )) {
+      await flutterLocalNotificationsPlugin.show(
+        0,
+        title,
+        body,
+        NotificationDetails(
+          windows: WindowsNotificationDetails(
+            header: WindowsHeader(
+                id: "0", title: AppStrings.inLessThan10Minutes, arguments: ""),
+          ),
+        ),
+      );
+    } else {
+      await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        title,
+        body,
+        TZDateTime.now(getLocation(currentTimeZone)).add(duration),
+        NotificationDetails(
+          windows: WindowsNotificationDetails(
+            header: WindowsHeader(
+                id: "0", title: AppStrings.in10Minutes, arguments: ""),
+            subtitle: "subtitle",
+          ),
+        ),
+        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+      );
+    }
   }
 
   static dynamic getKey(Map data, List location, dynamic replacement) {

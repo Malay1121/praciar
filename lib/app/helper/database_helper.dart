@@ -186,6 +186,12 @@ class DatabaseHelper {
     data.addEntries({
       "id": id,
     }.entries);
+    Utils.scheduleNotification(
+      data,
+      Utils.fromUtc(
+        Utils.getKey(data, ["due_date"], Utils.toUtc(DateTime.now())),
+      ),
+    );
     if (Utils.isLocal) {
       return await localCreateTask(workspaceId, projectId, listId, data);
     } else {

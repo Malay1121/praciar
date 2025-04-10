@@ -249,21 +249,36 @@ class ProjectTableViewController extends CommonController {
       {required String name,
       required String listId,
       required String description,
-      required DateTimeRange duration,
-      required Color color}) async {
+      required List<DateTime> duration,
+      required Color color,
+      String? imagePath,
+      String? imageType}) async {
+    Map data = {
+      "title": name,
+      "description": description,
+      "created_at": Utils.toUtc(
+        DateTime.now(),
+      ),
+      "due_date": Utils.toUtc(duration[1]),
+      "start_date": Utils.toUtc(duration[0]),
+    };
+    if ((imagePath ?? "").isNotEmpty) {
+      data.addEntries({
+        "images": {
+          "id": "image_1",
+          "type": imageType,
+          "path": imagePath,
+          "uploaded_at": Utils.toUtc(
+            DateTime.now(),
+          ),
+        }
+      }.entries);
+    }
     await DatabaseHelper.createTask(
         projectId: projectId,
         workspaceId: Utils.currentWorkspace,
         listId: listId,
-        data: {
-          "title": name,
-          "description": description,
-          "created_at": Utils.toUtc(
-            DateTime.now(),
-          ),
-          "due_date": Utils.toUtc(duration.end),
-          "start_date": Utils.toUtc(duration.start),
-        });
+        data: data);
   }
 
   void addNewTask({required String listId, Map? tag}) {
@@ -271,7 +286,8 @@ class ProjectTableViewController extends CommonController {
     TextEditingController nameController =
         TextEditingController(text: tag != null ? tag["name"] : "");
     TextEditingController taskDescriptionController = TextEditingController();
-    DateTimeRange? duration;
+    List<DateTime>? duration;
+    TextEditingController imageController = TextEditingController();
     showDialog(
       context: Get.context!,
       builder: (context) {
@@ -324,21 +340,69 @@ class ProjectTableViewController extends CommonController {
                     ),
                     InkWell(
                       onTap: () async {
-                        DateTimeRange? range = await showDateRangePicker(
+                        List<DateTime>? dateTimeList =
+                            await showOmniDateTimeRangePicker(
                           context: context,
-                          firstDate:
-                              DateTime.now().subtract(Duration(days: 9999)),
-                          lastDate: DateTime.now().add(
-                            Duration(days: 9999),
+                          startInitialDate: DateTime.now(),
+                          startFirstDate: DateTime(1600)
+                              .subtract(const Duration(days: 3652)),
+                          startLastDate: DateTime.now().add(
+                            const Duration(days: 3652),
                           ),
-                          initialDateRange: DateTimeRange(
-                            start: DateTime.now(),
-                            end: DateTime.now().add(Duration(days: 1)),
+                          endInitialDate: DateTime.now(),
+                          endFirstDate: DateTime(1600)
+                              .subtract(const Duration(days: 3652)),
+                          endLastDate: DateTime.now().add(
+                            const Duration(days: 3652),
                           ),
-                          initialEntryMode: DatePickerEntryMode.inputOnly,
+                          is24HourMode: false,
+                          isShowSeconds: false,
+                          minutesInterval: 1,
+                          secondsInterval: 1,
+                          borderRadius:
+                              const BorderRadius.all(Radius.circular(16)),
+                          constraints: const BoxConstraints(
+                            maxWidth: 350,
+                            maxHeight: 650,
+                          ),
+                          transitionBuilder: (context, anim1, anim2, child) {
+                            return FadeTransition(
+                              opacity: anim1.drive(
+                                Tween(
+                                  begin: 0,
+                                  end: 1,
+                                ),
+                              ),
+                              child: child,
+                            );
+                          },
+                          transitionDuration: const Duration(milliseconds: 200),
+                          barrierDismissible: true,
+                          // selectableDayPredicate: (dateTime) {
+                          //   // Disable 25th Feb 2023
+                          //   if (dateTime == DateTime(2023, 2, 25)) {
+                          //     return false;
+                          //   } else {
+                          //     return true;
+                          //   }
+                          // },
                         );
-                        if (range != null) {
-                          duration = range;
+                        // DateTimeRange? range = await showDateRangePicker(
+                        //   context: context,
+                        //   firstDate:
+                        //       DateTime.now().subtract(Duration(days: 9999)),
+                        //   lastDate: DateTime.now().add(
+                        //     Duration(days: 9999),
+                        //   ),
+                        //   initialDateRange: DateTimeRange(
+                        //     start: DateTime.now(),
+                        //     end: DateTime.now().add(Duration(days: 1)),
+                        //   ),
+                        //   initialEntryMode: DatePickerEntryMode.inputOnly,
+                        // );
+                        if (dateTimeList != null) {
+                          duration = dateTimeList;
+                          print(duration);
                         }
                         setState(() {});
                       },
@@ -361,7 +425,7 @@ class ProjectTableViewController extends CommonController {
                           children: [
                             AppText(
                               text: duration != null
-                                  ? "${Utils.formatDateTime(duration!.start)} - ${Utils.formatDateTime(duration!.end)}"
+                                  ? "${Utils.formatDateTime(duration![0])} - ${Utils.formatDateTime(duration![1])}"
                                   : AppStrings.duration,
                               style: TextStyles.regular(
                                 context: context,
@@ -431,11 +495,42 @@ class ProjectTableViewController extends CommonController {
                       ),
                     ),
                     SizedBox(
+                      height: 24.h(context),
+                    ),
+                    CommonImagePicker(controller: imageController),
+                    SizedBox(
                       height: 36.h(context),
                     ),
                     CommonButton(
                       text: AppStrings.create,
-                      onTap: () {
+                      onTap: () async {
+                        if (duration == null) {
+                          Utils.showSnackbar(
+                            message: AppStrings.durationValidation,
+                          );
+                          return;
+                        }
+                        if (nameController.text.isEmpty) {
+                          Utils.showSnackbar(
+                            message: AppStrings.taskNameValidation,
+                          );
+                          return;
+                        }
+                        if (taskDescriptionController.text.isEmpty) {
+                          Utils.showSnackbar(
+                            message: AppStrings.taskDescriptionValidation,
+                          );
+                          return;
+                        }
+                        String imageType = "";
+                        if (imageController.text.isNotEmpty) {
+                          if (await File(imageController.text).exists()) {
+                            imageType = "file";
+                          } else {
+                            imageType = "network";
+                          }
+                        }
+
                         tag != null
                             ? null
                             : createTask(
@@ -444,6 +539,8 @@ class ProjectTableViewController extends CommonController {
                                 description: taskDescriptionController.text,
                                 duration: duration!,
                                 name: nameController.text,
+                                imagePath: imageController.text,
+                                imageType: imageType,
                               );
                         Get.back();
                       },

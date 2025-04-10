@@ -18,11 +18,6 @@ class _CommonSidebarState extends State<CommonSidebar> {
       "screen": Routes.DASHBOARD,
     },
     {
-      "icon": AppImages.icBook,
-      "title": AppStrings.task,
-      "screen": Routes.DASHBOARD,
-    },
-    {
       "icon": AppImages.icTag,
       "title": AppStrings.tags,
       "screen": Routes.TAGS,

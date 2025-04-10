@@ -68,4 +68,24 @@ class AppStrings {
   static String general = "General";
   static String appearance = "Appearance";
   static String mode = "Mode";
+
+  static String enterImageURL = "Enter Image URL";
+  static String chooseFile = "Choose File";
+  static String chooseImage = "Choose Image";
+  static String uploadFile = "Upload File";
+
+  static String durationValidation = "Please select a valid duration";
+  static String taskNameValidation = "Please enter a valid task name";
+
+  static String taskDescriptionValidation =
+      "Please enter a valid task description";
+  static String listNameValidation = "Please enter a valid list name";
+  static String listDescriptionValidation =
+      "Please enter a valid list description";
+  static String tagNameValidation = "Please enter a valid tag name";
+  static String tagDescriptionValidation =
+      "Please enter a valid tag description";
+
+  static String inLessThan10Minutes = "In less than 10 minutes";
+  static String in10Minutes = "In 10 minutes";
 }

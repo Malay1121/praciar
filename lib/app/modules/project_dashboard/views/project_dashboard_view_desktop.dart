@@ -1,5 +1,6 @@
 import 'package:praciar/app/helper/all_imports.dart';
 import 'package:praciar/app/modules/project_dashboard/controllers/project_dashboard_controller.dart';
+import 'package:praciar/app/widgets/common_image_picker.dart';
 
 class ProjectDashboardViewDesktop extends StatefulWidget {
   ProjectDashboardViewDesktop({required this.controller});

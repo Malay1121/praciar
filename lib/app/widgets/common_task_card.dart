@@ -154,6 +154,22 @@ class _CommonTaskcardState extends State<CommonTaskcard> {
                   SizedBox(
                     height: 16.h(context),
                   ),
+                  AppText(
+                    text: Utils.getKey(widget.card, ["description"], ""),
+                    // height: 24.h(context),
+                    width: 280.w(context),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    minFontSize: 14.t(context).floor().toDouble(),
+                    style: TextStyles.regular(
+                      context: context,
+                      fontSize: 14.t(context),
+                      color: AppColors.secondary300,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16.h(context),
+                  ),
                   Row(
                     children: [
                       SvgPicture.asset(
