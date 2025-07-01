@@ -156,13 +156,23 @@ class _ProjectTableViewViewDesktopState
                                       child: Padding(
                                         padding: EdgeInsets.only(
                                             bottom: 16.w(context)),
-                                        child: CommonTaskcard(
-                                          card: card,
-                                          listId:
-                                              Utils.getKey(table, ["id"], ""),
-                                          projectId:
-                                              widget.controller.projectId,
-                                          view: widget.controller.selectedView,
+                                        child: GestureDetector(
+                                          onTap: () =>
+                                              widget.controller.openTaskDetails(
+                                            listId:
+                                                Utils.getKey(table, ["id"], ""),
+                                            taskId:
+                                                Utils.getKey(card, ["id"], ""),
+                                          ),
+                                          child: CommonTaskcard(
+                                            card: card,
+                                            listId:
+                                                Utils.getKey(table, ["id"], ""),
+                                            projectId:
+                                                widget.controller.projectId,
+                                            view:
+                                                widget.controller.selectedView,
+                                          ),
                                         ),
                                       ),
                                     ),

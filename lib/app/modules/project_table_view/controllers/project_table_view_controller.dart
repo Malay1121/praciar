@@ -63,7 +63,7 @@ class ProjectTableViewController extends CommonController {
               width: 96.w(Get.context!),
               style: TextStyles.semiBold(
                 context: Get.context!,
-                fontSize: 12.t(Get.context!),
+                fontSize: 12,
                 color: AppColors.error500,
               ),
             ),
@@ -253,6 +253,16 @@ class ProjectTableViewController extends CommonController {
       required Color color,
       String? imagePath,
       String? imageType}) async {
+    if (name.isEmpty) {
+      Utils.showSnackbar(message: AppStrings.taskNameValidation);
+      return;
+    } else if (description.isEmpty) {
+      Utils.showSnackbar(message: AppStrings.taskDescriptionValidation);
+      return;
+    } else if (duration.isEmpty) {
+      Utils.showSnackbar(message: AppStrings.durationValidation);
+      return;
+    }
     Map data = {
       "title": name,
       "description": description,
@@ -588,7 +598,7 @@ class ProjectTableViewController extends CommonController {
                 text: Utils.getKey(table, ["name"], ""),
                 style: TextStyles.bold(
                   context: Get.context!,
-                  fontSize: 20.t(Get.context!),
+                  fontSize: 20,
                   color: HexColor(Utils.getKey(table, ["color"], "")),
                 ),
               ),
@@ -640,7 +650,7 @@ class ProjectTableViewController extends CommonController {
                         width: 280.w(Get.context!),
                         style: TextStyles.bold(
                           context: Get.context!,
-                          fontSize: 16.t(Get.context!),
+                          fontSize: 16,
                           color: AppColors.secondary500,
                         ),
                       ),
@@ -655,7 +665,7 @@ class ProjectTableViewController extends CommonController {
                         overflow: TextOverflow.ellipsis,
                         style: TextStyles.regular(
                           context: Get.context!,
-                          fontSize: 14.t(Get.context!),
+                          fontSize: 14,
                           color: AppColors.secondary300,
                         ),
                       ),
@@ -744,12 +754,12 @@ class ProjectTableViewController extends CommonController {
                           //     Utils.getKey(card, ["pinned"], false) == true
                           //         ? Icons.star
                           //         : Icons.star_border_outlined,
-                          //     size: 20.t(Get.context!),
+                          //     size: 20,
                           //   ),
                           //   onPressed: () => null,
                           //   // togglePin(Utils.getKey(card, [], {})),
                           //   color: AppColors.secondary500,
-                          //   splashRadius: 20.t(Get.context!),
+                          //   splashRadius: 20,
                           //   hoverColor: AppColors.secondary500.withOpacity(0.1),
                           // ),
                         ],
@@ -762,6 +772,131 @@ class ProjectTableViewController extends CommonController {
         ),
     ];
     update();
+  }
+
+  void openTaskDetails({required String taskId, required String listId}) async {
+    Map task = (await DatabaseHelper.getTask(
+      workspaceId: Utils.currentWorkspace,
+      projectId: projectId,
+      taskListId: listId,
+      taskId: taskId,
+    ))
+        .first;
+    Map taskList = (await DatabaseHelper.getTaskList(
+            projectId: projectId,
+            workspaceId: Utils.currentWorkspace,
+            taskListId: listId))
+        .first;
+
+    showDialog(
+      context: Get.context!,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Colors.transparent,
+          child: StatefulBuilder(
+            builder: (context, setState) {
+              return GestureDetector(
+                onTap: () => Get.back(),
+                child: Container(
+                  width: MediaQuery.of(Get.context!).size.width,
+                  height: MediaQuery.of(Get.context!).size.height,
+                  color: Colors.transparent,
+                  child: SingleChildScrollView(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 280.w(context),
+                        vertical: 100.h(context),
+                      ),
+                      child: GestureDetector(
+                        onTap: () => null,
+                        child: Container(
+                          width: 875.w(context),
+                          constraints: BoxConstraints(
+                            minHeight: 545.h(context),
+                          ),
+                          decoration: BoxDecoration(
+                            color: AppColors.background,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 32.w(context),
+                            vertical: 32.h(context),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              AppText(
+                                text: Utils.getKey(task, ["title"], ""),
+                                style: TextStyles.bold(
+                                  context: Get.context!,
+                                  fontSize: 20,
+                                  color: AppColors.secondary500,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 8.h(Get.context!),
+                              ),
+                              Row(
+                                children: [
+                                  AppText(
+                                    text: AppStrings.inList,
+                                    style: TextStyles.regular(
+                                      context: Get.context!,
+                                      fontSize: 12,
+                                      color: AppColors.secondary400,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 4.w(Get.context!),
+                                  ),
+                                  Container(
+                                    height: 14.h(Get.context!),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 5.w(Get.context!),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(2),
+                                      color: HexColor(Utils.getKey(
+                                          taskList, ["color"], "546FFF")),
+                                    ),
+                                    child: AppText(
+                                      text:
+                                          Utils.getKey(taskList, ["name"], ""),
+                                      height: 14.h(Get.context!),
+                                      style: TextStyles.medium(
+                                        context: Get.context!,
+                                        fontSize: 8,
+                                        color: AppColors.primary0,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 16.h(Get.context!),
+                              ),
+                              AppText(
+                                text: Utils.getKey(task, ["description"], ""),
+                                style: TextStyles.regular(
+                                  context: Get.context!,
+                                  fontSize: 16,
+                                  color: AppColors.secondary300,
+                                ),
+                                maxLines: null,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        );
+      },
+    );
   }
 
   @override

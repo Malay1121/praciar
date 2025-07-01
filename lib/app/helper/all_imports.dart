@@ -70,6 +70,7 @@ export 'package:timezone/timezone.dart';
 export 'package:flutter_local_notifications/flutter_local_notifications.dart';
 export 'package:flutter_timezone/flutter_timezone.dart';
 export 'package:omni_datetime_picker/omni_datetime_picker.dart';
+export 'package:calendar_view/calendar_view.dart' hide HeaderStyle;
 
 export 'package:praciar/app/widgets/common_sidebar.dart';
 export 'package:praciar/app/widgets/common_project_sidebar.dart';

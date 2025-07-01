@@ -51,6 +51,7 @@ class AppStrings {
   static String listDescription = "List Description";
 
   static String tags = "Tags";
+  static String calendar = "Calendar";
   static String tag = "Tag";
   static String exploreTag = "Explore Tags";
   static String searchTags = "Search Tags";
@@ -88,4 +89,6 @@ class AppStrings {
 
   static String inLessThan10Minutes = "In less than 10 minutes";
   static String in10Minutes = "In 10 minutes";
+
+  static String inList = "In list";
 }

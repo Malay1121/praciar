@@ -19,6 +19,11 @@ class _CommonSidebarState extends State<CommonSidebar> {
     },
     {
       "icon": AppImages.icTag,
+      "title": AppStrings.calendar,
+      "screen": Routes.CALENDAR,
+    },
+    {
+      "icon": AppImages.icTag,
       "title": AppStrings.tags,
       "screen": Routes.TAGS,
     },

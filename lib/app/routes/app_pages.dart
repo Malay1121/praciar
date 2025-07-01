@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/calendar/bindings/calendar_binding.dart';
+import '../modules/calendar/views/calendar_view.dart';
 import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/home/bindings/home_binding.dart';
@@ -8,14 +10,14 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/project_dashboard/bindings/project_dashboard_binding.dart';
 import '../modules/project_dashboard/views/project_dashboard_view.dart';
+import '../modules/project_table_view/bindings/table_view_binding.dart';
+import '../modules/project_table_view/views/project_table_view_view.dart';
 import '../modules/project_tags/bindings/project_tags_binding.dart';
 import '../modules/project_tags/views/project_tags_view.dart';
 import '../modules/settings/bindings/settings_binding.dart';
 import '../modules/settings/views/settings_view.dart';
 import '../modules/splash/bindings/splash_binding.dart';
 import '../modules/splash/views/splash_view.dart';
-import '../modules/project_table_view/bindings/table_view_binding.dart';
-import '../modules/project_table_view/views/project_table_view_view.dart';
 import '../modules/tags/bindings/tags_binding.dart';
 import '../modules/tags/views/tags_view.dart';
 
@@ -71,6 +73,11 @@ class AppPages {
       name: _Paths.PROJECT_TAGS,
       page: () => const ProjectTagsView(),
       binding: ProjectTagsBinding(),
+    ),
+    GetPage(
+      name: _Paths.CALENDAR,
+      page: () => const CalendarView(),
+      binding: CalendarBinding(),
     ),
   ];
 }
