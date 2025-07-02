@@ -57,6 +57,7 @@ class AppStrings {
   static String searchTags = "Search Tags";
   static String newTag = "New Tag";
   static String addTag = "Add Tag";
+  static String saveTask = "Save Task";
   static String tagTitle = "Tag Title";
   static String sortBy = "Sort by";
   static String popularity = "Popularity";

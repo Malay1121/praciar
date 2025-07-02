@@ -6,6 +6,7 @@ class CommonImage extends StatefulWidget {
     required this.width,
     required this.height,
     required this.fit,
+    this.borderRadius,
     this.type = "network",
   });
   String imageUrl;
@@ -13,6 +14,7 @@ class CommonImage extends StatefulWidget {
   double height;
   BoxFit? fit;
   String type;
+  BorderRadius? borderRadius;
 
   @override
   State<CommonImage> createState() => _CommonImageState();
@@ -24,43 +26,46 @@ class _CommonImageState extends State<CommonImage> {
     (widget.imageUrl) == ""
         ? widget.imageUrl = "assets/images/placeholder.png"
         : widget.imageUrl = widget.imageUrl;
-    return widget.type == "network"
-        ? CachedNetworkImage(
-            imageUrl: widget.imageUrl,
-            width: widget.width,
-            height: widget.height,
-            fit: widget.fit,
-            progressIndicatorBuilder: (context, url, progress) =>
-                CircularProgressIndicator(
-              color: AppColors.primary500,
-            ),
-            errorWidget: (context, url, error) => Icon(
-              Icons.error_outline,
-              color: AppColors.error500,
-            ),
-          )
-        : widget.type == "asset"
-            ? Image.asset(
-                widget.imageUrl,
-                width: widget.width,
-                height: widget.height,
-                fit: widget.fit,
-                errorBuilder: (context, error, stackTrace) => Icon(
-                  Icons.error_outline,
-                  color: AppColors.error500,
-                ),
-              )
-            : widget.type == "file"
-                ? Image.file(
-                    File(widget.imageUrl),
-                    width: widget.width,
-                    height: widget.height,
-                    fit: widget.fit,
-                    errorBuilder: (context, error, stackTrace) => Icon(
-                      Icons.error_outline,
-                      color: AppColors.error500,
-                    ),
-                  )
-                : SizedBox();
+    return ClipRRect(
+      borderRadius: widget.borderRadius ?? BorderRadius.zero,
+      child: widget.type == "network"
+          ? CachedNetworkImage(
+              imageUrl: widget.imageUrl,
+              width: widget.width,
+              height: widget.height,
+              fit: widget.fit,
+              progressIndicatorBuilder: (context, url, progress) =>
+                  CircularProgressIndicator(
+                color: AppColors.primary500,
+              ),
+              errorWidget: (context, url, error) => Icon(
+                Icons.error_outline,
+                color: AppColors.error500,
+              ),
+            )
+          : widget.type == "asset"
+              ? Image.asset(
+                  widget.imageUrl,
+                  width: widget.width,
+                  height: widget.height,
+                  fit: widget.fit,
+                  errorBuilder: (context, error, stackTrace) => Icon(
+                    Icons.error_outline,
+                    color: AppColors.error500,
+                  ),
+                )
+              : widget.type == "file"
+                  ? Image.file(
+                      File(widget.imageUrl),
+                      width: widget.width,
+                      height: widget.height,
+                      fit: widget.fit,
+                      errorBuilder: (context, error, stackTrace) => Icon(
+                        Icons.error_outline,
+                        color: AppColors.error500,
+                      ),
+                    )
+                  : SizedBox(),
+    );
   }
 }

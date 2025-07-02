@@ -425,6 +425,7 @@ class ProjectTableViewController extends CommonController {
                         ),
                         decoration: BoxDecoration(
                           color: AppColors.primary0,
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(
                             color: AppColors.cardColor,
                             width: 1,
@@ -467,6 +468,7 @@ class ProjectTableViewController extends CommonController {
                         ),
                         decoration: BoxDecoration(
                           color: AppColors.primary0,
+                          borderRadius: BorderRadius.circular(8),
                           border: Border.all(
                             color: AppColors.cardColor,
                             width: 1,
@@ -774,6 +776,33 @@ class ProjectTableViewController extends CommonController {
     update();
   }
 
+  void updateTask({
+    required String projectId,
+    required String taskListId,
+    required String taskId,
+    required String title,
+    required String description,
+  }) async {
+    Map task = (await DatabaseHelper.getTask(
+      workspaceId: Utils.currentWorkspace,
+      projectId: projectId,
+      taskListId: taskListId,
+      taskId: taskId,
+    ))
+        .first;
+    task["title"] = title;
+    task["description"] = description;
+
+    Map? result = await DatabaseHelper.updateTask(
+        projectId: projectId,
+        taskListId: taskListId,
+        taskid: taskId,
+        taskData: task);
+    if (result != null) {
+      Get.back();
+    }
+  }
+
   void openTaskDetails({required String taskId, required String listId}) async {
     Map task = (await DatabaseHelper.getTask(
       workspaceId: Utils.currentWorkspace,
@@ -787,6 +816,12 @@ class ProjectTableViewController extends CommonController {
             workspaceId: Utils.currentWorkspace,
             taskListId: listId))
         .first;
+
+    TextEditingController titleController =
+        TextEditingController(text: Utils.getKey(task, ["title"], ""));
+    TextEditingController descriptionController =
+        TextEditingController(text: Utils.getKey(task, ["description"], ""));
+    TextEditingController imageController = TextEditingController();
 
     showDialog(
       context: Get.context!,
@@ -815,7 +850,7 @@ class ProjectTableViewController extends CommonController {
                             minHeight: 545.h(context),
                           ),
                           decoration: BoxDecoration(
-                            color: AppColors.background,
+                            color: AppColors.primary0,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           padding: EdgeInsets.symmetric(
@@ -825,8 +860,22 @@ class ProjectTableViewController extends CommonController {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              AppText(
-                                text: Utils.getKey(task, ["title"], ""),
+                              if (Utils.getKey(task, ["image"], null) == null)
+                                CommonImagePicker(controller: imageController),
+                              CommonImage(
+                                imageUrl:
+                                    Utils.getKey(task, ["image", "path"], ""),
+                                borderRadius: BorderRadius.circular(10),
+                                fit: BoxFit.cover,
+                                type: Utils.getKey(task, ["image", "type"], ""),
+                                width: 811.w(context),
+                                height: 318.607143.h(context),
+                              ),
+                              SizedBox(
+                                height: 12.h(context),
+                              ),
+                              CommonEditTextField(
+                                titleController: titleController,
                                 style: TextStyles.bold(
                                   context: Get.context!,
                                   fontSize: 20,
@@ -875,14 +924,55 @@ class ProjectTableViewController extends CommonController {
                               SizedBox(
                                 height: 16.h(Get.context!),
                               ),
-                              AppText(
-                                text: Utils.getKey(task, ["description"], ""),
+                              CommonEditTextField(
+                                titleController: descriptionController,
                                 style: TextStyles.regular(
                                   context: Get.context!,
                                   fontSize: 16,
-                                  color: AppColors.secondary300,
+                                  color: AppColors.secondary500,
                                 ),
-                                maxLines: null,
+                              ),
+                              SizedBox(
+                                height: 40.h(Get.context!),
+                              ),
+                              Row(
+                                children: [
+                                  CommonButton(
+                                    text: AppStrings.saveTask,
+                                    onTap: () => updateTask(
+                                      projectId: projectId,
+                                      taskListId:
+                                          Utils.getKey(taskList, ["id"], ""),
+                                      taskId: Utils.getKey(task, ["id"], ""),
+                                      title: titleController.text,
+                                      description: descriptionController.text,
+                                    ),
+                                    backgroundColor: AppColors.primary500,
+                                    textColor: AppColors.primary0,
+                                    fontSize: 14.t(context),
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 28.w(context),
+                                    ),
+                                    height: 52.h(context),
+                                  ),
+                                  SizedBox(
+                                    width: 10.w(context),
+                                  ),
+                                  CommonButton(
+                                    text: AppStrings.cancel,
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 28.w(context),
+                                    ),
+                                    height: 52.h(context),
+                                    backgroundColor: AppColors.primary0,
+                                    textColor: AppColors.primary500,
+                                    border: Border.all(
+                                      color: AppColors.cardColor,
+                                      width: 2,
+                                    ),
+                                    onTap: () => Get.back(),
+                                  ),
+                                ],
                               ),
                             ],
                           ),

@@ -80,3 +80,4 @@ export 'package:praciar/app/widgets/common_project_card.dart';
 export 'package:praciar/app/widgets/common_button.dart';
 export 'package:praciar/app/widgets/common_textfield.dart';
 export 'package:praciar/app/widgets/common_image_picker.dart';
+export 'package:praciar/app/widgets/common_edit_textfield.dart';

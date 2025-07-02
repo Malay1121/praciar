@@ -1,5 +1,6 @@
 import 'package:praciar/app/helper/local/database/create/local_create_project.dart';
 import 'package:praciar/app/helper/local/database/update/local_update_project.dart';
+import 'package:praciar/app/helper/local/database/update/local_update_task.dart';
 
 import 'all_imports.dart';
 import 'local/database/get/local_get_pinned_projects.dart';
@@ -249,6 +250,26 @@ class DatabaseHelper {
     } else {
       return await localUpdateProject(
           projectId: projectId, projectData: projectData);
+    }
+  }
+
+  static Future<dynamic> updateTask(
+      {required String projectId,
+      required String taskListId,
+      required String taskid,
+      required Map taskData}) async {
+    if (Utils.isLocal) {
+      return await localUpdateTask(
+          projectId: projectId,
+          taskListId: taskListId,
+          taskId: taskid,
+          taskData: taskData);
+    } else {
+      return await localUpdateTask(
+          projectId: projectId,
+          taskListId: taskListId,
+          taskId: taskid,
+          taskData: taskData);
     }
   }
 
