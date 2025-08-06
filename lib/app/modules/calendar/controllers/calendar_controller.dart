@@ -20,13 +20,15 @@ class CalendarController extends CommonController {
   }
 
   void getEvents() async {
-    List taskList = await DatabaseHelper.getTaskList();
+    List taskList = await DatabaseHelper.getTask();
     List<CalendarEventData> events = [];
     for (var task in taskList) {
       if (Utils.getKey(task, ["start_date"], null) != null &&
-          Utils.getKey(task, ["due_dateate"], null) != null) {
-        DateTime startDate = Utils.getKey(task, ["start_date"], null);
-        DateTime endDate = Utils.getKey(task, ["due_date"], null);
+          Utils.getKey(task, ["due_date"], null) != null) {
+        DateTime startDate =
+            Utils.fromUtc(Utils.getKey(task, ["start_date"], null));
+        DateTime endDate =
+            Utils.fromUtc(Utils.getKey(task, ["due_date"], null));
         String title = Utils.getKey(task, ["title"], "");
         String description = Utils.getKey(task, ["description"], "");
         String id = Utils.getKey(task, ["id"], "");
@@ -35,7 +37,7 @@ class CalendarController extends CommonController {
           event: id,
           title: title,
           description: description,
-          date: startDate,
+          date: endDate,
           startTime: startDate,
           endTime: endDate,
           color: AppColors.primary500,

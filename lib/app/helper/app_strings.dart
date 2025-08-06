@@ -87,6 +87,7 @@ class AppStrings {
   static String tagNameValidation = "Please enter a valid tag name";
   static String tagDescriptionValidation =
       "Please enter a valid tag description";
+  static String description = "Description";
 
   static String inLessThan10Minutes = "In less than 10 minutes";
   static String in10Minutes = "In 10 minutes";

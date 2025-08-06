@@ -252,7 +252,8 @@ class ProjectTableViewController extends CommonController {
       required List<DateTime> duration,
       required Color color,
       String? imagePath,
-      String? imageType}) async {
+      String? imageType,
+      List? tags}) async {
     if (name.isEmpty) {
       Utils.showSnackbar(message: AppStrings.taskNameValidation);
       return;
@@ -271,6 +272,7 @@ class ProjectTableViewController extends CommonController {
       ),
       "due_date": Utils.toUtc(duration[1]),
       "start_date": Utils.toUtc(duration[0]),
+      "tags": tags,
     };
     if ((imagePath ?? "").isNotEmpty) {
       data.addEntries({
@@ -291,13 +293,17 @@ class ProjectTableViewController extends CommonController {
         data: data);
   }
 
-  void addNewTask({required String listId, Map? tag}) {
+  void addNewTask({required String listId, Map? tag}) async {
     Color color = tag != null ? HexColor(tag["color"]) : AppColors.primary500;
     TextEditingController nameController =
         TextEditingController(text: tag != null ? tag["name"] : "");
     TextEditingController taskDescriptionController = TextEditingController();
     List<DateTime>? duration;
     TextEditingController imageController = TextEditingController();
+    MultiSelectController<Map> tagsController = MultiSelectController();
+
+    List tags = await DatabaseHelper.getTaskTags(
+        projectId: projectId, workspaceId: Utils.currentWorkspace);
     showDialog(
       context: Get.context!,
       builder: (context) {
@@ -511,6 +517,82 @@ class ProjectTableViewController extends CommonController {
                     ),
                     CommonImagePicker(controller: imageController),
                     SizedBox(
+                      height: 24.h(context),
+                    ),
+                    SizedBox(
+                      height: 43.h(context),
+                      width: 299.w(context),
+                      child: MultiDropdown<Map>(
+                        items: tags.map<DropdownItem<Map>>(
+                          (dynamic tag) {
+                            return DropdownItem(
+                              label: Utils.getKey(tag, ["name"], ""),
+                              value: tag,
+                            );
+                          },
+                        ).toList(),
+                        controller: tagsController,
+                        chipDecoration: ChipDecoration(
+                          labelStyle: TextStyles.regular(
+                            context: context,
+                            fontSize: 12.t(context),
+                            color: AppColors.primary0,
+                          ),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 0.h(context), vertical: 0.h(context)),
+                          backgroundColor: AppColors.primary500,
+                          deleteIcon: Icon(
+                            Icons.close,
+                            size: 16.t(context),
+                            color: AppColors.primary0,
+                          ),
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        dropdownItemDecoration: DropdownItemDecoration(
+                          textColor: AppColors.secondary900,
+                          backgroundColor: AppColors.background,
+                        ),
+                        dropdownDecoration: DropdownDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        fieldDecoration: FieldDecoration(
+                          suffixIcon: Icon(
+                            Icons.arrow_drop_down,
+                            size: 18.t(context),
+                            color: AppColors.secondary900,
+                          ),
+                          borderRadius: 8,
+                          hintText: AppStrings.tags,
+                          hintStyle: TextStyles.regular(
+                            context: context,
+                            fontSize: 12.t(context),
+                            color: AppColors.secondary400,
+                          ),
+                          labelStyle: TextStyles.regular(
+                            context: context,
+                            fontSize: 12.t(context),
+                            color: AppColors.secondary500,
+                          ),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: AppColors.cardColor,
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                        searchDecoration: SearchFieldDecoration(
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(8),
+                            borderSide: BorderSide(
+                              color: AppColors.cardColor,
+                              width: 1,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(
                       height: 36.h(context),
                     ),
                     CommonButton(
@@ -553,6 +635,7 @@ class ProjectTableViewController extends CommonController {
                                 name: nameController.text,
                                 imagePath: imageController.text,
                                 imageType: imageType,
+                                tags: tagsController.selectedItems,
                               );
                         Get.back();
                       },
@@ -821,7 +904,14 @@ class ProjectTableViewController extends CommonController {
         TextEditingController(text: Utils.getKey(task, ["title"], ""));
     TextEditingController descriptionController =
         TextEditingController(text: Utils.getKey(task, ["description"], ""));
-    TextEditingController imageController = TextEditingController();
+    TextEditingController imageController = TextEditingController(
+        text: Utils.getKey(
+            task,
+            [
+              "image",
+              ["path"]
+            ],
+            ""));
 
     showDialog(
       context: Get.context!,
@@ -861,7 +951,9 @@ class ProjectTableViewController extends CommonController {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               if (Utils.getKey(task, ["image"], null) == null)
-                                CommonImagePicker(controller: imageController),
+                                Center(
+                                    child: CommonImagePicker(
+                                        controller: imageController)),
                               CommonImage(
                                 imageUrl:
                                     Utils.getKey(task, ["image", "path"], ""),
@@ -923,6 +1015,76 @@ class ProjectTableViewController extends CommonController {
                               ),
                               SizedBox(
                                 height: 16.h(Get.context!),
+                              ),
+                              AppText(
+                                text: AppStrings.tags,
+                                style: TextStyles.regular(
+                                  context: Get.context!,
+                                  fontSize: 12,
+                                  color: AppColors.secondary400,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5.h(context),
+                              ),
+                              Wrap(
+                                direction: Axis.horizontal,
+                                spacing: 5.w(context),
+                                runSpacing: 5.h(context),
+                                children: [
+                                  for (Map tag
+                                      in Utils.getKey(task, ["tags"], []))
+                                    FutureBuilder(
+                                        future: DatabaseHelper.getTaskTags(
+                                            workspaceId: Utils.currentWorkspace,
+                                            projectId: projectId,
+                                            tagId:
+                                                Utils.getKey(tag, ["id"], "")),
+                                        builder: (context, snapshot) {
+                                          if (snapshot.data == null ||
+                                              snapshot.data.isEmpty) {
+                                            return SizedBox();
+                                          }
+                                          Map tagData = snapshot.data.first;
+                                          return Container(
+                                            padding: EdgeInsets.symmetric(
+                                              horizontal: 5.w(Get.context!),
+                                              vertical: 5.h(context),
+                                            ),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(5),
+                                              color: HexColor(Utils.getKey(
+                                                  tagData,
+                                                  ["color"],
+                                                  "564FFF")),
+                                            ),
+                                            child: AppText(
+                                              text: Utils.getKey(
+                                                  tagData, ["name"], ""),
+                                              style: TextStyles.semiBold(
+                                                context: Get.context!,
+                                                fontSize: 14,
+                                                color: AppColors.primary0,
+                                              ),
+                                            ),
+                                          );
+                                        }),
+                                ],
+                              ),
+                              SizedBox(
+                                height: 16.h(Get.context!),
+                              ),
+                              AppText(
+                                text: AppStrings.description,
+                                style: TextStyles.regular(
+                                  context: Get.context!,
+                                  fontSize: 12,
+                                  color: AppColors.secondary400,
+                                ),
+                              ),
+                              SizedBox(
+                                height: 5.h(context),
                               ),
                               CommonEditTextField(
                                 titleController: descriptionController,

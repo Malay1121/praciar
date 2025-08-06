@@ -95,6 +95,7 @@ class DashboardController extends CommonController {
     required String name,
     required String description,
     required DateTimeRange duration,
+    List? tags,
   }) async {
     Map projectTemplate = {
       "id": id,
@@ -108,14 +109,12 @@ class DashboardController extends CommonController {
       "task_list": [
         {"id": "todo", "name": "TODO", "color": "FFFFF", "tasks": []}
       ],
-      "tags": [],
+      "tags": tags,
     };
     return await DatabaseHelper.createProject(
         workspace: Utils.currentWorkspace,
         id: id,
-        name: name,
-        description: description,
-        duration: duration);
+        projectData: projectTemplate);
   }
 
   void createProjectDialog() async {
@@ -123,6 +122,8 @@ class DashboardController extends CommonController {
     TextEditingController projectNameController = TextEditingController();
     TextEditingController projectDescriptionController =
         TextEditingController();
+    MultiSelectController tagsController = MultiSelectController();
+
     DateTimeRange? duration;
     bool projectDetailsValidation() {
       if (projectIdController.text.isEmpty) {
@@ -146,9 +147,6 @@ class DashboardController extends CommonController {
     }
 
     List tags = await DatabaseHelper.getTags();
-
-    print("tagssss: ");
-    print(tags);
 
     showDialog(
       context: Get.context!,
@@ -284,13 +282,14 @@ class DashboardController extends CommonController {
                       height: 24.h(context),
                     ),
                     SizedBox(
+                      height: 43.h(context),
                       width: 299.w(context),
-                      child: MultiDropdown<String>(
-                        items: tags.map<DropdownItem<String>>(
+                      child: MultiDropdown<Map>(
+                        items: tags.map<DropdownItem<Map>>(
                           (dynamic tag) {
                             return DropdownItem(
                               label: Utils.getKey(tag, ["name"], ""),
-                              value: Utils.getKey(tag, ["id"], ""),
+                              value: tag,
                             );
                           },
                         ).toList(),
@@ -366,6 +365,7 @@ class DashboardController extends CommonController {
                             name: projectNameController.text,
                             description: projectDescriptionController.text,
                             duration: duration!,
+                            tags: tagsController.selectedItems,
                           );
 
                           Get.back();

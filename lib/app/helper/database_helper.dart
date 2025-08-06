@@ -318,24 +318,14 @@ class DatabaseHelper {
   static Future<dynamic> createProject({
     required String workspace,
     required String id,
-    required String name,
-    required String description,
-    required DateTimeRange duration,
+    required Map projectData,
   }) async {
     if (Utils.isLocal) {
       return await localCreateProject(
-          workspace: workspace,
-          id: id,
-          name: name,
-          description: description,
-          duration: duration);
+          workspace: workspace, id: id, projectData: projectData);
     } else {
       return await localCreateProject(
-          workspace: workspace,
-          id: id,
-          name: name,
-          description: description,
-          duration: duration);
+          workspace: workspace, id: id, projectData: projectData);
     }
   }
 

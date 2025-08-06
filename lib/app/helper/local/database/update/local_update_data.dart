@@ -4,7 +4,6 @@ Future<dynamic> localUpdateKey(
     {required List location, required Map updateData}) async {
   return await run(() async {
     Map data = await localReadData();
-    print(data);
     dynamic output = data;
     for (String key in location) {
       output = output[key];

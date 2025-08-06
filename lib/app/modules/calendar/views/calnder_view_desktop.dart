@@ -37,81 +37,8 @@ class _CalendarViewDesktopState extends State<CalendarViewDesktop> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 236.w(context),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                AppText(
-                                  text: AppStrings.hi + ", Malay Patel",
-                                  style: TextStyles.semiBold(
-                                    context: context,
-                                    fontSize: 24,
-                                    color: AppColors.secondary500,
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 8.h(context),
-                                ),
-                                AppText(
-                                  text: AppStrings.letsFinishYourTaskToday,
-                                  style: TextStyles.medium(
-                                    context: context,
-                                    fontSize: 16,
-                                    color: AppColors.secondary400,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(
-                            width: 324.w(context),
-                          ),
-                          Container(
-                            width: 52.w(context),
-                            height: 52.h(context),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: AppColors.cardColor,
-                                width: 1,
-                              ),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(
-                                vertical: 14.h(context),
-                                horizontal: 14.w(context),
-                              ),
-                              child: SvgPicture.asset(
-                                AppImages.icNotification,
-                                color: AppColors.secondary300,
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            width: 24.w(context),
-                          ),
-                          Container(
-                            width: 52.w(context),
-                            height: 52.h(context),
-                            decoration: BoxDecoration(
-                              shape: BoxShape.circle,
-                              image: DecorationImage(
-                                image: NetworkImage(
-                                  "https://placehold.co/52x52",
-                                ),
-                                fit: BoxFit.fill,
-                              ),
-                              border: Border.all(
-                                color: AppColors.cardColor,
-                                width: 1,
-                              ),
-                            ),
-                          ),
-                        ],
+                      CommonHeader(
+                        title: AppStrings.exploreTag,
                       ),
                       SizedBox(
                         height: 44.h(context),
@@ -125,43 +52,6 @@ class _CalendarViewDesktopState extends State<CalendarViewDesktop> {
                           headerStringBuilder: (date, {secondaryDate}) {
                             return "${date.month}/${date.year}";
                           },
-                          // cellBuilder: (date, event, isToday, isInMonth,
-                          //     hideDaysNotInMonth) {
-                          //   return Container(
-                          //     decoration: BoxDecoration(
-                          //       color: isToday
-                          //           ? AppColors.primary100
-                          //           : AppColors.cardColor,
-                          //       borderRadius: BorderRadius.circular(8),
-                          //     ),
-                          //     child: Padding(
-                          //       padding: EdgeInsets.all(8.w(context)),
-                          //       child: Column(
-                          //         mainAxisAlignment:
-                          //             MainAxisAlignment.spaceBetween,
-                          //         children: [
-                          //           AppText(
-                          //             text: date.day.toString(),
-                          //             style: TextStyles.semiBold(
-                          //               context: context,
-                          //               fontSize: 16,
-                          //               color: isToday
-                          //                   ? AppColors.primary500
-                          //                   : AppColors.secondary900,
-                          //             ),
-                          //           ),
-                          //           if (event != null)
-                          //             CommonImage(
-                          //               imageUrl: date.toString(),
-                          //               fit: BoxFit.cover,
-                          //               width: 32.w(context),
-                          //               height: 32.h(context),
-                          //             ),
-                          //         ],
-                          //       ),
-                          //     ),
-                          //   );
-                          // },
                         ),
                       ),
                     ],

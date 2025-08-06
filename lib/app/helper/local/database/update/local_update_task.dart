@@ -20,8 +20,15 @@ Future<Map> localUpdateTask(
   int taskIndex = (data["workspaces"][workspaceIndex]["projects"][projectIndex]
           ["task_list"][taskListIndex]["tasks"] as List)
       .indexWhere((element) => element["id"] == taskId);
+  for (String key in taskData.keys.toList()) {
+    data["workspaces"][workspaceIndex]["projects"][projectIndex]["task_list"]
+            [taskListIndex]["tasks"][taskIndex]
+        .update(key, (value) => taskData[key], ifAbsent: () => taskData[key]);
+  }
   data["workspaces"][workspaceIndex]["projects"][projectIndex]["task_list"]
-      [taskListIndex]["tasks"][taskIndex] = taskData;
+          [taskListIndex]["tasks"][taskIndex]
+      .update("updated_at", (value) => Utils.toUtc(DateTime.now()),
+          ifAbsent: () => Utils.toUtc(DateTime.now()));
   await localWriteData(data);
   return taskData;
 }
