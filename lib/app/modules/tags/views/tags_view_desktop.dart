@@ -174,7 +174,8 @@ class _TagsViewDesktopState extends State<TagsViewDesktop> {
                                 width: 8.w(context),
                               ),
                               AppText(
-                                text: "40",
+                                text: Utils.getKey(tag, ["items"], "0")
+                                    .toString(),
                                 height: 24.h(context),
                                 style: TextStyles.medium(
                                   context: context,

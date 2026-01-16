@@ -18,7 +18,7 @@ class _CommonSidebarState extends State<CommonSidebar> {
       "screen": Routes.DASHBOARD,
     },
     {
-      "icon": AppImages.icTag,
+      "icon": AppImages.icCalendar,
       "title": AppStrings.calendar,
       "screen": Routes.CALENDAR,
     },

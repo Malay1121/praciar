@@ -223,6 +223,21 @@ class TagsController extends CommonController {
 
   void fetchTags() async {
     tags = await DatabaseHelper.getTags();
+    List projects = await DatabaseHelper.getProject();
+    for (Map project in projects) {
+      for (Map tag in Utils.getKey(project, ["tags"], [])) {
+        int index = tags.indexOf((element) => element["id"] == tag["id"]);
+
+        if (index >= 0) {
+          if (!(tags[index] as Map).containsKey("items")) {
+            tags[index].addEntries({
+              "items": 0,
+            }.entries);
+          }
+          tags[index]["items"] += 1;
+        }
+      }
+    }
     update();
   }
 

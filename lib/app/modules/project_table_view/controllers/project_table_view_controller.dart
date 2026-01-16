@@ -635,7 +635,11 @@ class ProjectTableViewController extends CommonController {
                                 name: nameController.text,
                                 imagePath: imageController.text,
                                 imageType: imageType,
-                                tags: tagsController.selectedItems,
+                                tags: tagsController.selectedItems
+                                    .map(
+                                      (e) => e.value,
+                                    )
+                                    .toList(),
                               );
                         Get.back();
                       },

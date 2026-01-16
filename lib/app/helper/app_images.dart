@@ -17,6 +17,7 @@ class AppImages {
   static String icMore = "${iconsDirectory}ic_more.svg";
   static String icTasks = "${iconsDirectory}ic_tasks.svg";
   static String icTag = "${iconsDirectory}ic_tag.svg";
+  static String icCalendar = "${iconsDirectory}ic_calendar.svg";
   static String icSearch = "${iconsDirectory}ic_search.svg";
   static String icSort = "${iconsDirectory}ic_sort.svg";
   static String icAdd = "${iconsDirectory}ic_add.svg";

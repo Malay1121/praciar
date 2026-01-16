@@ -3,6 +3,7 @@ import 'package:praciar/app/modules/calendar/controllers/calendar_controller.dar
 import 'package:praciar/app/modules/dashboard/controllers/dashboard_controller.dart';
 import 'package:praciar/app/widgets/common_button.dart';
 import 'package:praciar/app/widgets/common_image.dart';
+import 'package:praciar/app/widgets/update_task_popup.dart';
 import 'package:watcher/watcher.dart';
 
 import '../../../helper/all_imports.dart';
@@ -51,6 +52,15 @@ class _CalendarViewDesktopState extends State<CalendarViewDesktop> {
                           cellAspectRatio: 1,
                           headerStringBuilder: (date, {secondaryDate}) {
                             return "${date.month}/${date.year}";
+                          },
+                          onEventTap: (event, date) {
+                            Map taskData = event.event as Map;
+                            openTaskDetails(
+                              projectId:
+                                  Utils.getKey(taskData, ["_projectId"], ""),
+                              listId: Utils.getKey(taskData, ["_listId"], ""),
+                              taskId: Utils.getKey(taskData, ["id"], ""),
+                            );
                           },
                         ),
                       ),

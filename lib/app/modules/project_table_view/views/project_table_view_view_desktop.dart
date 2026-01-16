@@ -3,6 +3,7 @@ import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
 import 'package:praciar/app/helper/all_imports.dart';
 import 'package:praciar/app/modules/project_table_view/controllers/project_table_view_controller.dart';
 import 'package:praciar/app/widgets/common_task_card.dart';
+import 'package:praciar/app/widgets/update_task_popup.dart';
 
 class ProjectTableViewViewDesktop extends StatefulWidget {
   ProjectTableViewViewDesktop({required this.controller});
@@ -157,13 +158,13 @@ class _ProjectTableViewViewDesktopState
                                         padding: EdgeInsets.only(
                                             bottom: 16.w(context)),
                                         child: GestureDetector(
-                                          onTap: () =>
-                                              widget.controller.openTaskDetails(
-                                            listId:
-                                                Utils.getKey(table, ["id"], ""),
-                                            taskId:
-                                                Utils.getKey(card, ["id"], ""),
-                                          ),
+                                          onTap: () => openTaskDetails(
+                                              listId: Utils.getKey(
+                                                  table, ["id"], ""),
+                                              taskId: Utils.getKey(
+                                                  card, ["id"], ""),
+                                              projectId:
+                                                  widget.controller.projectId),
                                           child: CommonTaskcard(
                                             card: card,
                                             listId:
