@@ -39,7 +39,7 @@ class _CalendarViewDesktopState extends State<CalendarViewDesktop> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CommonHeader(
-                        title: AppStrings.exploreTag,
+                        title: AppStrings.calendar,
                       ),
                       SizedBox(
                         height: 44.h(context),

@@ -9,7 +9,12 @@ Future<Map> localReadData() async {
     Map data = {};
     if (await file.exists()) {
       file.watch(recursive: true).asBroadcastStream();
-      data = jsonDecode(await file.readAsString());
+      String fdata = (await file.readAsString());
+      if (fdata.isEmpty) {
+        await localCreateDatabase();
+      } else {
+        data = jsonDecode(fdata);
+      }
     } else {
       localCreateDatabase();
     }

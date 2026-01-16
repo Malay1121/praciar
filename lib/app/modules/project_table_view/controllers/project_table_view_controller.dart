@@ -73,7 +73,7 @@ class ProjectTableViewController extends CommonController {
     ];
   }
 
-  void createTaskList(
+  Future createTaskList(
       {required String name,
       required String description,
       required Color color}) async {
@@ -206,14 +206,15 @@ class ProjectTableViewController extends CommonController {
                     ),
                     CommonButton(
                       text: AppStrings.create,
-                      onTap: () {
+                      onTap: () async {
                         tag != null
                             ? null
-                            : createTaskList(
+                            : await createTaskList(
                                 color: color,
                                 description: taskDescriptionController.text,
                                 name: nameController.text,
                               );
+                        initializeTab();
                         Get.back();
                       },
                       width: 235.w(context),
@@ -683,13 +684,22 @@ class ProjectTableViewController extends CommonController {
           header: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              AppText(
-                text: Utils.getKey(table, ["name"], ""),
-                style: TextStyles.bold(
-                  context: Get.context!,
-                  fontSize: 20,
-                  color: HexColor(Utils.getKey(table, ["color"], "")),
-                ),
+              Row(
+                children: [
+                  AppText(
+                    text: Utils.getKey(table, ["name"], ""),
+                    style: TextStyles.bold(
+                      context: Get.context!,
+                      fontSize: 20,
+                      color: HexColor(Utils.getKey(table, ["color"], "")),
+                    ),
+                  ),
+                  // Spacer(),
+                  Icon(
+                    Icons.more_horiz,
+                    color: AppColors.secondary800,
+                  ),
+                ],
               ),
               SizedBox(
                 height: 8.h(Get.context!),

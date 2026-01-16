@@ -6,7 +6,7 @@ import 'package:timezone/data/latest_all.dart' as tz;
 import 'all_imports.dart';
 
 class Utils {
-  static bool isLocal = Platform.isWindows || Platform.isMacOS;
+  static bool isLocal = true;
   static String dataPath = "";
   static WindowsNotification winNotifyPlugin = WindowsNotification(
       applicationId:
