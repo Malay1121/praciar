@@ -93,4 +93,24 @@ class AppStrings {
   static String in10Minutes = "In 10 minutes";
 
   static String inList = "In list";
+
+  // Activity/Logs related strings
+  static String logs = "Logs";
+  static String activityLog = "Activity Log";
+  static String recentActivity = "Recent Activity";
+  static String noActivityYet = "No activity yet!";
+  static String activityDescription =
+      "Here you can see all your recent activities";
+  static String createProject = "Created project";
+  static String updateProject = "Updated project";
+  static String deleteProject = "Deleted project";
+  static String createTask = "Created task";
+  static String updateTask = "Updated task";
+  static String deleteTask = "Deleted task";
+  static String createTag = "Created tag";
+  static String updateTag = "Updated tag";
+  static String deleteTag = "Deleted tag";
+  static String createList = "Created list";
+  static String updateList = "Updated list";
+  static String deleteList = "Deleted list";
 }

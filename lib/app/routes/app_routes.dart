@@ -13,6 +13,7 @@ abstract class Routes {
   static const PROJECT_DASHBOARD = _Paths.PROJECT_DASHBOARD;
   static const PROJECT_TAGS = _Paths.PROJECT_TAGS;
   static const CALENDAR = _Paths.CALENDAR;
+  static const LOGS = _Paths.LOGS;
 }
 
 abstract class _Paths {
@@ -27,4 +28,5 @@ abstract class _Paths {
   static const PROJECT_DASHBOARD = '/project-dashboard';
   static const PROJECT_TAGS = '/project-tags';
   static const CALENDAR = '/calendar';
+  static const LOGS = '/logs';
 }

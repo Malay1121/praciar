@@ -111,10 +111,27 @@ class DashboardController extends CommonController {
       ],
       "tags": tags,
     };
-    return await DatabaseHelper.createProject(
+
+    await DatabaseHelper.createProject(
         workspace: Utils.currentWorkspace,
         id: id,
         projectData: projectTemplate);
+
+    // Log the activity
+    await Utils.logActivity(
+      action: "created",
+      entityType: "project",
+      entityName: name,
+      entityId: id,
+      description: "Created project: $name",
+      metadata: {
+        "start_date": Utils.toUtc(duration.start),
+        "end_date": Utils.toUtc(duration.end),
+        "tags_count": tags?.length ?? 0,
+      },
+    );
+
+    return;
   }
 
   void createProjectDialog() async {

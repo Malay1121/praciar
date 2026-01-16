@@ -23,11 +23,27 @@ class _CommonTaskcardState extends State<CommonTaskcard> {
   void deleteTask({
     required String id,
   }) async {
+    String taskName = Utils.getKey(widget.card, ["title"], "");
+    String taskId = Utils.getKey(widget.card, ["id"], "");
+
     await DatabaseHelper.deleteTask(
         projectId: widget.projectId,
         workspaceId: Utils.currentWorkspace,
         listId: widget.listId,
-        taskId: Utils.getKey(widget.card, ["id"], ""));
+        taskId: taskId);
+
+    // Log the activity
+    await Utils.logActivity(
+      action: "deleted",
+      entityType: "task",
+      entityName: taskName,
+      entityId: taskId,
+      projectId: widget.projectId,
+      description: "Deleted task: $taskName",
+      metadata: {
+        "list_id": widget.listId,
+      },
+    );
   }
 
   List<PopupMenuEntry> popupMenuButtons(Map task) {

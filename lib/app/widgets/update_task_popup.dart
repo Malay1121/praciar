@@ -27,6 +27,20 @@ void updateTask({
     taskData: task,
   );
   if (result != null) {
+    // Log the activity
+    await Utils.logActivity(
+      action: "updated",
+      entityType: "task",
+      entityName: title,
+      entityId: taskId,
+      projectId: projectId,
+      description: "Updated task: $title",
+      metadata: {
+        "list_id": taskListId,
+        "tags_count": tags?.length ?? 0,
+      },
+    );
+
     Get.back();
   }
 }

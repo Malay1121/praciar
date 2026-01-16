@@ -6,6 +6,8 @@ import '../modules/dashboard/bindings/dashboard_binding.dart';
 import '../modules/dashboard/views/dashboard_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
+import '../modules/logs/bindings/logs_binding.dart';
+import '../modules/logs/views/logs_view.dart';
 import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/project_dashboard/bindings/project_dashboard_binding.dart';
@@ -78,6 +80,11 @@ class AppPages {
       name: _Paths.CALENDAR,
       page: () => const CalendarView(),
       binding: CalendarBinding(),
+    ),
+    GetPage(
+      name: _Paths.LOGS,
+      page: () => const LogsView(),
+      binding: LogsBinding(),
     ),
   ];
 }

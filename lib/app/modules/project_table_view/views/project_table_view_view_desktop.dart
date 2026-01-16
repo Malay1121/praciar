@@ -1,5 +1,6 @@
 import 'package:drag_and_drop_lists/drag_and_drop_list_interface.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
+import 'package:get/get.dart';
 import 'package:praciar/app/helper/all_imports.dart';
 import 'package:praciar/app/modules/project_table_view/controllers/project_table_view_controller.dart';
 import 'package:praciar/app/widgets/common_task_card.dart';
@@ -126,21 +127,92 @@ class _ProjectTableViewViewDesktopState
                               DragAndDropList(
                                 header: Column(
                                   children: [
-                                    AppText(
-                                      text: Utils.getKey(table, ["name"], ""),
-                                      style: TextStyles.bold(
-                                        context: context,
-                                        fontSize: 20.t(context),
-                                        color: HexColor(Utils.getKey(
-                                            table, ["color"], "FFFFFF")),
-                                      ),
+                                    Row(
+                                      children: [
+                                        AppText(
+                                          text:
+                                              Utils.getKey(table, ["name"], ""),
+                                          style: TextStyles.bold(
+                                            context: context,
+                                            fontSize: 20.t(context),
+                                            color: HexColor(Utils.getKey(
+                                                table, ["color"], "FFFFFF")),
+                                          ),
+                                        ),
+                                        Spacer(),
+                                        PopupMenuButton(
+                                          constraints: BoxConstraints(
+                                            minWidth: 152.w(context),
+                                          ),
+                                          padding: EdgeInsets.zero,
+                                          shape: Border.all(
+                                            color: AppColors.cardColor,
+                                          ),
+                                          shadowColor: Colors.transparent,
+                                          color: AppColors.primary0,
+                                          itemBuilder: (BuildContext context) =>
+                                              <PopupMenuEntry>[
+                                            PopupMenuItem(
+                                              onTap: () => widget.controller
+                                                  .deleteTaskList(
+                                                      id: Utils.getKey(
+                                                          table, ["id"], "")),
+                                              height: 24.h(Get.context!),
+                                              padding: EdgeInsets.zero,
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                children: [
+                                                  SvgPicture.asset(
+                                                    AppImages.icBin,
+                                                    width: 24.w(Get.context!),
+                                                    height: 24.h(Get.context!),
+                                                    color: AppColors.error500,
+                                                  ),
+                                                  SizedBox(
+                                                    width: 12.w(Get.context!),
+                                                  ),
+                                                  AppText(
+                                                    centered: true,
+                                                    text: AppStrings.delete,
+                                                    height: 40.h(Get.context!),
+                                                    width: 96.w(Get.context!),
+                                                    style: TextStyles.semiBold(
+                                                      context: Get.context!,
+                                                      fontSize: 12,
+                                                      color: AppColors.error500,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                          child: Container(
+                                            width: 30.h(context),
+                                            height: 30.h(context),
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(10),
+                                              color: AppColors.primary500,
+                                            ),
+                                            child: Center(
+                                              child: SvgPicture.asset(
+                                                AppImages.icMore,
+                                                width: 16.w(context),
+                                                height: 16.h(context),
+                                                color: AppColors.primary0,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                     SizedBox(
                                       height: 8.h(context),
                                     ),
                                     Container(
                                       height: 0.5,
-                                      width: 328.w(context),
+                                      // width: 328.w(context),
                                       color: HexColor(Utils.getKey(
                                           table, ["color"], "FFFFFF")),
                                     ),
@@ -156,7 +228,7 @@ class _ProjectTableViewViewDesktopState
                                       canDrag: true,
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                            bottom: 16.w(context)),
+                                            bottom: 16.h(context)),
                                         child: GestureDetector(
                                           onTap: () => openTaskDetails(
                                               listId: Utils.getKey(

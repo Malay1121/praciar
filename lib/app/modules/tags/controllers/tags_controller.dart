@@ -17,6 +17,18 @@ class TagsController extends CommonController {
         DateTime.now(),
       ),
     });
+
+    // Log the activity
+    await Utils.logActivity(
+      action: "created",
+      entityType: "tag",
+      entityName: name,
+      description: "Created tag: $name",
+      metadata: {
+        "color": color.toHexString().substring(2),
+      },
+    );
+
     update();
   }
 
@@ -31,13 +43,41 @@ class TagsController extends CommonController {
       "id": id,
     });
 
+    // Log the activity
+    await Utils.logActivity(
+      action: "updated",
+      entityType: "tag",
+      entityName: name,
+      entityId: id,
+      description: "Updated tag: $name",
+      metadata: {
+        "color": color.toHexString().substring(2),
+      },
+    );
+
     update();
   }
 
   void deleteTag({
     required String id,
   }) async {
+    // Get the tag name before deletion for logging
+    Map? tagToDelete = tags.firstWhereOrNull((tag) => tag["id"] == id);
+    String tagName = tagToDelete != null
+        ? Utils.getKey(tagToDelete, ["name"], "Unknown Tag")
+        : "Unknown Tag";
+
     tags = await DatabaseHelper.deleteTag(id: id);
+
+    // Log the activity
+    await Utils.logActivity(
+      action: "deleted",
+      entityType: "tag",
+      entityName: tagName,
+      entityId: id,
+      description: "Deleted tag: $tagName",
+    );
+
     update();
   }
 

@@ -88,6 +88,18 @@ class ProjectTableViewController extends CommonController {
             DateTime.now(),
           ),
         });
+
+    // Log the activity
+    await Utils.logActivity(
+      action: "created",
+      entityType: "list",
+      entityName: name,
+      projectId: projectId,
+      description: "Created list: $name",
+      metadata: {
+        "color": color.toHexString().substring(2),
+      },
+    );
   }
 
   void addNewTaskList({Map? tag}) {
@@ -292,6 +304,21 @@ class ProjectTableViewController extends CommonController {
         workspaceId: Utils.currentWorkspace,
         listId: listId,
         data: data);
+
+    // Log the activity
+    await Utils.logActivity(
+      action: "created",
+      entityType: "task",
+      entityName: name,
+      projectId: projectId,
+      description: "Created task: $name",
+      metadata: {
+        "list_id": listId,
+        "start_date": Utils.toUtc(duration[0]),
+        "due_date": Utils.toUtc(duration[1]),
+        "tags_count": tags?.length ?? 0,
+      },
+    );
   }
 
   void addNewTask({required String listId, Map? tag}) async {
@@ -694,11 +721,6 @@ class ProjectTableViewController extends CommonController {
                       color: HexColor(Utils.getKey(table, ["color"], "")),
                     ),
                   ),
-                  // Spacer(),
-                  Icon(
-                    Icons.more_horiz,
-                    color: AppColors.secondary800,
-                  ),
                 ],
               ),
               SizedBox(
@@ -896,8 +918,52 @@ class ProjectTableViewController extends CommonController {
         taskid: taskId,
         taskData: task);
     if (result != null) {
+      // Log the activity
+      await Utils.logActivity(
+        action: "updated",
+        entityType: "task",
+        entityName: title,
+        entityId: taskId,
+        projectId: projectId,
+        description: "Updated task: $title",
+        metadata: {
+          "list_id": taskListId,
+        },
+      );
+
       Get.back();
     }
+  }
+
+  void deleteTaskList({
+    required String id,
+  }) async {
+    // Get the task list name before deleting
+    List taskListData = await DatabaseHelper.getTaskList(
+      projectId: projectId,
+      workspaceId: Utils.currentWorkspace,
+      taskListId: id,
+    );
+    String listName = "";
+    if (taskListData.isNotEmpty) {
+      listName = Utils.getKey(taskListData.first, ["name"], "");
+    }
+
+    await DatabaseHelper.deleteTaskList(
+      projectId: projectId,
+      workspaceId: Utils.currentWorkspace,
+      listId: id,
+    );
+
+    // Log the activity
+    await Utils.logActivity(
+      action: "deleted",
+      entityType: "list",
+      entityName: listName,
+      entityId: id,
+      projectId: projectId,
+      description: "Deleted list: $listName",
+    );
   }
 
   void openTaskDetails({required String taskId, required String listId}) async {

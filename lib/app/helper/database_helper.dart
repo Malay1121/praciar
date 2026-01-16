@@ -1,6 +1,9 @@
 import 'package:praciar/app/helper/local/database/create/local_create_project.dart';
+import 'package:praciar/app/helper/local/database/delete/local_delete_task_list.dart';
 import 'package:praciar/app/helper/local/database/update/local_update_project.dart';
 import 'package:praciar/app/helper/local/database/update/local_update_task.dart';
+import 'package:praciar/app/helper/local/database/create/local_create_activity_log.dart';
+import 'package:praciar/app/helper/local/database/get/local_get_activity_logs.dart';
 
 import 'all_imports.dart';
 import 'local/database/get/local_get_pinned_projects.dart';
@@ -304,6 +307,17 @@ class DatabaseHelper {
     }
   }
 
+  static Future<dynamic> deleteTaskList(
+      {required String workspaceId,
+      required String projectId,
+      required String listId}) async {
+    if (Utils.isLocal) {
+      return await localDeleteTaskList(workspaceId, projectId, listId);
+    } else {
+      return await localDeleteTaskList(workspaceId, projectId, listId);
+    }
+  }
+
   static Future<dynamic> createUser(
       {required String name,
       required String email,
@@ -347,6 +361,22 @@ class DatabaseHelper {
     } else {
       return await localUpdateSettings(
           category: category, parameter: parameter, newValue: newValue);
+    }
+  }
+
+  static Future<dynamic> createActivityLog({required Map data}) async {
+    if (Utils.isLocal) {
+      return await localCreateActivityLog(data);
+    } else {
+      return await localCreateActivityLog(data);
+    }
+  }
+
+  static Future<List> getActivityLogs() async {
+    if (Utils.isLocal) {
+      return await localGetActivityLogs();
+    } else {
+      return await localGetActivityLogs();
     }
   }
 }

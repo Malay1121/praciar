@@ -22,4 +22,8 @@ class AppImages {
   static String icSort = "${iconsDirectory}ic_sort.svg";
   static String icAdd = "${iconsDirectory}ic_add.svg";
   static String icBin = "${iconsDirectory}ic_bin.svg";
+  static String icDelete =
+      "${iconsDirectory}ic_bin.svg"; // Using bin icon for delete
+  static String icList =
+      "${iconsDirectory}ic_tasks.svg"; // Using tasks icon for list
 }

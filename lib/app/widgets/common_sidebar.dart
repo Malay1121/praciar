@@ -28,6 +28,11 @@ class _CommonSidebarState extends State<CommonSidebar> {
       "screen": Routes.TAGS,
     },
     {
+      "icon": AppImages.icTasks,
+      "title": AppStrings.logs,
+      "screen": Routes.LOGS,
+    },
+    {
       "icon": AppImages.icSettings,
       "title": AppStrings.settings,
       "screen": Routes.SETTINGS,

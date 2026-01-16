@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:humanize_duration/humanize_duration.dart';
 import 'package:intl/intl.dart';
 import 'package:praciar/app/helper/local_firestore/local_firestore.dart';
+import 'package:praciar/app/modules/logs/controllers/logs_controller.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'all_imports.dart';
 
@@ -335,5 +336,36 @@ class Utils {
     AppColors.information300 = Color(0xFF98D3FF);
     AppColors.information200 = Color(0xFFBAE5FF);
     AppColors.information100 = Color(0xFFDCF3FF);
+  }
+
+  static Future<void> logActivity({
+    required String action,
+    required String entityType,
+    required String entityName,
+    String? entityId,
+    String? projectId,
+    String? description,
+    Map? metadata,
+  }) async {
+    try {
+      await DatabaseHelper.createActivityLog(data: {
+        "id": DateTime.now().millisecondsSinceEpoch.toString(),
+        "action": action, // e.g., "created", "updated", "deleted"
+        "entity_type": entityType, // e.g., "project", "task", "tag", "list"
+        "entity_name": entityName,
+        "entity_id": entityId,
+        "project_id": projectId,
+        "description": description ?? "$action $entityType: $entityName",
+        "metadata": metadata ?? {},
+        "created_at": toUtc(DateTime.now()),
+      });
+
+      // Refresh logs controller if it's active
+      if (Get.isRegistered<LogsController>()) {
+        LogsController.refreshIfActive();
+      }
+    } catch (e) {
+      print("Error logging activity: $e");
+    }
   }
 }
