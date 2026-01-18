@@ -13,6 +13,7 @@ Future<List> localCreateProject({
         .firstWhere((element) => element["id"] == workspace)["projects"]
         .add(projectData);
     await localWriteData(data);
-    return data["projects"];
+    return data["workspaces"]
+        .firstWhere((element) => element["id"] == workspace)["projects"];
   });
 }
