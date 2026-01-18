@@ -33,6 +33,11 @@ class _CommonProjectSidebarState extends State<CommonProjectSidebar> {
       "title": AppStrings.tags,
       "screen": Routes.PROJECT_TAGS,
     },
+    {
+      "icon": AppImages.icTasks,
+      "title": AppStrings.logs,
+      "screen": Routes.PROJECT_LOGS,
+    },
   ];
 
   bool tabSelected(Map tab) =>

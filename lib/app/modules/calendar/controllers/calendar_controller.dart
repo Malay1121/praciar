@@ -3,6 +3,15 @@ import 'package:praciar/app/helper/all_imports.dart';
 
 class CalendarController extends CommonController {
   EventController eventController = EventController();
+
+  List views = ["Month", "Day"];
+  String selectedView = "Month";
+
+  void changeView(String view) {
+    selectedView = view;
+    update();
+  }
+
   @override
   void onInit() {
     super.onInit();

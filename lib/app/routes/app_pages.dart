@@ -12,6 +12,8 @@ import '../modules/onboarding/bindings/onboarding_binding.dart';
 import '../modules/onboarding/views/onboarding_view.dart';
 import '../modules/project_dashboard/bindings/project_dashboard_binding.dart';
 import '../modules/project_dashboard/views/project_dashboard_view.dart';
+import '../modules/project_logs/bindings/project_logs_binding.dart';
+import '../modules/project_logs/views/project_logs_view.dart';
 import '../modules/project_table_view/bindings/table_view_binding.dart';
 import '../modules/project_table_view/views/project_table_view_view.dart';
 import '../modules/project_tags/bindings/project_tags_binding.dart';
@@ -85,6 +87,11 @@ class AppPages {
       name: _Paths.LOGS,
       page: () => const LogsView(),
       binding: LogsBinding(),
+    ),
+    GetPage(
+      name: _Paths.PROJECT_LOGS,
+      page: () => const ProjectLogsView(),
+      binding: ProjectLogsBinding(),
     ),
   ];
 }

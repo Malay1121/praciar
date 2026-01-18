@@ -27,7 +27,6 @@ void updateTask({
     taskData: task,
   );
   if (result != null) {
-    // Log the activity
     await Utils.logActivity(
       action: "updated",
       entityType: "task",

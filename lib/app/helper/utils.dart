@@ -3,6 +3,7 @@ import 'package:humanize_duration/humanize_duration.dart';
 import 'package:intl/intl.dart';
 import 'package:praciar/app/helper/local_firestore/local_firestore.dart';
 import 'package:praciar/app/modules/logs/controllers/logs_controller.dart';
+import 'package:praciar/app/modules/project_logs/controllers/project_logs_controller.dart';
 import 'package:timezone/data/latest_all.dart' as tz;
 import 'all_imports.dart';
 
@@ -94,7 +95,7 @@ class Utils {
   static dynamic getKey(Map data, List location, dynamic replacement) {
     dynamic value = data;
     for (var key in location) {
-      if (value is Map) {
+      if (value is Map || value is List) {
         value = value[key];
       } else {
         return replacement;
@@ -363,6 +364,11 @@ class Utils {
       // Refresh logs controller if it's active
       if (Get.isRegistered<LogsController>()) {
         LogsController.refreshIfActive();
+      }
+
+      // Refresh project logs controller if it's active
+      if (Get.isRegistered<ProjectLogsController>()) {
+        ProjectLogsController.refreshIfActive();
       }
     } catch (e) {
       print("Error logging activity: $e");

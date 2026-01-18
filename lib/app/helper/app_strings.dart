@@ -96,6 +96,7 @@ class AppStrings {
 
   // Activity/Logs related strings
   static String logs = "Logs";
+  static String projectLogs = "Project Logs";
   static String activityLog = "Activity Log";
   static String recentActivity = "Recent Activity";
   static String noActivityYet = "No activity yet!";

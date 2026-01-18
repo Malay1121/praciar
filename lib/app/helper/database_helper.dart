@@ -379,4 +379,12 @@ class DatabaseHelper {
       return await localGetActivityLogs();
     }
   }
+
+  static Future<List> getProjectActivityLogs(String projectId) async {
+    if (Utils.isLocal) {
+      return await localGetProjectActivityLogs(projectId);
+    } else {
+      return await localGetProjectActivityLogs(projectId);
+    }
+  }
 }

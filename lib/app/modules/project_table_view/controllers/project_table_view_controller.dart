@@ -276,6 +276,12 @@ class ProjectTableViewController extends CommonController {
     } else if (duration.isEmpty) {
       Utils.showSnackbar(message: AppStrings.durationValidation);
       return;
+    } else if (duration[1].isBefore(duration[0])) {
+      Utils.showSnackbar(message: AppStrings.durationValidation);
+      return;
+    } else if (duration[1] == duration[0]) {
+      Utils.showSnackbar(message: AppStrings.durationValidation);
+      return;
     }
     Map data = {
       "title": name,
@@ -289,14 +295,16 @@ class ProjectTableViewController extends CommonController {
     };
     if ((imagePath ?? "").isNotEmpty) {
       data.addEntries({
-        "images": {
-          "id": "image_1",
-          "type": imageType,
-          "path": imagePath,
-          "uploaded_at": Utils.toUtc(
-            DateTime.now(),
-          ),
-        }
+        "images": [
+          {
+            "id": "image_1",
+            "type": imageType,
+            "path": imagePath,
+            "uploaded_at": Utils.toUtc(
+              DateTime.now(),
+            ),
+          }
+        ]
       }.entries);
     }
     await DatabaseHelper.createTask(
