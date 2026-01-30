@@ -1,5 +1,6 @@
 import 'package:praciar/app/helper/local/database/create/local_create_project.dart';
 import 'package:praciar/app/helper/local/database/delete/local_delete_task_list.dart';
+import 'package:praciar/app/helper/local/database/get/local_get_settings.dart';
 import 'package:praciar/app/helper/local/database/update/local_update_project.dart';
 import 'package:praciar/app/helper/local/database/update/local_update_task.dart';
 import 'package:praciar/app/helper/local/database/create/local_create_activity_log.dart';
@@ -28,6 +29,14 @@ class DatabaseHelper {
       return await localGetTags();
     } else {
       return await localGetTags();
+    }
+  }
+
+  static Future<Map> getSettings() async {
+    if (Utils.isLocal) {
+      return await localGetSettings();
+    } else {
+      return await localGetSettings();
     }
   }
 

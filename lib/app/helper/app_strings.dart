@@ -69,7 +69,51 @@ class AppStrings {
   static String delete = "Delete";
   static String general = "General";
   static String appearance = "Appearance";
+  static String productivity = "Productivity";
+  static String privacy = "Privacy";
   static String mode = "Mode";
+
+  // General settings
+  static String language = "Language";
+  static String notifications = "Notifications";
+  static String defaultWorkspace = "Default Workspace";
+
+  // Appearance settings
+  static String fontSize = "Font Size";
+  static String compactView = "Compact View";
+  static String accentColor = "Accent Color";
+
+  // Productivity settings
+  static String autoSave = "Auto Save";
+  static String taskReminders = "Task Reminders";
+  static String timeTracking = "Time Tracking";
+  static String smartSuggestions = "Smart Suggestions";
+
+  // Privacy settings
+  static String dataBackup = "Data Backup";
+  static String analytics = "Usage Analytics";
+  static String crashReports = "Crash Reports";
+
+  // Option values
+  static String enabled = "Enabled";
+  static String disabled = "Disabled";
+  static String english = "English";
+  static String spanish = "Spanish";
+  static String french = "French";
+  static String small = "Small";
+  static String medium = "Medium";
+  static String large = "Large";
+  static String blue = "Blue";
+  static String green = "Green";
+  static String purple = "Purple";
+  static String red = "Red";
+  static String personal = "Personal";
+  static String work = "Work";
+  static String team = "Team";
+  static String always = "Always";
+  static String never = "Never";
+  static String daily = "Daily";
+  static String weekly = "Weekly";
 
   static String enterImageURL = "Enter Image URL";
   static String chooseFile = "Choose File";

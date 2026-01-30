@@ -50,45 +50,51 @@ class Utils {
   }
 
   static scheduleNotification(Map task, DateTime endDate) async {
-    tz.initializeTimeZones();
-    final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
-    setLocalLocation(getLocation(currentTimeZone));
-    String title = getKey(task, ["title"], "Task Notification");
-    String body = getKey(task, ["description"], "Task Description");
-    Duration duration =
-        endDate.subtract(Duration(minutes: 10)).difference(DateTime.now());
+    Map settings = await DatabaseHelper.getSettings();
+    if (getKey(settings, ["general", "notifications"], "Enabled") !=
+        "Disabled") {
+      tz.initializeTimeZones();
+      final String currentTimeZone = await FlutterTimezone.getLocalTimezone();
+      setLocalLocation(getLocation(currentTimeZone));
+      String title = getKey(task, ["title"], "Task Notification");
+      String body = getKey(task, ["description"], "Task Description");
+      Duration duration =
+          endDate.subtract(Duration(minutes: 10)).difference(DateTime.now());
 
-    if (DateTime.now().isAfter(
-      endDate.subtract(
-        Duration(minutes: 11),
-      ),
-    )) {
-      await flutterLocalNotificationsPlugin.show(
-        0,
-        title,
-        body,
-        NotificationDetails(
-          windows: WindowsNotificationDetails(
-            header: WindowsHeader(
-                id: "0", title: AppStrings.inLessThan10Minutes, arguments: ""),
-          ),
+      if (DateTime.now().isAfter(
+        endDate.subtract(
+          Duration(minutes: 11),
         ),
-      );
-    } else {
-      await flutterLocalNotificationsPlugin.zonedSchedule(
-        0,
-        title,
-        body,
-        TZDateTime.now(getLocation(currentTimeZone)).add(duration),
-        NotificationDetails(
-          windows: WindowsNotificationDetails(
-            header: WindowsHeader(
-                id: "0", title: AppStrings.in10Minutes, arguments: ""),
-            subtitle: "subtitle",
+      )) {
+        await flutterLocalNotificationsPlugin.show(
+          0,
+          title,
+          body,
+          NotificationDetails(
+            windows: WindowsNotificationDetails(
+              header: WindowsHeader(
+                  id: "0",
+                  title: AppStrings.inLessThan10Minutes,
+                  arguments: ""),
+            ),
           ),
-        ),
-        androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
-      );
+        );
+      } else {
+        await flutterLocalNotificationsPlugin.zonedSchedule(
+          0,
+          title,
+          body,
+          TZDateTime.now(getLocation(currentTimeZone)).add(duration),
+          NotificationDetails(
+            windows: WindowsNotificationDetails(
+              header: WindowsHeader(
+                  id: "0", title: AppStrings.in10Minutes, arguments: ""),
+              subtitle: "subtitle",
+            ),
+          ),
+          androidScheduleMode: AndroidScheduleMode.exactAllowWhileIdle,
+        );
+      }
     }
   }
 

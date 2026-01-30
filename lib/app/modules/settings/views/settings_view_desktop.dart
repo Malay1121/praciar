@@ -64,64 +64,123 @@ class _SettingsViewDesktopState extends State<SettingsViewDesktop> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Wrap(
-                                    crossAxisAlignment:
-                                        WrapCrossAlignment.start,
-                                    spacing: 24.w(context),
-                                    children: [
-                                      for (String category
-                                          in widget.controller.options.keys)
-                                        InkWell(
-                                          onTap: () => widget.controller
-                                              .changeCategory(category),
-                                          child: Column(
-                                            children: [
-                                              AppText(
-                                                width: 76.w(context),
-                                                height: 21.h(context),
-                                                centered: true,
+                                  Container(
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 8.h(context),
+                                      horizontal: 4.w(context),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        for (String category in widget
+                                            .controller.options.keys) ...[
+                                          InkWell(
+                                            onTap: () => widget.controller
+                                                .changeCategory(category),
+                                            borderRadius:
+                                                BorderRadius.circular(8),
+                                            child: Container(
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 12.h(context),
+                                                horizontal: 20.w(context),
+                                              ),
+                                              decoration: BoxDecoration(
+                                                color: category ==
+                                                        widget.controller
+                                                            .selectedCategory
+                                                    ? AppColors.primary500
+                                                        .withOpacity(0.1)
+                                                    : Colors.transparent,
+                                                borderRadius:
+                                                    BorderRadius.circular(8),
+                                                border: Border.all(
+                                                  color: category ==
+                                                          widget.controller
+                                                              .selectedCategory
+                                                      ? AppColors.primary500
+                                                      : Colors.transparent,
+                                                  width: 1,
+                                                ),
+                                              ),
+                                              child: AppText(
                                                 text: category.capitalizeFirst
                                                     .toString(),
-                                                style: TextStyles.medium(
+                                                style: TextStyles.semiBold(
                                                   context: context,
                                                   fontSize: 14.t(context),
                                                   color: category ==
                                                           widget.controller
                                                               .selectedCategory
-                                                      ? AppColors.secondary500
-                                                      : AppColors.secondary300,
+                                                      ? AppColors.primary500
+                                                      : AppColors.secondary400,
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 12.h(context),
-                                              ),
-                                              Container(
-                                                width: 76.w(context),
-                                                height: 2.h(context),
-                                                color: category ==
-                                                        widget.controller
-                                                            .selectedCategory
-                                                    ? AppColors.primary500
-                                                    : AppColors.primary0,
-                                              ),
-                                            ],
+                                            ),
                                           ),
-                                        ),
-                                    ],
+                                          if (category !=
+                                              widget
+                                                  .controller.options.keys.last)
+                                            SizedBox(width: 8.w(context)),
+                                        ],
+                                      ],
+                                    ),
                                   ),
                                   SizedBox(
                                     height: 32.h(context),
+                                  ),
+                                  Container(
+                                    width: double.infinity,
+                                    padding: EdgeInsets.symmetric(
+                                      vertical: 16.h(context),
+                                      horizontal: 20.w(context),
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: AppColors.background,
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        AppText(
+                                          text: widget
+                                                  .controller
+                                                  .selectedCategory
+                                                  .capitalizeFirst ??
+                                              '',
+                                          style: TextStyles.bold(
+                                            context: context,
+                                            fontSize: 18,
+                                            color: AppColors.secondary500,
+                                          ),
+                                        ),
+                                        SizedBox(height: 4.h(context)),
+                                        AppText(
+                                          text: _getCategoryDescription(widget
+                                              .controller.selectedCategory),
+                                          style: TextStyles.regular(
+                                            context: context,
+                                            fontSize: 14,
+                                            color: AppColors.secondary400,
+                                          ),
+                                          maxLines: 2,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 24.h(context),
                                   ),
                                   for (String parameter in widget
                                       .controller
                                       .options[
                                           widget.controller.selectedCategory]
-                                      .keys)
+                                      .keys) ...[
                                     widget.controller.settingWidget(
                                       type: widget.controller.options[widget
                                           .controller
                                           .selectedCategory][parameter]["type"],
-                                      category: "appearance",
+                                      category:
+                                          widget.controller.selectedCategory,
                                       parameter: widget.controller.options[
                                               widget
                                                   .controller.selectedCategory]
@@ -130,6 +189,8 @@ class _SettingsViewDesktopState extends State<SettingsViewDesktop> {
                                               .controller.selectedCategory]
                                           [parameter]["options"],
                                     ),
+                                    SizedBox(height: 24.h(context)),
+                                  ],
                                 ],
                               ),
                             ),
@@ -143,5 +204,20 @@ class _SettingsViewDesktopState extends State<SettingsViewDesktop> {
             ),
           );
         });
+  }
+
+  String _getCategoryDescription(String category) {
+    switch (category) {
+      case 'general':
+        return "Basic app preferences and global settings";
+      case 'appearance':
+        return "Customize the look and feel of your interface";
+      case 'productivity':
+        return "Settings to help you work more efficiently";
+      case 'privacy':
+        return "Control your data and privacy preferences";
+      default:
+        return "Configure your app settings";
+    }
   }
 }

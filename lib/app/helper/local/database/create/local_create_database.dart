@@ -39,8 +39,27 @@ Future localCreateDatabase() async {
       "activity_log": [],
       "tags": [],
       "settings": {
+        "general": {
+          "language": {"name": "English"},
+          "notifications": {"name": "Enabled"},
+          "defaultWorkspace": {"name": "Personal"}
+        },
         "appearance": {
-          "mode": {"name": "Light"}
+          "mode": {"name": "Light"},
+          "fontSize": {"name": "Medium"},
+          "compactView": {"name": "Disabled"},
+          "accentColor": {"name": "Blue"}
+        },
+        "productivity": {
+          "autoSave": {"name": "Enabled"},
+          "taskReminders": {"name": "Enabled"},
+          "timeTracking": {"name": "Always"},
+          "smartSuggestions": {"name": "Enabled"}
+        },
+        "privacy": {
+          "dataBackup": {"name": "Weekly"},
+          "analytics": {"name": "Enabled"},
+          "crashReports": {"name": "Enabled"}
         }
       }
     };
