@@ -100,6 +100,8 @@ class AppStrings {
   static String english = "English";
   static String spanish = "Spanish";
   static String french = "French";
+  static String hindi = "हिंदी";
+  static String german = "Deutsch";
   static String small = "Small";
   static String medium = "Medium";
   static String large = "Large";

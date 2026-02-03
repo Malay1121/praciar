@@ -45,6 +45,7 @@ export 'package:get/get_state_manager/src/simple/get_controllers.dart';
 export 'package:windows_notification/notification_message.dart';
 export 'package:windows_notification/windows_notification.dart';
 export 'app_strings.dart';
+export 'app_localizations.dart';
 export 'app_images.dart';
 export 'package:flutter/material.dart';
 export 'app_colors.dart';

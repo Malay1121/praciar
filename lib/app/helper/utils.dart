@@ -262,28 +262,183 @@ class Utils {
     return initialColor;
   }
 
+  static changeLanguage() async {
+    Map settings = await DatabaseHelper.getKey(location: ["settings"]);
+    String languageCode = "english";
+
+    if (settings["general"] != null &&
+        settings["general"]["language"] != null) {
+      String languageName = settings["general"]["language"]["name"].toString();
+      languageCode = _getLanguageCode(languageName);
+    }
+
+    AppLocalizations.setLanguage(languageCode);
+    _updateAppStrings();
+  }
+
+  static String _getLanguageCode(String languageName) {
+    switch (languageName.toLowerCase()) {
+      case 'english':
+        return 'english';
+      case 'हिंदी':
+      case 'hindi':
+        return 'hindi';
+      case 'español':
+      case 'spanish':
+        return 'spanish';
+      case 'français':
+      case 'french':
+        return 'french';
+      case 'deutsch':
+      case 'german':
+        return 'german';
+      default:
+        return 'english';
+    }
+  }
+
+  static _updateAppStrings() {
+    AppStrings.appName = AppLocalizations.appName;
+    AppStrings.letsGetYouStarted = AppLocalizations.letsGetYouStarted;
+    AppStrings.getStarted = AppLocalizations.getStarted;
+    AppStrings.yourName = AppLocalizations.yourName;
+    AppStrings.yourEmail = AppLocalizations.yourEmail;
+    AppStrings.back = AppLocalizations.back;
+    AppStrings.overview = AppLocalizations.overview;
+    AppStrings.task = AppLocalizations.task;
+    AppStrings.settings = AppLocalizations.settings;
+    AppStrings.hi = AppLocalizations.hi;
+    AppStrings.letsFinishYourTaskToday =
+        AppLocalizations.letsFinishYourTaskToday;
+    AppStrings.activity = AppLocalizations.activity;
+    AppStrings.tasks = AppLocalizations.tasks;
+    AppStrings.general = AppLocalizations.general;
+    AppStrings.appearance = AppLocalizations.appearance;
+    AppStrings.productivity = AppLocalizations.productivity;
+    AppStrings.privacy = AppLocalizations.privacy;
+    AppStrings.mode = AppLocalizations.mode;
+    AppStrings.language = AppLocalizations.language;
+    AppStrings.notifications = AppLocalizations.notifications;
+    AppStrings.defaultWorkspace = AppLocalizations.defaultWorkspace;
+    AppStrings.fontSize = AppLocalizations.fontSize;
+    AppStrings.compactView = AppLocalizations.compactView;
+    AppStrings.accentColor = AppLocalizations.accentColor;
+    AppStrings.autoSave = AppLocalizations.autoSave;
+    AppStrings.taskReminders = AppLocalizations.taskReminders;
+    AppStrings.timeTracking = AppLocalizations.timeTracking;
+    AppStrings.smartSuggestions = AppLocalizations.smartSuggestions;
+    AppStrings.dataBackup = AppLocalizations.dataBackup;
+    AppStrings.analytics = AppLocalizations.analytics;
+    AppStrings.crashReports = AppLocalizations.crashReports;
+    AppStrings.enabled = AppLocalizations.enabled;
+    AppStrings.disabled = AppLocalizations.disabled;
+    AppStrings.small = AppLocalizations.small;
+    AppStrings.medium = AppLocalizations.medium;
+    AppStrings.large = AppLocalizations.large;
+    AppStrings.blue = AppLocalizations.blue;
+    AppStrings.green = AppLocalizations.green;
+    AppStrings.purple = AppLocalizations.purple;
+    AppStrings.red = AppLocalizations.red;
+    AppStrings.personal = AppLocalizations.personal;
+    AppStrings.work = AppLocalizations.work;
+    AppStrings.team = AppLocalizations.team;
+    AppStrings.always = AppLocalizations.always;
+    AppStrings.never = AppLocalizations.never;
+    AppStrings.daily = AppLocalizations.daily;
+    AppStrings.weekly = AppLocalizations.weekly;
+  }
+
+  static changeAccentColor() async {
+    Map settings = await DatabaseHelper.getKey(location: ["settings"]);
+    String accentColor = "blue";
+    String theme = "light";
+
+    if (settings["appearance"] != null) {
+      if (settings["appearance"]["accentColor"] != null) {
+        accentColor = settings["appearance"]["accentColor"]["name"]
+            .toString()
+            .toLowerCase();
+      }
+      if (settings["appearance"]["mode"] != null) {
+        theme = settings["appearance"]["mode"]["name"].toString().toLowerCase();
+      }
+    }
+
+    _applyAccentColors(accentColor, theme);
+    _applyThemeColors(theme);
+    _applyStaticColors();
+  }
+
+  static _applyAccentColors(String accentColor, String theme) {
+    bool isDark = theme == "dark";
+
+    switch (accentColor) {
+      case "blue":
+        AppColors.primary900 = isDark ? Color(0xFF040815) : Color(0xFF10197A);
+        AppColors.primary800 = isDark ? Color(0xFF060713) : Color(0xFF1A2793);
+        AppColors.primary700 = isDark ? Color(0xFF0A0A18) : Color(0xFF2A3BB7);
+        AppColors.primary600 = isDark ? Color(0xFF0E0F1D) : Color(0xFF3D53DB);
+        AppColors.primary500 = Color(0xFF546FFF);
+        AppColors.primary400 = isDark ? Color(0xFF54577A) : Color(0xFF9F84FD);
+        AppColors.primary300 = isDark ? Color(0xFF8E92BC) : Color(0xFF98ABFF);
+        AppColors.primary200 = isDark ? Color(0xFFC2C6E8) : Color(0xFFBAC8FF);
+        AppColors.primary100 = isDark ? Color(0xFFDFE1F3) : Color(0xFFDCE4FF);
+        break;
+      case "green":
+        AppColors.primary900 = isDark ? Color(0xFF0A1A0A) : Color(0xFF1B4A1B);
+        AppColors.primary800 = isDark ? Color(0xFF0E2A0E) : Color(0xFF2D5F2D);
+        AppColors.primary700 = isDark ? Color(0xFF123D12) : Color(0xFF3F743F);
+        AppColors.primary600 = isDark ? Color(0xFF1A5A1A) : Color(0xFF518951);
+        AppColors.primary500 = Color(0xFF22C55E);
+        AppColors.primary400 = isDark ? Color(0xFF4A7A4A) : Color(0xFF6EE76E);
+        AppColors.primary300 = isDark ? Color(0xFF7A9A7A) : Color(0xFF8FE58F);
+        AppColors.primary200 = isDark ? Color(0xFFAABAAA) : Color(0xFFB0E3B0);
+        AppColors.primary100 = isDark ? Color(0xFFD5E0D5) : Color(0xFFD1F1D1);
+        break;
+      case "purple":
+        AppColors.primary900 = isDark ? Color(0xFF1A0A1A) : Color(0xFF4A1B4A);
+        AppColors.primary800 = isDark ? Color(0xFF2A0E2A) : Color(0xFF5F2D5F);
+        AppColors.primary700 = isDark ? Color(0xFF3D123D) : Color(0xFF743F74);
+        AppColors.primary600 = isDark ? Color(0xFF5A1A5A) : Color(0xFF895189);
+        AppColors.primary500 = Color(0xFFA855F7);
+        AppColors.primary400 = isDark ? Color(0xFF7A4A7A) : Color(0xFFC476C4);
+        AppColors.primary300 = isDark ? Color(0xFF9A7A9A) : Color(0xFFD997D9);
+        AppColors.primary200 = isDark ? Color(0xFFBAAAAA) : Color(0xFFE6BBE6);
+        AppColors.primary100 = isDark ? Color(0xFFE0D5E0) : Color(0xFFF3E8F3);
+        break;
+      case "red":
+        AppColors.primary900 = isDark ? Color(0xFF1A0A0A) : Color(0xFF7A1A1A);
+        AppColors.primary800 = isDark ? Color(0xFF2A0E0E) : Color(0xFF932B2B);
+        AppColors.primary700 = isDark ? Color(0xFF3D1212) : Color(0xFFB73F3F);
+        AppColors.primary600 = isDark ? Color(0xFF5A1A1A) : Color(0xFFDB5151);
+        AppColors.primary500 = Color(0xFFEF4444);
+        AppColors.primary400 = isDark ? Color(0xFF7A4A4A) : Color(0xFFF87171);
+        AppColors.primary300 = isDark ? Color(0xFF9A7A7A) : Color(0xFFF99F9F);
+        AppColors.primary200 = isDark ? Color(0xFFBAAAAA) : Color(0xFFFCBFBF);
+        AppColors.primary100 = isDark ? Color(0xFFE0D5D5) : Color(0xFFFEE2E2);
+        break;
+    }
+  }
+
   static changeTheme() async {
     Map settings = await DatabaseHelper.getKey(location: ["settings"]);
     String type =
         settings["appearance"]["mode"]["name"].toString().toLowerCase();
-    AppColors.primary900 =
-        type == "dark" ? Color(0xFF040815) : Color(0xFF10197A);
-    AppColors.primary800 =
-        type == "dark" ? Color(0xFF060713) : Color(0xFF1A2793);
-    AppColors.primary700 =
-        type == "dark" ? Color(0xFF0A0A18) : Color(0xFF2A3BB7);
-    AppColors.primary600 =
-        type == "dark" ? Color(0xFF0E0F1D) : Color(0xFF3D53DB);
-    AppColors.primary500 =
-        type == "dark" ? Color(0xFF546FFF) : Color(0xFF546FFF);
-    AppColors.primary400 =
-        type == "dark" ? Color(0xFF54577A) : Color(0xFF9F84FD);
-    AppColors.primary300 =
-        type == "dark" ? Color(0xFF8E92BC) : Color(0xFF98ABFF);
-    AppColors.primary200 =
-        type == "dark" ? Color(0xFFC2C6E8) : Color(0xFFBAC8FF);
-    AppColors.primary100 =
-        type == "dark" ? Color(0xFFDFE1F3) : Color(0xFFDCE4FF);
+    String accentColor = "blue";
+
+    if (settings["appearance"] != null &&
+        settings["appearance"]["accentColor"] != null) {
+      accentColor = settings["appearance"]["accentColor"]["name"]
+          .toString()
+          .toLowerCase();
+    }
+
+    _applyAccentColors(accentColor, type);
+    _applyThemeColors(type);
+    _applyStaticColors();
+  }
+
+  static _applyThemeColors(String type) {
     AppColors.background =
         type == "dark" ? Color(0xFF0A0A0A) : Color(0xFFFAFAFA);
     AppColors.cardColor =
@@ -307,7 +462,9 @@ class Utils {
         type == "dark" ? Color(0xFFBAC8FF) : Color(0xFFC2C6E8);
     AppColors.secondary100 =
         type == "dark" ? Color(0xFFDCE4FF) : Color(0xFFDFE1F3);
-    AppColors.success900 = Color(0xFF3B6506);
+  }
+
+  static _applyStaticColors() {
     AppColors.success800 = Color(0xFF4C7A0B);
     AppColors.success700 = Color(0xFF659711);
     AppColors.success600 = Color(0xFF7FB519);

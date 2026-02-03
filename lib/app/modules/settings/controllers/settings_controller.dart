@@ -12,8 +12,10 @@ class SettingsController extends CommonController {
         "parameter": "language",
         "options": [
           {"name": AppStrings.english},
+          {"name": AppStrings.hindi},
           {"name": AppStrings.spanish},
           {"name": AppStrings.french},
+          {"name": AppStrings.german},
         ],
       },
       "notifications": {
@@ -135,71 +137,35 @@ class SettingsController extends CommonController {
   };
   Map settings = {};
   void _onLanguageChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName, message: "Language setting changed");
+    Utils.changeLanguage();
+    update();
   }
 
-  void _onNotificationsChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName, message: "Notifications setting changed");
-  }
+  void _onNotificationsChange() {}
 
-  void _onDefaultWorkspaceChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName,
-        message: "Default workspace setting changed");
-  }
+  void _onDefaultWorkspaceChange() {}
 
-  void _onFontSizeChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName, message: "Font size setting changed");
-  }
+  void _onFontSizeChange() {}
 
-  void _onCompactViewChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName, message: "Compact view setting changed");
-  }
+  void _onCompactViewChange() {}
 
   void _onAccentColorChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName, message: "Accent color setting changed");
+    Utils.changeAccentColor();
   }
 
-  void _onAutoSaveChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName, message: "Auto save setting changed");
-  }
+  void _onAutoSaveChange() {}
 
-  void _onTaskRemindersChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName, message: "Task reminders setting changed");
-  }
+  void _onTaskRemindersChange() {}
 
-  void _onTimeTrackingChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName, message: "Time tracking setting changed");
-  }
+  void _onTimeTrackingChange() {}
 
-  void _onSmartSuggestionsChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName,
-        message: "Smart suggestions setting changed");
-  }
+  void _onSmartSuggestionsChange() {}
 
-  void _onDataBackupChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName, message: "Data backup setting changed");
-  }
+  void _onDataBackupChange() {}
 
-  void _onAnalyticsChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName, message: "Analytics setting changed");
-  }
+  void _onAnalyticsChange() {}
 
-  void _onCrashReportsChange() {
-    Utils.showSnackbar(
-        title: AppStrings.appName, message: "Crash reports setting changed");
-  }
+  void _onCrashReportsChange() {}
 
   String _getParameterDisplayName(String parameter) {
     switch (parameter) {

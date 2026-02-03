@@ -16,6 +16,7 @@ class SplashController extends CommonController {
 
   Future<bool> tasks() async {
     await Utils.changeTheme();
+    await Utils.changeLanguage();
     Utils.dataPath = await Utils.getDataPath();
     return true;
   }
