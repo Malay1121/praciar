@@ -282,16 +282,14 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                                           AppText(
                                             text: AppStrings.activity,
                                             height: 24.h(context),
-                                            width: 60.w(context),
+                                            width: 120.w(context),
                                             style: TextStyles.semiBold(
                                               context: context,
                                               fontSize: 16,
                                               color: AppColors.secondary500,
                                             ),
                                           ),
-                                          SizedBox(
-                                            width: 302.w(context),
-                                          ),
+                                          Spacer(),
                                           AppText(
                                             text: AppStrings.thisWeek,
                                             width: 60.w(context),
@@ -321,113 +319,130 @@ class _DashboardViewDesktopState extends State<DashboardViewDesktop> {
                                             left: 16.w(context),
                                             right: 16.w(context),
                                           ),
-                                          child: LineChart(
-                                            LineChartData(
-                                              lineTouchData: LineTouchData(
-                                                touchTooltipData:
-                                                    LineTouchTooltipData(
-                                                  getTooltipColor:
-                                                      (touchedSpot) => AppColors
-                                                          .secondary500,
-                                                  getTooltipItems:
-                                                      (touchedSpots) {
-                                                    return touchedSpots.map(
-                                                        (LineBarSpot
-                                                            touchedSpot) {
-                                                      final textStyle =
-                                                          TextStyles.semiBold(
-                                                        context: context,
-                                                        color:
-                                                            AppColors.primary0,
-                                                        fontSize: 14,
-                                                      );
-                                                      return LineTooltipItem(
-                                                        '${touchedSpot.y.toInt()} ${AppStrings.task}',
-                                                        textStyle,
-                                                      );
-                                                    }).toList();
-                                                  },
-                                                ),
-                                                handleBuiltInTouches: true,
-                                                getTouchLineStart:
-                                                    (data, index) => 0,
-                                              ),
-                                              backgroundColor:
-                                                  AppColors.primary0,
-                                              borderData: FlBorderData(
-                                                border: Border.symmetric(
-                                                  vertical: BorderSide(
-                                                    color: AppColors.cardColor,
-                                                    width: 1,
-                                                  ),
-                                                ),
-                                              ),
-                                              gridData: FlGridData(
-                                                verticalInterval: 1,
-                                                getDrawingVerticalLine:
-                                                    (value) {
-                                                  return FlLine(
-                                                    color: AppColors.cardColor,
-                                                    strokeWidth: 1,
-                                                  );
-                                                },
-                                              ),
-                                              titlesData: FlTitlesData(
-                                                leftTitles: AxisTitles(
-                                                  sideTitles: SideTitles(
-                                                    showTitles: true,
-                                                    interval: 1,
-                                                    getTitlesWidget:
-                                                        (value, meta) => widget
-                                                            .controller
-                                                            .getProjectNumber(
-                                                                value, meta),
-                                                  ),
-                                                ),
-                                                rightTitles: AxisTitles(
-                                                  sideTitles: SideTitles(),
-                                                ),
-                                                topTitles: AxisTitles(
-                                                  sideTitles: SideTitles(),
-                                                ),
-                                                bottomTitles: AxisTitles(
-                                                  sideTitles: SideTitles(
-                                                    getTitlesWidget:
-                                                        (value, meta) => widget
-                                                            .controller
-                                                            .getWeekdays(
-                                                                value, meta),
-                                                    interval: 1,
-                                                    showTitles: true,
-                                                  ),
-                                                ),
-                                              ),
-                                              lineBarsData: [
-                                                LineChartBarData(
-                                                    color:
-                                                        AppColors.secondary500,
-                                                    barWidth: 3,
-                                                    isCurved: true,
-                                                    preventCurveOverShooting:
-                                                        true,
-                                                    spots: [
-                                                      FlSpot(0, 0),
-                                                      FlSpot(1, 1),
-                                                      FlSpot(2, 0),
-                                                      FlSpot(3, 2),
-                                                      FlSpot(4, 1),
-                                                      FlSpot(5, 2),
-                                                      FlSpot(6, 0),
+                                          child: FutureBuilder<List<int>>(
+                                              future: widget.controller
+                                                  .getNewTasksCreatedThisWeek(),
+                                              builder: (context, snapshot) {
+                                                List<int> weeklyData =
+                                                    snapshot.data ??
+                                                        [0, 0, 0, 0, 0, 0, 0];
+                                                return LineChart(
+                                                  LineChartData(
+                                                    lineTouchData:
+                                                        LineTouchData(
+                                                      touchTooltipData:
+                                                          LineTouchTooltipData(
+                                                        getTooltipColor:
+                                                            (touchedSpot) =>
+                                                                AppColors
+                                                                    .secondary500,
+                                                        getTooltipItems:
+                                                            (touchedSpots) {
+                                                          return touchedSpots
+                                                              .map((LineBarSpot
+                                                                  touchedSpot) {
+                                                            final textStyle =
+                                                                TextStyles
+                                                                    .semiBold(
+                                                              context: context,
+                                                              color: AppColors
+                                                                  .primary0,
+                                                              fontSize: 14,
+                                                            );
+                                                            return LineTooltipItem(
+                                                              '${touchedSpot.y.toInt()} tasks created',
+                                                              textStyle,
+                                                            );
+                                                          }).toList();
+                                                        },
+                                                      ),
+                                                      handleBuiltInTouches:
+                                                          true,
+                                                      getTouchLineStart:
+                                                          (data, index) => 0,
+                                                    ),
+                                                    backgroundColor:
+                                                        AppColors.primary0,
+                                                    borderData: FlBorderData(
+                                                      border: Border.symmetric(
+                                                        vertical: BorderSide(
+                                                          color: AppColors
+                                                              .cardColor,
+                                                          width: 1,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    gridData: FlGridData(
+                                                      verticalInterval: 1,
+                                                      getDrawingVerticalLine:
+                                                          (value) {
+                                                        return FlLine(
+                                                          color: AppColors
+                                                              .cardColor,
+                                                          strokeWidth: 1,
+                                                        );
+                                                      },
+                                                    ),
+                                                    titlesData: FlTitlesData(
+                                                      leftTitles: AxisTitles(
+                                                        sideTitles: SideTitles(
+                                                          showTitles: true,
+                                                          interval: 1,
+                                                          getTitlesWidget: (value,
+                                                                  meta) =>
+                                                              widget.controller
+                                                                  .getProjectNumber(
+                                                                      value,
+                                                                      meta),
+                                                        ),
+                                                      ),
+                                                      rightTitles: AxisTitles(
+                                                        sideTitles:
+                                                            SideTitles(),
+                                                      ),
+                                                      topTitles: AxisTitles(
+                                                        sideTitles:
+                                                            SideTitles(),
+                                                      ),
+                                                      bottomTitles: AxisTitles(
+                                                        sideTitles: SideTitles(
+                                                          getTitlesWidget: (value,
+                                                                  meta) =>
+                                                              widget.controller
+                                                                  .getWeekdays(
+                                                                      value,
+                                                                      meta),
+                                                          interval: 1,
+                                                          showTitles: true,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    lineBarsData: [
+                                                      LineChartBarData(
+                                                          color: AppColors
+                                                              .secondary500,
+                                                          barWidth: 3,
+                                                          isCurved: true,
+                                                          preventCurveOverShooting:
+                                                              true,
+                                                          spots: weeklyData
+                                                              .asMap()
+                                                              .entries
+                                                              .map((entry) => FlSpot(
+                                                                  entry.key
+                                                                      .toDouble(),
+                                                                  entry.value
+                                                                      .toDouble()))
+                                                              .toList(),
+                                                          dotData: FlDotData(
+                                                              show: false)),
                                                     ],
-                                                    dotData:
-                                                        FlDotData(show: false)),
-                                              ],
-                                            ),
-
-                                            duration: Duration(
-                                                milliseconds: 150), // Optional
-                                            curve: Curves.linear, // Optional
-                                          ),
+                                                  ),
+                                                  duration: Duration(
+                                                      milliseconds: 150),
+                                                  curve: Curves.linear,
+                                                );
+                                              }),
                                         ),
                                       ),
                                     ],

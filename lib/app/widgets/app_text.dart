@@ -64,10 +64,17 @@ class _AppTextState extends State<AppText> {
                 },
                 child: AutoSizeText(
                   widget.text,
-                  style: widget.style,
+                  style: widget.style?.copyWith(
+                        fontSize: widget.style?.fontSize != null
+                            ? widget.style!.fontSize! * Utils.fontSizeMultiplier
+                            : null,
+                      ) ??
+                      widget.style,
                   strutStyle: widget.strutStyle,
                   minFontSize: widget.minFontSize,
-                  maxFontSize: widget.maxFontSize = double.infinity,
+                  maxFontSize: widget.maxFontSize == double.infinity
+                      ? double.infinity
+                      : widget.maxFontSize! * Utils.fontSizeMultiplier,
                   stepGranularity: widget.stepGranularity = 1,
                   presetFontSizes: widget.presetFontSizes,
                   group: widget.group,
@@ -90,10 +97,17 @@ class _AppTextState extends State<AppText> {
               },
               child: AutoSizeText(
                 widget.text,
-                style: widget.style,
+                style: widget.style?.copyWith(
+                      fontSize: widget.style?.fontSize != null
+                          ? widget.style!.fontSize! * Utils.fontSizeMultiplier
+                          : null,
+                    ) ??
+                    widget.style,
                 strutStyle: widget.strutStyle,
                 minFontSize: widget.minFontSize,
-                maxFontSize: widget.maxFontSize = double.infinity,
+                maxFontSize: widget.maxFontSize == double.infinity
+                    ? double.infinity
+                    : widget.maxFontSize! * Utils.fontSizeMultiplier,
                 stepGranularity: widget.stepGranularity = 1,
                 presetFontSizes: widget.presetFontSizes,
                 group: widget.group,
@@ -173,10 +187,17 @@ class _AppRichTextState extends State<AppRichText> {
           ? Center(
               child: AutoSizeText.rich(
                 widget.text,
-                style: widget.style,
+                style: widget.style?.copyWith(
+                      fontSize: widget.style?.fontSize != null
+                          ? widget.style!.fontSize! * Utils.fontSizeMultiplier
+                          : null,
+                    ) ??
+                    widget.style,
                 strutStyle: widget.strutStyle,
                 minFontSize: widget.minFontSize,
-                maxFontSize: widget.maxFontSize = double.infinity,
+                maxFontSize: widget.maxFontSize == double.infinity
+                    ? double.infinity
+                    : widget.maxFontSize! * Utils.fontSizeMultiplier,
                 stepGranularity: widget.stepGranularity = 1,
                 presetFontSizes: widget.presetFontSizes,
                 group: widget.group,
@@ -194,10 +215,17 @@ class _AppRichTextState extends State<AppRichText> {
             )
           : AutoSizeText.rich(
               widget.text,
-              style: widget.style,
+              style: widget.style?.copyWith(
+                    fontSize: widget.style?.fontSize != null
+                        ? widget.style!.fontSize! * Utils.fontSizeMultiplier
+                        : null,
+                  ) ??
+                  widget.style,
               strutStyle: widget.strutStyle,
               minFontSize: widget.minFontSize,
-              maxFontSize: widget.maxFontSize = double.infinity,
+              maxFontSize: widget.maxFontSize == double.infinity
+                  ? double.infinity
+                  : widget.maxFontSize! * Utils.fontSizeMultiplier,
               stepGranularity: widget.stepGranularity = 1,
               presetFontSizes: widget.presetFontSizes,
               group: widget.group,

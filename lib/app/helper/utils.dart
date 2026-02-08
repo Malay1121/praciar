@@ -502,6 +502,38 @@ class Utils {
     AppColors.information100 = Color(0xFFDCF3FF);
   }
 
+  static double _fontSizeMultiplier = 1.0;
+
+  static double get fontSizeMultiplier => _fontSizeMultiplier;
+
+  static changeFontSize() async {
+    Map settings = await DatabaseHelper.getKey(location: ["settings"]);
+    String fontSize = "medium";
+
+    if (settings["appearance"] != null &&
+        settings["appearance"]["fontSize"] != null) {
+      fontSize =
+          settings["appearance"]["fontSize"]["name"].toString().toLowerCase();
+    }
+
+    _applyFontSizeMultiplier(fontSize);
+  }
+
+  static _applyFontSizeMultiplier(String fontSize) {
+    switch (fontSize) {
+      case "small":
+        _fontSizeMultiplier = 0.85;
+        break;
+      case "large":
+        _fontSizeMultiplier = 1.2;
+        break;
+      case "medium":
+      default:
+        _fontSizeMultiplier = 1.0;
+        break;
+    }
+  }
+
   static Future<void> logActivity({
     required String action,
     required String entityType,

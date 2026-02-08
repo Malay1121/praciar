@@ -85,6 +85,40 @@ class DashboardController extends CommonController {
     super.onClose();
   }
 
+  List activityLogs = [];
+  void loadLogs() async {
+    activityLogs = await DatabaseHelper.getActivityLogs();
+    update();
+  }
+
+  Future<List<int>> getNewTasksCreatedThisWeek() async {
+    List activityLogs = await DatabaseHelper.getActivityLogs();
+    DateTime now = DateTime.now();
+    DateTime startOfWeek = now.subtract(Duration(days: now.weekday % 7));
+    startOfWeek =
+        DateTime(startOfWeek.year, startOfWeek.month, startOfWeek.day);
+
+    List<int> weeklyTaskCounts = List.filled(7, 0);
+
+    for (Map log in activityLogs) {
+      // if (log["action"] == "created" && log["entity_type"] == "task") {
+      DateTime createdDate = Utils.fromUtc(log["created_at"]);
+      if (createdDate.isAfter(startOfWeek) &&
+          createdDate.isBefore(startOfWeek.add(Duration(days: 7)))) {
+        int dayIndex = createdDate.weekday % 7;
+        weeklyTaskCounts[dayIndex]++;
+      }
+      // }
+    }
+
+    return weeklyTaskCounts;
+  }
+
+  Future<int> getTotalNewTasksThisWeek() async {
+    List<int> weeklyTaskCounts = await getNewTasksCreatedThisWeek();
+    return weeklyTaskCounts.reduce((a, b) => a + b);
+  }
+
   Future<bool> isProjectIdUnique(String projectId) async {
     List projects = await DatabaseHelper.getProject();
     return projects.where((element) => element["id"] == projectId).isEmpty;
@@ -117,7 +151,6 @@ class DashboardController extends CommonController {
         id: id,
         projectData: projectTemplate);
 
-    // Log the activity
     await Utils.logActivity(
       action: "created",
       entityType: "project",

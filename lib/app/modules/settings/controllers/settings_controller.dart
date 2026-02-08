@@ -145,7 +145,10 @@ class SettingsController extends CommonController {
 
   void _onDefaultWorkspaceChange() {}
 
-  void _onFontSizeChange() {}
+  void _onFontSizeChange() {
+    Utils.changeFontSize();
+    Get.forceAppUpdate();
+  }
 
   void _onCompactViewChange() {}
 

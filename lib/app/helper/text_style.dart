@@ -10,7 +10,7 @@ class TextStyles {
       color: color,
       fontWeight: FontWeight.w400,
       fontFamily: AppStrings.fontFamily,
-      fontSize: fontSize.t(context),
+      fontSize: (fontSize * Utils.fontSizeMultiplier).t(context),
     );
   }
 
@@ -23,7 +23,7 @@ class TextStyles {
       color: color,
       fontWeight: FontWeight.w500,
       fontFamily: AppStrings.fontFamily,
-      fontSize: fontSize.t(context),
+      fontSize: (fontSize * Utils.fontSizeMultiplier).t(context),
     );
   }
 
@@ -36,7 +36,7 @@ class TextStyles {
       color: color,
       fontWeight: FontWeight.w600,
       fontFamily: AppStrings.fontFamily,
-      fontSize: fontSize.t(context),
+      fontSize: (fontSize * Utils.fontSizeMultiplier).t(context),
     );
   }
 
@@ -49,7 +49,7 @@ class TextStyles {
       color: color,
       fontWeight: FontWeight.w700,
       fontFamily: AppStrings.fontFamily,
-      fontSize: fontSize.t(context),
+      fontSize: (fontSize * Utils.fontSizeMultiplier).t(context),
     );
   }
 }
