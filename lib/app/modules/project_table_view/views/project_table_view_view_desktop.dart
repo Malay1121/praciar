@@ -1,5 +1,6 @@
 import 'package:drag_and_drop_lists/drag_and_drop_list_interface.dart';
 import 'package:drag_and_drop_lists/drag_and_drop_lists.dart';
+import 'package:flutter_gantt/flutter_gantt.dart';
 import 'package:get/get.dart';
 import 'package:praciar/app/helper/all_imports.dart';
 import 'package:praciar/app/modules/project_table_view/controllers/project_table_view_controller.dart';
@@ -121,251 +122,335 @@ class _ProjectTableViewViewDesktopState
                             return Container();
                           }
                           Map project = (snapshot.data as List).first;
-                          List<DragAndDropListInterface> contents = [
-                            for (var table
-                                in Utils.getKey(project, ["task_list"], []))
-                              DragAndDropList(
-                                header: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        AppText(
-                                          text:
-                                              Utils.getKey(table, ["name"], ""),
-                                          style: TextStyles.bold(
-                                            context: context,
-                                            fontSize: 20.t(context),
-                                            color: HexColor(Utils.getKey(
-                                                table, ["color"], "FFFFFF")),
-                                          ),
-                                        ),
-                                        Spacer(),
-                                        PopupMenuButton(
-                                          constraints: BoxConstraints(
-                                            minWidth: 152.w(context),
-                                          ),
-                                          padding: EdgeInsets.zero,
-                                          shape: Border.all(
-                                            color: AppColors.cardColor,
-                                          ),
-                                          shadowColor: Colors.transparent,
-                                          color: AppColors.primary0,
-                                          itemBuilder: (BuildContext context) =>
-                                              <PopupMenuEntry>[
-                                            PopupMenuItem(
-                                              onTap: () => widget.controller
-                                                  .deleteTaskList(
-                                                      id: Utils.getKey(
-                                                          table, ["id"], "")),
-                                              height: 24.h(Get.context!),
-                                              padding: EdgeInsets.zero,
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: [
-                                                  SvgPicture.asset(
-                                                    AppImages.icBin,
-                                                    width: 24.w(Get.context!),
-                                                    height: 24.h(Get.context!),
-                                                    color: AppColors.error500,
-                                                  ),
-                                                  SizedBox(
-                                                    width: 12.w(Get.context!),
-                                                  ),
-                                                  AppText(
-                                                    centered: true,
-                                                    text: AppStrings.delete,
-                                                    height: 40.h(Get.context!),
-                                                    width: 96.w(Get.context!),
-                                                    style: TextStyles.semiBold(
-                                                      context: Get.context!,
-                                                      fontSize: 12,
-                                                      color: AppColors.error500,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ],
-                                          child: Container(
-                                            width: 30.h(context),
-                                            height: 30.h(context),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(10),
-                                              color: AppColors.primary500,
-                                            ),
-                                            child: Center(
-                                              child: SvgPicture.asset(
-                                                AppImages.icMore,
-                                                width: 16.w(context),
-                                                height: 16.h(context),
-                                                color: AppColors.primary0,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 8.h(context),
-                                    ),
-                                    Container(
-                                      height: 0.5,
-                                      // width: 328.w(context),
-                                      color: HexColor(Utils.getKey(
-                                          table, ["color"], "FFFFFF")),
-                                    ),
-                                    SizedBox(
-                                      height: 16.h(context),
-                                    ),
-                                  ],
-                                ),
-                                children: <DragAndDropItem>[
+                          if (widget.controller.selectedView == "Gantt") {
+                            return Gantt(
+                              theme: GanttTheme.of(context),
+                              activities: [
+                                for (var table
+                                    in Utils.getKey(project, ["task_list"], []))
                                   for (var card
                                       in Utils.getKey(table, ["tasks"], []))
-                                    DragAndDropItem(
-                                      canDrag: true,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                            bottom: 16.h(context)),
-                                        child: GestureDetector(
-                                          onTap: () => openTaskDetails(
+                                    GanttActivity(
+                                      key: "${Utils.getKey(table, [
+                                            "id"
+                                          ], [])},${Utils.getKey(card, [
+                                            "id"
+                                          ], "")}",
+                                      start: Utils.fromUtc(Utils.getKey(
+                                          card,
+                                          ["start_date"],
+                                          Utils.toUtc(DateTime.now()))),
+                                      end: Utils.fromUtc(Utils.getKey(
+                                          card,
+                                          ["end_date"],
+                                          Utils.toUtc(DateTime.now()))),
+                                      title: Utils.getKey(card, ["title"], ""),
+                                      data: card,
+                                      onCellTap: (activity) => openTaskDetails(
+                                          listId:
+                                              Utils.getKey(table, ["id"], ""),
+                                          taskId:
+                                              Utils.getKey(card, ["id"], ""),
+                                          projectId:
+                                              widget.controller.projectId),
+                                    ),
+                              ],
+                              startDate: DateTime.now().subtract(
+                                Duration(
+                                  days: 999999,
+                                ),
+                              ),
+                              // activitiesAsync: (startDate, endDate, activity) async => _activities,
+                              // holidaysAsync: (startDate, endDate, holidays) async _holidays,
+                              onActivityChanged: (activity, start, end) async {
+                                if (start != null && end != null) {
+                                  String key = activity.key;
+                                  String taskListId = key.split(",")[0];
+                                  String taskId = key.split(",")[1];
+                                  List taskList = project["task_list"];
+                                  Map task = taskList
+                                      .firstWhere(
+                                        (element) =>
+                                            Utils.getKey(element, ["id"], "") ==
+                                            taskListId,
+                                      )["tasks"]
+                                      .firstWhere((e) =>
+                                          Utils.getKey(e, ["id"], ".") ==
+                                          taskId);
+                                  task["start_date"] = Utils.toUtc(start);
+                                  task["end_date"] = Utils.toUtc(end);
+
+                                  await DatabaseHelper.updateProject(
+                                      projectId: widget.controller.projectId,
+                                      projectData: project);
+                                  widget.controller.update();
+                                }
+                                // else if (start != null) {
+                                //   debugPrint(
+                                //     '$activity start was moved (Event on widget)',
+                                //   );
+                                // } else if (end != null) {
+                                //   debugPrint(
+                                //       '$activity end was moved (Event on widget)');
+                                // }
+                              },
+                            );
+                          } else {
+                            List<DragAndDropListInterface> contents = [
+                              for (var table
+                                  in Utils.getKey(project, ["task_list"], []))
+                                DragAndDropList(
+                                  header: Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          AppText(
+                                            text: Utils.getKey(
+                                                table, ["name"], ""),
+                                            style: TextStyles.bold(
+                                              context: context,
+                                              fontSize: 20.t(context),
+                                              color: HexColor(Utils.getKey(
+                                                  table, ["color"], "FFFFFF")),
+                                            ),
+                                          ),
+                                          Spacer(),
+                                          PopupMenuButton(
+                                            constraints: BoxConstraints(
+                                              minWidth: 152.w(context),
+                                            ),
+                                            padding: EdgeInsets.zero,
+                                            shape: Border.all(
+                                              color: AppColors.cardColor,
+                                            ),
+                                            shadowColor: Colors.transparent,
+                                            color: AppColors.primary0,
+                                            itemBuilder:
+                                                (BuildContext context) =>
+                                                    <PopupMenuEntry>[
+                                              PopupMenuItem(
+                                                onTap: () => widget.controller
+                                                    .deleteTaskList(
+                                                        id: Utils.getKey(
+                                                            table, ["id"], "")),
+                                                height: 24.h(Get.context!),
+                                                padding: EdgeInsets.zero,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    SvgPicture.asset(
+                                                      AppImages.icBin,
+                                                      width: 24.w(Get.context!),
+                                                      height:
+                                                          24.h(Get.context!),
+                                                      color: AppColors.error500,
+                                                    ),
+                                                    SizedBox(
+                                                      width: 12.w(Get.context!),
+                                                    ),
+                                                    AppText(
+                                                      centered: true,
+                                                      text: AppStrings.delete,
+                                                      height:
+                                                          40.h(Get.context!),
+                                                      width: 96.w(Get.context!),
+                                                      style:
+                                                          TextStyles.semiBold(
+                                                        context: Get.context!,
+                                                        fontSize: 12,
+                                                        color:
+                                                            AppColors.error500,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ],
+                                            child: Container(
+                                              width: 30.h(context),
+                                              height: 30.h(context),
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                color: AppColors.primary500,
+                                              ),
+                                              child: Center(
+                                                child: SvgPicture.asset(
+                                                  AppImages.icMore,
+                                                  width: 16.w(context),
+                                                  height: 16.h(context),
+                                                  color: AppColors.primary0,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 8.h(context),
+                                      ),
+                                      Container(
+                                        height: 0.5,
+                                        // width: 328.w(context),
+                                        color: HexColor(Utils.getKey(
+                                            table, ["color"], "FFFFFF")),
+                                      ),
+                                      SizedBox(
+                                        height: 16.h(context),
+                                      ),
+                                    ],
+                                  ),
+                                  children: <DragAndDropItem>[
+                                    for (var card
+                                        in Utils.getKey(table, ["tasks"], []))
+                                      DragAndDropItem(
+                                        canDrag: true,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(
+                                              bottom: 16.h(context)),
+                                          child: GestureDetector(
+                                            onTap: () => openTaskDetails(
+                                                listId: Utils.getKey(
+                                                    table, ["id"], ""),
+                                                taskId: Utils.getKey(
+                                                    card, ["id"], ""),
+                                                projectId: widget
+                                                    .controller.projectId),
+                                            child: CommonTaskcard(
+                                              card: card,
                                               listId: Utils.getKey(
                                                   table, ["id"], ""),
-                                              taskId: Utils.getKey(
-                                                  card, ["id"], ""),
                                               projectId:
-                                                  widget.controller.projectId),
-                                          child: CommonTaskcard(
-                                            card: card,
-                                            listId:
-                                                Utils.getKey(table, ["id"], ""),
-                                            projectId:
-                                                widget.controller.projectId,
-                                            view:
-                                                widget.controller.selectedView,
+                                                  widget.controller.projectId,
+                                              view: widget
+                                                  .controller.selectedView,
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  DragAndDropItem(
-                                      child: CommonButton(
-                                        text: AppStrings.newTask,
-                                        onTap: () => widget.controller
-                                            .addNewTask(
-                                                listId: Utils.getKey(
-                                                    table, ["id"], "")),
-                                        prefix: SvgPicture.asset(
-                                          AppImages.icAdd,
-                                          width: 24.w(context),
-                                          height: 24.h(context),
-                                          color: AppColors.primary500,
+                                    DragAndDropItem(
+                                        child: CommonButton(
+                                          text: AppStrings.newTask,
+                                          onTap: () => widget.controller
+                                              .addNewTask(
+                                                  listId: Utils.getKey(
+                                                      table, ["id"], "")),
+                                          prefix: SvgPicture.asset(
+                                            AppImages.icAdd,
+                                            width: 24.w(context),
+                                            height: 24.h(context),
+                                            color: AppColors.primary500,
+                                          ),
+                                          border: Border.all(
+                                            color: AppColors.primary500,
+                                          ),
+                                          textColor: AppColors.primary500,
+                                          fontSize: 14.t(context),
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 28.w(context),
+                                          ),
+                                          height: 52.h(context),
+                                          width: 328.w(context),
                                         ),
-                                        border: Border.all(
-                                          color: AppColors.primary500,
-                                        ),
-                                        textColor: AppColors.primary500,
-                                        fontSize: 14.t(context),
-                                        padding: EdgeInsets.symmetric(
-                                          horizontal: 28.w(context),
-                                        ),
-                                        height: 52.h(context),
-                                        width: 328.w(context),
-                                      ),
-                                      canDrag: false)
-                                ],
+                                        canDrag: false)
+                                  ],
+                                ),
+                              DragAndDropList(
+                                children: [],
+                                header: CommonButton(
+                                  text: AppStrings.newList,
+                                  onTap: () =>
+                                      widget.controller.addNewTaskList(),
+                                  prefix: SvgPicture.asset(
+                                    AppImages.icAdd,
+                                    width: 24.w(context),
+                                    height: 24.h(context),
+                                    color: AppColors.primary500,
+                                  ),
+                                  border: Border.all(
+                                    color: AppColors.primary500,
+                                  ),
+                                  textColor: AppColors.primary500,
+                                  fontSize: 14.t(context),
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: 28.w(context),
+                                  ),
+                                  height: 52.h(context),
+                                  width: 328.w(context),
+                                ),
+                                contentsWhenEmpty: SizedBox(),
                               ),
-                            DragAndDropList(
-                              children: [],
-                              header: CommonButton(
-                                text: AppStrings.newList,
-                                onTap: () => widget.controller.addNewTaskList(),
-                                prefix: SvgPicture.asset(
-                                  AppImages.icAdd,
-                                  width: 24.w(context),
-                                  height: 24.h(context),
-                                  color: AppColors.primary500,
-                                ),
-                                border: Border.all(
-                                  color: AppColors.primary500,
-                                ),
-                                textColor: AppColors.primary500,
-                                fontSize: 14.t(context),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: 28.w(context),
-                                ),
-                                height: 52.h(context),
-                                width: 328.w(context),
-                              ),
-                              contentsWhenEmpty: SizedBox(),
-                            ),
-                          ];
-                          onItemReorder(int oldItemIndex, int oldListIndex,
-                              int newItemIndex, int newListIndex) async {
-                            List taskList = project["task_list"];
-                            var movedItem = taskList[oldListIndex]["tasks"]
-                                .removeAt(oldItemIndex);
-                            taskList[newListIndex]["tasks"]
-                                .insert(newItemIndex, movedItem);
-                            await DatabaseHelper.updateProject(
-                                projectId: widget.controller.projectId,
-                                projectData: project);
-                            // var movedItem = contents[oldListIndex]
-                            //     .children!
-                            //     .removeAt(oldItemIndex);
-                            // contents[newListIndex]
-                            //     .children!
-                            //     .insert(newItemIndex, movedItem);
-                            widget.controller.update();
-                          }
+                            ];
+                            onItemReorder(int oldItemIndex, int oldListIndex,
+                                int newItemIndex, int newListIndex) async {
+                              List taskList = project["task_list"];
+                              var movedItem = taskList[oldListIndex]["tasks"]
+                                  .removeAt(oldItemIndex);
+                              taskList[newListIndex]["tasks"]
+                                  .insert(newItemIndex, movedItem);
+                              await DatabaseHelper.updateProject(
+                                  projectId: widget.controller.projectId,
+                                  projectData: project);
+                              // var movedItem = contents[oldListIndex]
+                              //     .children!
+                              //     .removeAt(oldItemIndex);
+                              // contents[newListIndex]
+                              //     .children!
+                              //     .insert(newItemIndex, movedItem);
+                              widget.controller.update();
+                            }
 
-                          onListReorder(
-                              int oldListIndex, int newListIndex) async {
-                            List taskList = project["task_list"];
-                            var movedList = taskList.removeAt(oldListIndex);
-                            taskList.insert(newListIndex, movedList);
-                            await DatabaseHelper.updateProject(
-                                projectId: widget.controller.projectId,
-                                projectData: project);
-                            // var movedList = contents.removeAt(oldListIndex);
-                            // contents.insert(newListIndex, movedList);
-                            widget.controller.update();
-                          }
+                            onListReorder(
+                                int oldListIndex, int newListIndex) async {
+                              List taskList = project["task_list"];
+                              var movedList = taskList.removeAt(oldListIndex);
+                              taskList.insert(newListIndex, movedList);
+                              await DatabaseHelper.updateProject(
+                                  projectId: widget.controller.projectId,
+                                  projectData: project);
+                              // var movedList = contents.removeAt(oldListIndex);
+                              // contents.insert(newListIndex, movedList);
+                              widget.controller.update();
+                            }
 
-                          return DragAndDropLists(
-                            axis: Utils.getKey(
-                                widget.controller.viewData,
-                                [widget.controller.selectedView, "axis"],
-                                Axis.horizontal),
-                            listWidth: int.parse(Utils.getKey(
-                                        widget.controller.viewData,
-                                        [
-                                          widget.controller.selectedView,
-                                          "listWidth"
-                                        ],
-                                        1)
-                                    .toString())
-                                .w(context),
-                            listDraggingWidth: int.parse(Utils.getKey(
-                                        widget.controller.viewData,
-                                        [
-                                          widget.controller.selectedView,
-                                          "listDraggingWidth"
-                                        ],
-                                        1)
-                                    .toString())
-                                .w(context),
-                            listPadding: Utils.getKey(
-                                widget.controller.viewData,
-                                [widget.controller.selectedView, "listPadding"],
-                                EdgeInsets.zero),
-                            itemDragOnLongPress: false,
-                            listDragOnLongPress: false,
-                            children: contents,
-                            onItemReorder: onItemReorder,
-                            onListReorder: onListReorder,
-                          );
+                            return DragAndDropLists(
+                              axis: Utils.getKey(
+                                  widget.controller.viewData,
+                                  [widget.controller.selectedView, "axis"],
+                                  Axis.horizontal),
+                              listWidth: int.parse(Utils.getKey(
+                                          widget.controller.viewData,
+                                          [
+                                            widget.controller.selectedView,
+                                            "listWidth"
+                                          ],
+                                          1)
+                                      .toString())
+                                  .w(context),
+                              listDraggingWidth: int.parse(Utils.getKey(
+                                          widget.controller.viewData,
+                                          [
+                                            widget.controller.selectedView,
+                                            "listDraggingWidth"
+                                          ],
+                                          1)
+                                      .toString())
+                                  .w(context),
+                              listPadding: Utils.getKey(
+                                  widget.controller.viewData,
+                                  [
+                                    widget.controller.selectedView,
+                                    "listPadding"
+                                  ],
+                                  EdgeInsets.zero),
+                              itemDragOnLongPress: false,
+                              listDragOnLongPress: false,
+                              children: contents,
+                              onItemReorder: onItemReorder,
+                              onListReorder: onListReorder,
+                            );
+                          }
                         }),
                   ),
                 ),

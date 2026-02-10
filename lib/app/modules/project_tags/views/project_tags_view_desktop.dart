@@ -175,7 +175,8 @@ class _ProjectTagsViewDesktopState extends State<ProjectTagsViewDesktop> {
                                 width: 8.w(context),
                               ),
                               AppText(
-                                text: "40",
+                                text: Utils.getKey(tag, ["items"], "0")
+                                    .toString(),
                                 height: 24.h(context),
                                 style: TextStyles.medium(
                                   context: context,

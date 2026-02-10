@@ -33,6 +33,7 @@ dependencies:
   flutter_timezone: ^4.1.0
   omni_datetime_picker: ^2.1.1
   calendar_view: ^1.4.0
+  flutter_gantt: ^1.0.1
 dev_dependencies:
   flutter_lints: 4.0.0
   flutter_test:

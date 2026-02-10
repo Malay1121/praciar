@@ -266,7 +266,7 @@ class TagsController extends CommonController {
     List projects = await DatabaseHelper.getProject();
     for (Map project in projects) {
       for (Map tag in Utils.getKey(project, ["tags"], [])) {
-        int index = tags.indexOf((element) => element["id"] == tag["id"]);
+        int index = tags.indexWhere((element) => element["id"] == tag["id"]);
 
         if (index >= 0) {
           if (!(tags[index] as Map).containsKey("items")) {

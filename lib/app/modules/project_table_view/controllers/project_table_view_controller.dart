@@ -10,7 +10,11 @@ class ProjectTableViewController extends CommonController {
   final count = 0.obs;
   Map project = {};
 
-  List views = ["Table", "List"];
+  List views = [
+    "Table",
+    "List",
+    "Gantt",
+  ];
   String selectedView = "Table";
 
   Map viewData = {

@@ -228,6 +228,21 @@ class ProjectTagsController extends CommonController {
   void fetchTags() async {
     tags = await DatabaseHelper.getTaskTags(
         projectId: projectId, workspaceId: Utils.currentWorkspace);
+    List tasks = await DatabaseHelper.getTask(projectId: projectId);
+    for (Map task in tasks) {
+      for (Map tag in Utils.getKey(task, ["tags"], [])) {
+        int index = tags.indexWhere((element) => element["id"] == tag["id"]);
+
+        if (index >= 0) {
+          if (!(tags[index] as Map).containsKey("items")) {
+            tags[index].addEntries({
+              "items": 0,
+            }.entries);
+          }
+          tags[index]["items"] += 1;
+        }
+      }
+    }
     update();
   }
 

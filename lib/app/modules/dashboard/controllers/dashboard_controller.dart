@@ -172,7 +172,7 @@ class DashboardController extends CommonController {
     TextEditingController projectNameController = TextEditingController();
     TextEditingController projectDescriptionController =
         TextEditingController();
-    MultiSelectController tagsController = MultiSelectController();
+    MultiSelectController<Map>? tagsController = MultiSelectController<Map>();
 
     DateTimeRange? duration;
     bool projectDetailsValidation() {
@@ -335,6 +335,7 @@ class DashboardController extends CommonController {
                       height: 43.h(context),
                       width: 299.w(context),
                       child: MultiDropdown<Map>(
+                        controller: tagsController,
                         items: tags.map<DropdownItem<Map>>(
                           (dynamic tag) {
                             return DropdownItem(
@@ -415,7 +416,9 @@ class DashboardController extends CommonController {
                             name: projectNameController.text,
                             description: projectDescriptionController.text,
                             duration: duration!,
-                            tags: tagsController.selectedItems,
+                            tags: tagsController.selectedItems
+                                .map((e) => e.value)
+                                .toList(),
                           );
 
                           Get.back();
