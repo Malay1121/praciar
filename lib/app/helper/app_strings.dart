@@ -10,6 +10,7 @@ class AppStrings {
   static String overview = "Overview";
   static String task = "Task";
   static String settings = "Settings";
+  static String projectSettings = "Project Settings";
 
   static String hi = "Hi";
   static String letsFinishYourTaskToday = "Let's finish your task today!";
